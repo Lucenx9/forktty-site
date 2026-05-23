@@ -25,7 +25,6 @@ export function Header() {
         <nav aria-label="Primary" className="hidden items-center gap-7 text-sm text-ink-300 md:flex">
           <a href="#download" className="hover:text-white">Download</a>
           <a href="#why" className="hover:text-white">Why</a>
-          <a href="#workflows" className="hover:text-white">Workflows</a>
           <a href="#install" className="hover:text-white">Install</a>
           <a href="#faq" className="hover:text-white">FAQ</a>
         </nav>

@@ -1,84 +1,52 @@
-import { CpuIcon, LayersIcon, PlugIcon, ShieldIcon, TerminalIcon, SparkIcon } from "./Icons";
-
-const FEATURES = [
-  {
-    icon: CpuIcon,
-    title: "Rust + GTK/VTE",
-    body:
-      "Native to Linux. No Electron, no web shell. VTE handles the bytes; GTK draws the chrome.",
-  },
-  {
-    icon: LayersIcon,
-    title: "Parallel agent panes",
-    body:
-      "Tile any number of agents in one window. Each pane is a real PTY — your CLI doesn't know the difference.",
-  },
-  {
-    icon: PlugIcon,
-    title: "Bring your own CLI",
-    body:
-      "Codex, Claude Code, Gemini CLI, aider, custom scripts — anything that runs in a shell, runs in ForkTTY.",
-  },
-  {
-    icon: ShieldIcon,
-    title: "Local-first, no telemetry",
-    body:
-      "Sessions, history, and keys stay on your machine. Nothing is phoned home. Ever.",
-  },
-  {
-    icon: TerminalIcon,
-    title: "Terminal-native UX",
-    body:
-      "Keyboard-first navigation, true color, ligatures, fast scrollback. Behaves like a terminal — because it is one.",
-  },
-  {
-    icon: SparkIcon,
-    title: "Forkable by design",
-    body:
-      "Open source. Auditable. Patch it, ship a fork, or wire your own orchestrator on top.",
-  },
-];
-
 export function Why() {
   return (
     <section id="why" className="border-t border-ink-800/60">
       <div className="section py-20 sm:py-24">
-        <div className="flex flex-col items-start gap-4">
-          <span className="h-eyebrow">02 · Why ForkTTY</span>
-          <h2 className="h-title max-w-2xl">
-            A terminal that respects your workflow — and your subscriptions.
-          </h2>
-          <p className="max-w-2xl text-ink-300">
-            ForkTTY isn&rsquo;t a chat app pretending to be a terminal. It&rsquo;s a
-            terminal that happens to be very good at running a dozen coding
-            agents at once, on Linux, the way Linux works.
-          </p>
-        </div>
+        <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
+          <div className="flex flex-col gap-4">
+            <h2 className="h-title">Built for Linux, not ported to it.</h2>
+            <p className="text-ink-300">
+              ForkTTY is a native GTK4 application that uses VTE — the same
+              terminal widget behind GNOME Terminal and Tilix — so emulation,
+              true colour, ligatures, and scrollback behave the way you expect.
+              No Electron, no web shell, no embedded browser.
+            </p>
+            <p className="text-ink-300">
+              The orchestration sits in Rust on top of that: workspaces hold
+              tiling pane layouts, each pane is a real PTY, and the agent CLI
+              talking to it has no idea it&rsquo;s being multiplexed.
+            </p>
+          </div>
 
-        <div className="mt-12 grid gap-px overflow-hidden rounded-xl border border-ink-800 bg-ink-800 sm:grid-cols-2 lg:grid-cols-3">
-          {FEATURES.map((f) => (
-            <FeatureCell key={f.title} {...f} />
-          ))}
+          <div className="flex flex-col gap-6">
+            <Point title="Bring your own CLI">
+              ForkTTY ships no model, no proxy, no API key. You install Codex,
+              Claude Code, Gemini CLI, aider, or any custom script, and it just
+              runs in a pane. Your credentials, your rate limits, your bill.
+            </Point>
+            <Point title="Workspaces, not tabs">
+              A workspace is a saved pane layout you can dedicate to one task
+              or one agent. Switch with a single shortcut; the panes stay
+              attached to their PTYs in the background.
+            </Point>
+            <Point title="Local-first, no telemetry">
+              Sessions, history, and keys live on your machine. ForkTTY makes
+              zero outbound connections for analytics, updates, or crash
+              reporting. It&rsquo;s open source under AGPL-3.0 — fork it, audit
+              it, patch it.
+            </Point>
+          </div>
         </div>
       </div>
     </section>
   );
 }
 
-function FeatureCell({
-  icon: Icon,
-  title,
-  body,
-}: {
-  icon: (props: { className?: string }) => React.JSX.Element;
-  title: string;
-  body: string;
-}) {
+function Point({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-3 bg-ink-900/80 p-6">
-      <Icon className="h-5 w-5 text-forktty" />
-      <h3 className="font-display text-base text-white">{title}</h3>
-      <p className="text-sm leading-relaxed text-ink-300">{body}</p>
+    <div className="border-l-2 border-ink-800 pl-5">
+      <h3 className="font-display text-lg text-white">{title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-ink-300">{children}</p>
     </div>
   );
 }

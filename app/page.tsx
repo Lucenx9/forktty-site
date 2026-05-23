@@ -3,7 +3,6 @@ import { Hero } from "@/components/Hero";
 import { Screenshot } from "@/components/Screenshot";
 import { Download } from "@/components/Download";
 import { Why } from "@/components/Why";
-import { Workflows } from "@/components/Workflows";
 import { Install } from "@/components/Install";
 import { AlphaNotes } from "@/components/AlphaNotes";
 import { Faq } from "@/components/Faq";
@@ -20,7 +19,6 @@ export default function Page() {
         <Screenshot />
         <Download />
         <Why />
-        <Workflows />
         <Install />
         <AlphaNotes />
         <Faq />

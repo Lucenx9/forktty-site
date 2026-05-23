@@ -34,8 +34,7 @@ export function Faq() {
     <section id="faq" className="border-t border-ink-800/60">
       <div className="section py-20 sm:py-24">
         <div className="flex flex-col items-start gap-4">
-          <span className="h-eyebrow">06 · FAQ</span>
-          <h2 className="h-title">Common questions.</h2>
+          <h2 className="h-title">Common questions</h2>
         </div>
 
         <div className="mt-12 divide-y divide-ink-800 overflow-hidden rounded-xl border border-ink-800">

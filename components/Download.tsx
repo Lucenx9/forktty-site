@@ -14,7 +14,6 @@ export async function Download() {
     <section id="download" className="border-t border-ink-800/60">
       <div className="section py-20 sm:py-24">
         <div className="flex flex-col items-start gap-4">
-          <span className="h-eyebrow">01 · Download</span>
           <h2 className="h-title">Latest release</h2>
           <p className="max-w-2xl text-ink-300">
             Pre-built binaries for x86_64 Linux. Verify checksums against

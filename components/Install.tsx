@@ -40,8 +40,7 @@ export function Install() {
     <section id="install" className="border-t border-ink-800/60">
       <div className="section py-20 sm:py-24">
         <div className="flex flex-col items-start gap-4">
-          <span className="h-eyebrow">04 · Install &amp; verify</span>
-          <h2 className="h-title max-w-2xl">Four commands and you&rsquo;re running.</h2>
+          <h2 className="h-title max-w-2xl">Install &amp; verify</h2>
           <p className="max-w-2xl text-ink-300">
             ForkTTY is distributed as standard Linux artifacts. No account,
             no cloud setup, no first-run wizard.

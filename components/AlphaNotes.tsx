@@ -4,7 +4,6 @@ export function AlphaNotes() {
       <div className="section py-20 sm:py-24">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
           <div className="flex flex-col gap-4">
-            <span className="h-eyebrow">05 · Alpha notes</span>
             <h2 className="h-title">This is early software.</h2>
             <p className="text-ink-300">
               ForkTTY is in early alpha. Expect rough edges, breaking changes,
