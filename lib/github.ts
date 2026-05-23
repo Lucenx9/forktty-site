@@ -38,7 +38,7 @@ export type ReleaseFallback = {
 const REPO = "Lucenx9/forktty";
 export const REPO_HTML_URL = `https://github.com/${REPO}`;
 export const RELEASES_HTML_URL = `${REPO_HTML_URL}/releases`;
-const RELEASES_API_URL = `https://api.github.com/repos/${REPO}/releases/latest`;
+const RELEASES_API_URL = `https://api.github.com/repos/${REPO}/releases?per_page=10`;
 
 function pickAsset(assets: ReleaseAsset[], predicate: (a: ReleaseAsset) => boolean): ReleaseAsset | null {
   return assets.find(predicate) ?? null;
@@ -62,7 +62,19 @@ export async function fetchLatestRelease(): Promise<ReleaseView | ReleaseFallbac
       };
     }
 
-    const data = (await res.json()) as LatestRelease;
+    const list = (await res.json()) as LatestRelease[];
+    const data = Array.isArray(list)
+      ? list.find((r) => !(r as unknown as { draft?: boolean }).draft) ?? null
+      : null;
+
+    if (!data) {
+      return {
+        ok: false,
+        reason: "No releases published yet",
+        releasesUrl: RELEASES_HTML_URL,
+      };
+    }
+
     const assets = data.assets ?? [];
 
     const appImage = pickAsset(
