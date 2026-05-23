@@ -38,7 +38,7 @@ export function Footer() {
         <div className="mt-10 flex flex-col items-start justify-between gap-3 border-t border-ink-800/60 pt-6 text-xs text-ink-500 sm:flex-row sm:items-center">
           <div className="flex flex-col gap-1">
             <span>
-              © {new Date().getFullYear()} ForkTTY contributors. Built for Linux.
+              © {new Date().getFullYear()} ForkTTY contributors. Linux-native, AGPL-3.0.
             </span>
             <span>
               The ForkTTY app has no telemetry. This site uses anonymous Vercel page-view analytics.

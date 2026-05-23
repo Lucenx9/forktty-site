@@ -41,7 +41,8 @@ export function Header() {
             <span className="hidden sm:inline">Source</span>
           </a>
           <a href="#download" className="btn-primary text-xs sm:text-sm">
-            Download for Linux
+            <span className="sm:hidden">Download</span>
+            <span className="hidden sm:inline">Download for Linux</span>
           </a>
         </div>
       </div>

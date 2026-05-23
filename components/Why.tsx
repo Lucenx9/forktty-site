@@ -4,12 +4,13 @@ export function Why() {
       <div className="section py-20 sm:py-24">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
           <div className="flex flex-col gap-4">
-            <h2 className="h-title">Built for Linux, not ported to it.</h2>
+            <h2 className="h-title">Native Linux, not a port.</h2>
             <p className="text-ink-300">
-              ForkTTY is a native GTK4 application that uses VTE — the same
-              terminal widget behind GNOME Terminal and Tilix — so emulation,
-              true colour, ligatures, and scrollback behave the way you expect.
-              No Electron, no web shell, no embedded browser.
+              ForkTTY is a GTK4 application that uses VTE — the same terminal
+              widget behind GNOME Terminal and Tilix — so xterm emulation,
+              true colour, ligatures, and scrollback work the way every other
+              VTE terminal does. No Electron, no web shell, no embedded
+              browser.
             </p>
             <p className="text-ink-300">
               The orchestration sits in Rust on top of that: workspaces hold
@@ -20,9 +21,9 @@ export function Why() {
 
           <div className="flex flex-col gap-6">
             <Point title="Bring your own CLI">
-              ForkTTY ships no model, no proxy, no API key. You install Codex,
-              Claude Code, Gemini CLI, aider, or any custom script, and it just
-              runs in a pane. Your credentials, your rate limits, your bill.
+              ForkTTY ships no model, no proxy, no API key. Install Codex,
+              Claude Code, Gemini CLI, aider, or a custom script and run it
+              in a pane. Your credentials, your rate limits, your bill.
             </Point>
             <Point title="Workspaces, not tabs">
               A workspace is a saved pane layout you can dedicate to one task
