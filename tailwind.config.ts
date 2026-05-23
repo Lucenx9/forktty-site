@@ -35,9 +35,9 @@ const config: Config = {
         },
       },
       fontFamily: {
-        display: ['"JetBrains Mono"', '"Fira Code"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
-        mono: ['"JetBrains Mono"', '"Fira Code"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
-        sans: ['"Inter Tight"', "ui-sans-serif", "system-ui", "sans-serif"],
+        display: ['var(--font-jetbrains-mono)', '"JetBrains Mono"', '"Fira Code"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        mono: ['var(--font-jetbrains-mono)', '"JetBrains Mono"', '"Fira Code"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        sans: ['var(--font-inter-tight)', '"Inter Tight"', "ui-sans-serif", "system-ui", "sans-serif"],
       },
       boxShadow: {
         glow: "0 0 0 1px rgba(167,139,250,0.22), 0 8px 32px -12px rgba(167,139,250,0.4)",

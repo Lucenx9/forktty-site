@@ -9,14 +9,14 @@ export function Hero() {
         className="pointer-events-none absolute inset-0 -z-10 ascii-grid opacity-30"
       />
 
-      <div className="section pt-24 pb-12 sm:pt-32 sm:pb-16">
+      <div className="section pt-16 pb-10 sm:pt-24 sm:pb-14">
         <div className="flex max-w-3xl flex-col items-start gap-6">
           <span className="chip">
             <span className="h-1.5 w-1.5 rounded-full bg-forktty" />
             Early alpha · Linux only
           </span>
 
-          <h1 className="font-display text-4xl font-medium leading-[1.05] tracking-tight text-white sm:text-6xl">
+          <h1 className="max-w-3xl font-display text-4xl font-medium leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
             Multi-agent terminal for Linux.
           </h1>
 

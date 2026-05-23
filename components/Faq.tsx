@@ -34,14 +34,25 @@ export function Faq() {
     <section id="faq" className="border-t border-ink-800/60">
       <div className="section py-20 sm:py-24">
         <div className="flex flex-col items-start gap-4">
+          <span className="h-eyebrow">FAQ</span>
           <h2 className="h-title">Common questions</h2>
         </div>
 
         <div className="mt-12 divide-y divide-ink-800 overflow-hidden rounded-md border border-ink-800">
           {ITEMS.map((item, i) => (
             <details key={i} className="group bg-ink-900">
-              <summary className="flex cursor-pointer list-none items-start gap-6 px-6 py-5 text-base text-white hover:bg-ink-850">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 px-6 py-5 text-base text-white transition-colors hover:bg-ink-850">
                 <span className="font-display tracking-tight">{item.q}</span>
+                <svg
+                  aria-hidden
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  className="h-4 w-4 shrink-0 text-ink-400 transition-transform group-open:rotate-180"
+                >
+                  <path d="m6 9 6 6 6-6" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
               </summary>
               <div className="px-6 pb-6 text-sm leading-relaxed text-ink-300">
                 {item.a}

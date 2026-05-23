@@ -4,6 +4,7 @@ export function Why() {
       <div className="section py-20 sm:py-24">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
           <div className="flex flex-col gap-4">
+            <span className="h-eyebrow">WHY</span>
             <h2 className="h-title">Native Linux, not a port.</h2>
             <p className="text-ink-300">
               ForkTTY is a GTK4 application that uses VTE — the same terminal

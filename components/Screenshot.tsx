@@ -3,8 +3,9 @@ import Image from "next/image";
 export function Screenshot() {
   return (
     <section id="screenshot" className="border-t border-ink-800/60">
-      <div className="section py-20 sm:py-24">
+      <div className="section py-16 sm:py-20">
         <div className="flex flex-col items-start gap-4">
+          <span className="h-eyebrow">SCREENSHOT</span>
           <h2 className="h-title max-w-2xl">
             One window. Many workspaces. Many agents.
           </h2>
