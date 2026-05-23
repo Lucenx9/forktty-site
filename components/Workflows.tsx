@@ -76,13 +76,13 @@ function WorkflowRow({
           {workflow.panes.map((p) => (
             <div key={p.label} className="flex flex-col gap-2 p-5">
               <div className="flex items-center gap-2">
-                <span className="h-1.5 w-1.5 rounded-full bg-ember" />
+                <span className="h-1.5 w-1.5 rounded-full bg-forktty" />
                 <span className="font-mono text-[11px] uppercase tracking-[0.16em] text-ink-300">
                   {p.label}
                 </span>
               </div>
               <pre className="overflow-x-auto rounded-md border border-ink-800 bg-ink-950/60 px-3 py-2 font-mono text-[12.5px] text-ink-100">
-                <span className="text-ember-soft">$</span> {p.cmd}
+                <span className="text-forktty-soft">$</span> {p.cmd}
               </pre>
             </div>
           ))}

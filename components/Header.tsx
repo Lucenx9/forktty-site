@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { GitHubIcon } from "./Icons";
 import { REPO_HTML_URL } from "@/lib/github";
 
@@ -7,10 +8,17 @@ export function Header() {
     <header className="sticky top-0 z-40 border-b border-ink-800/60 bg-ink-950/70 backdrop-blur">
       <div className="section flex h-14 items-center justify-between">
         <Link href="#top" className="flex items-center gap-2.5">
-          <Logo className="h-6 w-6 text-ember" />
+          <Image
+            src="/forktty.svg"
+            alt=""
+            width={24}
+            height={24}
+            className="h-6 w-6"
+            priority
+          />
           <span className="font-display text-sm tracking-tight text-white">
             forktty
-            <span className="text-ember">_</span>
+            <span className="text-forktty">_</span>
           </span>
         </Link>
 
@@ -42,22 +50,3 @@ export function Header() {
   );
 }
 
-function Logo({ className }: { className?: string }) {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className={className}
-      aria-hidden="true"
-    >
-      <path d="M4 5h16v3H4z" />
-      <path d="m6 14 3-3-3-3" />
-      <path d="M12 14h6" />
-      <path d="M4 5v14h16V5" />
-    </svg>
-  );
-}

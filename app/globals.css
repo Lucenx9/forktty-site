@@ -16,13 +16,14 @@
   body {
     @apply bg-ink-950 text-ink-100 font-sans;
     background-image:
-      radial-gradient(900px 500px at 80% -10%, rgba(255, 122, 42, 0.07), transparent 60%),
-      radial-gradient(700px 400px at 10% 20%, rgba(95, 199, 217, 0.05), transparent 70%);
+      radial-gradient(900px 500px at 80% -10%, rgba(167, 139, 250, 0.09), transparent 60%),
+      radial-gradient(700px 400px at 10% 20%, rgba(103, 232, 249, 0.05), transparent 70%),
+      radial-gradient(600px 360px at 90% 80%, rgba(240, 171, 252, 0.05), transparent 70%);
     background-attachment: fixed;
   }
 
   ::selection {
-    background: rgba(255, 122, 42, 0.35);
+    background: rgba(167, 139, 250, 0.4);
     color: #fff;
   }
 }
@@ -43,11 +44,11 @@
   }
 
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ember/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950;
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-forktty/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950;
   }
 
   .btn-primary {
-    @apply btn bg-ember text-ink-950 hover:bg-ember-soft;
+    @apply btn bg-forktty text-ink-950 hover:bg-forktty-soft;
   }
 
   .btn-secondary {
@@ -63,7 +64,7 @@
   }
 
   .h-eyebrow {
-    @apply text-[11px] uppercase tracking-[0.22em] text-ember-soft;
+    @apply text-[11px] uppercase tracking-[0.22em] text-forktty-soft;
   }
 
   .h-title {

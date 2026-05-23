@@ -21,15 +21,16 @@ const config: Config = {
           200: "#b9c0cf",
           100: "#e3e7ef",
         },
-        ember: {
-          DEFAULT: "#ff7a2a",
-          soft: "#ffb27a",
-          deep: "#c54a00",
+        forktty: {
+          DEFAULT: "#a78bfa",
+          soft: "#c4b5fd",
+          deep: "#7c3aed",
         },
         signal: {
           green: "#7fe3a3",
-          cyan: "#5fc7d9",
-          violet: "#b48cff",
+          cyan: "#67e8f9",
+          violet: "#a78bfa",
+          magenta: "#f0abfc",
           yellow: "#f3c969",
         },
       },
@@ -39,14 +40,14 @@ const config: Config = {
         sans: ['"Inter Tight"', "ui-sans-serif", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        glow: "0 0 0 1px rgba(255,122,42,0.18), 0 8px 32px -12px rgba(255,122,42,0.35)",
+        glow: "0 0 0 1px rgba(167,139,250,0.22), 0 8px 32px -12px rgba(167,139,250,0.4)",
         panel: "0 1px 0 rgba(255,255,255,0.04) inset, 0 24px 48px -32px rgba(0,0,0,0.7)",
       },
       backgroundImage: {
         "grid-faint":
           "linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px)",
-        "radial-ember":
-          "radial-gradient(60% 50% at 50% 0%, rgba(255,122,42,0.18) 0%, rgba(255,122,42,0) 70%)",
+        "radial-forktty":
+          "radial-gradient(60% 50% at 50% 0%, rgba(167,139,250,0.22) 0%, rgba(167,139,250,0) 70%)",
       },
     },
   },

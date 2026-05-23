@@ -76,7 +76,7 @@ function FeatureCell({
 }) {
   return (
     <div className="flex flex-col gap-3 bg-ink-900/80 p-6">
-      <Icon className="h-5 w-5 text-ember" />
+      <Icon className="h-5 w-5 text-forktty" />
       <h3 className="font-display text-base text-white">{title}</h3>
       <p className="text-sm leading-relaxed text-ink-300">{body}</p>
     </div>

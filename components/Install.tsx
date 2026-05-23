@@ -67,7 +67,7 @@ function Step({
   return (
     <div className="terminal-frame flex flex-col gap-4 p-6">
       <div className="flex items-start gap-4">
-        <span className="font-mono text-sm text-ember">{String(index).padStart(2, "0")}</span>
+        <span className="font-mono text-sm text-forktty">{String(index).padStart(2, "0")}</span>
         <div>
           <h3 className="font-display text-base text-white">{step.title}</h3>
           <p className="mt-1 text-sm text-ink-300">{step.note}</p>
@@ -80,7 +80,7 @@ function Step({
               <span className="text-ink-400">{line}</span>
             ) : (
               <>
-                <span className="text-ember-soft">$</span> {line}
+                <span className="text-forktty-soft">$</span> {line}
               </>
             )}
           </div>

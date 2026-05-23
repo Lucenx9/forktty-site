@@ -8,7 +8,7 @@ export function Footer() {
         <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
           <div className="max-w-md">
             <div className="font-display text-base text-white">
-              forktty<span className="text-ember">_</span>
+              forktty<span className="text-forktty">_</span>
             </div>
             <p className="mt-2 text-sm text-ink-400">
               A Linux-native terminal for multi-agent coding. Rust, GTK/VTE,

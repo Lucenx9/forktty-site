@@ -63,7 +63,7 @@ function ReleaseGrid({ release }: { release: Extract<Awaited<ReturnType<typeof f
           title="AppImage"
           subtitle="Portable · runs on most distros"
           badge="experimental"
-          accent="ember"
+          accent="forktty"
           asset={release.appImage}
         />
         <AssetCard
@@ -92,12 +92,12 @@ function AssetCard({
   title: string;
   subtitle: string;
   badge?: string;
-  accent: "ember" | "cyan";
+  accent: "forktty" | "cyan";
   asset: ReleaseAsset | null;
 }) {
   const accentBorder =
-    accent === "ember" ? "hover:border-ember/40" : "hover:border-signal-cyan/40";
-  const accentText = accent === "ember" ? "text-ember-soft" : "text-signal-cyan";
+    accent === "forktty" ? "hover:border-forktty/40" : "hover:border-signal-cyan/40";
+  const accentText = accent === "forktty" ? "text-forktty-soft" : "text-signal-cyan";
 
   return (
     <div

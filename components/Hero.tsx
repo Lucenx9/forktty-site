@@ -10,19 +10,19 @@ export function Hero() {
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-24 left-1/2 -z-10 h-[420px] w-[800px] -translate-x-1/2 bg-radial-ember blur-2xl"
+        className="pointer-events-none absolute -top-24 left-1/2 -z-10 h-[420px] w-[800px] -translate-x-1/2 bg-radial-forktty blur-2xl"
       />
 
       <div className="section pt-20 pb-16 sm:pt-28 sm:pb-24">
         <div className="flex flex-col items-start gap-6">
           <span className="chip">
-            <span className="h-1.5 w-1.5 rounded-full bg-ember" />
+            <span className="h-1.5 w-1.5 rounded-full bg-forktty" />
             Early alpha · Linux only
           </span>
 
           <h1 className="max-w-3xl font-display text-4xl font-medium leading-[1.05] tracking-tight text-white sm:text-6xl">
             A terminal built for running
-            <span className="block text-ember-soft">coding agents in parallel.</span>
+            <span className="block text-forktty-soft">coding agents in parallel.</span>
           </h1>
 
           <p className="max-w-2xl text-base text-ink-200 sm:text-lg">
@@ -65,7 +65,7 @@ export function Hero() {
 function FeatureBullet({ label }: { label: string }) {
   return (
     <li className="flex items-center gap-2">
-      <span className="h-1 w-1 rounded-full bg-ember" />
+      <span className="h-1 w-1 rounded-full bg-forktty" />
       <span>{label}</span>
     </li>
   );
@@ -130,7 +130,7 @@ function PaneMock({ title, lines }: { title: string; lines: { text: string; tone
   return (
     <div className="flex flex-col">
       <div className="flex items-center gap-2 border-b border-ink-800/80 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.16em] text-ink-300">
-        <span className="h-1.5 w-1.5 rounded-full bg-ember" />
+        <span className="h-1.5 w-1.5 rounded-full bg-forktty" />
         {title}
       </div>
       <div className="space-y-1.5 px-4 py-3 font-mono text-[12.5px] leading-relaxed">

@@ -1,5 +1,9 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
+
+export const viewport: Viewport = {
+  themeColor: "#0c0e12",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://forktty.dev"),
@@ -36,7 +40,11 @@ export const metadata: Metadata = {
       "Linux-native multi-agent terminal. Rust + GTK/VTE. Local-first, no telemetry.",
   },
   icons: {
-    icon: "/favicon.svg",
+    icon: [
+      { url: "/forktty.svg", type: "image/svg+xml" },
+      { url: "/forktty.png", type: "image/png", sizes: "128x128" },
+    ],
+    apple: "/forktty.png",
   },
 };
 
