@@ -21,11 +21,11 @@ const ITEMS = [
   },
   {
     q: "Can I script it / extend it?",
-    a: "Yes. It's open source under a permissive license. Fork it, add panes, wire your own orchestrator on top — that's exactly the point.",
+    a: "Yes. ForkTTY is open source under AGPL-3.0. Fork it, add panes, wire your own orchestrator on top — that's exactly the point.",
   },
   {
     q: "AppImage or .deb?",
-    a: "If you're on Debian/Ubuntu, prefer the .deb — it's the most tested path. AppImage works on most distros but is experimental in this alpha.",
+    a: "If you're on Debian/Ubuntu, prefer the .deb — it's the most tested path. AppImage is an experimental Linux build and may not work on every distro yet.",
   },
 ];
 

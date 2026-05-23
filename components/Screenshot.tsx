@@ -34,7 +34,7 @@ export function Screenshot() {
           </div>
           <figcaption className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-ink-400">
             <span className="font-mono">forktty · GTK4 / VTE · Ubuntu</span>
-            <span>v0.0.x alpha · workspaces + tiling panes</span>
+            <span>alpha · workspaces + tiling panes</span>
           </figcaption>
         </figure>
       </div>

@@ -28,8 +28,9 @@ const STEPS = [
     note: "Requires Rust toolchain and GTK4 / VTE 0.74+ development packages.",
     code: [
       "git clone https://github.com/Lucenx9/forktty.git",
-      "cd forktty && cargo build --release",
-      "./target/release/forktty",
+      "cd forktty",
+      "cargo build -p forktty-ui-gtk --features gtk-vte --release",
+      "./target/release/forktty-ui-gtk",
     ].join("\n"),
   },
 ];
@@ -42,8 +43,8 @@ export function Install() {
           <span className="h-eyebrow">04 · Install &amp; verify</span>
           <h2 className="h-title max-w-2xl">Four commands and you&rsquo;re running.</h2>
           <p className="max-w-2xl text-ink-300">
-            ForkTTY is distributed as standard Linux artifacts. No installers,
-            no first-run wizard, no account.
+            ForkTTY is distributed as standard Linux artifacts. No account,
+            no cloud setup, no first-run wizard.
           </p>
         </div>
 

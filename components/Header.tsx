@@ -22,7 +22,7 @@ export function Header() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-7 text-sm text-ink-300 md:flex">
+        <nav aria-label="Primary" className="hidden items-center gap-7 text-sm text-ink-300 md:flex">
           <a href="#download" className="hover:text-white">Download</a>
           <a href="#why" className="hover:text-white">Why</a>
           <a href="#workflows" className="hover:text-white">Workflows</a>
@@ -42,7 +42,7 @@ export function Header() {
             <span className="hidden sm:inline">Source</span>
           </a>
           <a href="#download" className="btn-primary text-xs sm:text-sm">
-            Download
+            Download for Linux
           </a>
         </div>
       </div>

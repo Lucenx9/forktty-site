@@ -15,7 +15,7 @@ export default function Page() {
   return (
     <>
       <Header />
-      <main>
+      <main id="main">
         <Hero />
         <Screenshot />
         <Download />

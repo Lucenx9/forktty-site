@@ -84,7 +84,7 @@ function HeroFrame() {
           <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-ink-400">
             ~/projects/forktty · 3 panes
           </span>
-          <span className="font-mono text-[11px] text-ink-500">v0.0.x alpha</span>
+          <span className="font-mono text-[11px] text-ink-500">alpha</span>
         </div>
 
         <div className="grid grid-cols-1 divide-y divide-ink-800/80 md:grid-cols-3 md:divide-x md:divide-y-0">

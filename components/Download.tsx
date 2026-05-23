@@ -61,7 +61,7 @@ function ReleaseGrid({ release }: { release: Extract<Awaited<ReturnType<typeof f
       <div className="grid gap-4 md:grid-cols-2">
         <AssetCard
           title="AppImage"
-          subtitle="Portable · runs on most distros"
+          subtitle="Experimental portable Linux build"
           badge="experimental"
           accent="forktty"
           asset={release.appImage}
@@ -121,7 +121,6 @@ function AssetCard({
             <div className="truncate text-ink-200">{asset.name}</div>
             <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1">
               <span>{formatBytes(asset.size)}</span>
-              <span>{asset.download_count.toLocaleString()} downloads</span>
             </div>
           </div>
           <a

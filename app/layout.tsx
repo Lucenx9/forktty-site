@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -6,7 +7,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://forktty.dev"),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "ForkTTY — Linux-native multi-agent terminal",
     template: "%s — ForkTTY",
@@ -25,11 +26,14 @@ export const metadata: Metadata = {
     "Gemini CLI",
     "Rust",
   ],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     title: "ForkTTY — Linux-native multi-agent terminal",
     description:
       "A GTK/VTE terminal built in Rust for multi-agent coding. Bring your own CLI and subscription.",
-    url: "https://forktty.dev",
+    url: SITE_URL,
     siteName: "ForkTTY",
     type: "website",
   },
@@ -55,7 +59,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="bg-ink-950">
-      <body className="min-h-screen antialiased">{children}</body>
+      <body className="min-h-screen antialiased">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-forktty focus:px-3 focus:py-2 focus:text-sm focus:text-ink-950"
+        >
+          Skip to content
+        </a>
+        {children}
+      </body>
     </html>
   );
 }
