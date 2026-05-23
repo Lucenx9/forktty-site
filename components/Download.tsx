@@ -17,7 +17,8 @@ export async function Download() {
           <h2 className="h-title">Latest release</h2>
           <p className="max-w-2xl text-ink-300">
             Pre-built binaries for x86_64 Linux. Verify checksums against
-            SHA256SUMS, then make the AppImage executable or install the .deb.
+            SHA256SUMS, then install the .deb on Debian/Ubuntu, or run the
+            AppImage if you&rsquo;re on another distro.
           </p>
         </div>
 
@@ -59,17 +60,20 @@ function ReleaseGrid({ release }: { release: Extract<Awaited<ReturnType<typeof f
 
       <div className="grid gap-4 md:grid-cols-2">
         <AssetCard
+          title=".deb package"
+          subtitle="Debian / Ubuntu — the tested path"
+          badge="recommended"
+          badgeTone="green"
+          accent="green"
+          asset={release.deb}
+        />
+        <AssetCard
           title="AppImage"
           subtitle="Experimental portable Linux build"
           badge="experimental"
+          badgeTone="yellow"
           accent="forktty"
           asset={release.appImage}
-        />
-        <AssetCard
-          title=".deb package"
-          subtitle="Debian / Ubuntu"
-          accent="cyan"
-          asset={release.deb}
         />
       </div>
 
@@ -85,31 +89,36 @@ function AssetCard({
   title,
   subtitle,
   badge,
+  badgeTone,
   accent,
   asset,
 }: {
   title: string;
   subtitle: string;
   badge?: string;
-  accent: "forktty" | "cyan";
+  badgeTone?: "green" | "yellow";
+  accent: "forktty" | "green";
   asset: ReleaseAsset | null;
 }) {
   const accentBorder =
-    accent === "forktty" ? "hover:border-forktty/40" : "hover:border-signal-cyan/40";
-  const accentText = accent === "forktty" ? "text-forktty-soft" : "text-signal-cyan";
+    accent === "green"
+      ? "hover:border-signal-green/50"
+      : "hover:border-forktty/50";
+  const accentText =
+    accent === "green" ? "text-signal-green" : "text-forktty-soft";
+  const badgeClass =
+    badgeTone === "green"
+      ? "border-signal-green/40 text-signal-green"
+      : "border-signal-yellow/40 text-signal-yellow";
 
   return (
     <div
-      className={`group terminal-frame flex flex-col justify-between gap-6 p-6 transition-colors ${accentBorder}`}
+      className={`group terminal-frame flex flex-col justify-between gap-6 p-6 transition-colors hover:bg-ink-900 ${accentBorder}`}
     >
       <div>
         <div className="flex items-center justify-between gap-2">
           <h3 className="font-display text-xl text-white">{title}</h3>
-          {badge && (
-            <span className="chip border-signal-yellow/40 text-signal-yellow">
-              {badge}
-            </span>
-          )}
+          {badge && <span className={`chip ${badgeClass}`}>{badge}</span>}
         </div>
         <p className="mt-1 text-sm text-ink-300">{subtitle}</p>
       </div>

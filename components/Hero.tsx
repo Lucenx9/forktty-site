@@ -21,15 +21,15 @@ export function Hero() {
           </span>
 
           <h1 className="font-display text-4xl font-medium leading-[1.05] tracking-tight text-white sm:text-6xl">
-            A terminal for running
-            <span className="block text-forktty-soft">coding agents in parallel.</span>
+            Linux-native terminal
+            <span className="block text-forktty-soft">for multi-agent coding.</span>
           </h1>
 
           <p className="max-w-2xl text-base text-ink-200 sm:text-lg">
-            ForkTTY is a Linux-native GTK/VTE terminal written in Rust. Each
-            workspace is a tiling pane layout you can dedicate to one agent —
-            Codex, Claude Code, Gemini CLI, or anything else that runs in a
-            shell. Your keys, your subscription, your machine.
+            A GTK/VTE terminal written in Rust. Each workspace is a tiling
+            pane layout you can dedicate to one agent — Codex, Claude Code,
+            Gemini CLI, or anything else that runs in a shell. Your keys,
+            your subscription, your machine.
           </p>
 
           <div className="mt-2 flex flex-wrap items-center gap-3">

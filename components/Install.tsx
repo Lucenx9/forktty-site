@@ -8,19 +8,19 @@ const STEPS = [
     ].join("\n"),
   },
   {
+    title: ".deb package",
+    note: "Recommended on Debian / Ubuntu and derivatives.",
+    code: [
+      "sudo apt install ./forktty_*.deb",
+      "forktty",
+    ].join("\n"),
+  },
+  {
     title: "AppImage",
     note: "Experimental portable Linux build. Prefer the .deb on Debian/Ubuntu.",
     code: [
       "chmod +x forktty-*.AppImage",
       "./forktty-*.AppImage",
-    ].join("\n"),
-  },
-  {
-    title: ".deb package",
-    note: "Debian / Ubuntu (and derivatives).",
-    code: [
-      "sudo apt install ./forktty_*.deb",
-      "forktty",
     ].join("\n"),
   },
   {
