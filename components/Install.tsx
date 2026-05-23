@@ -66,7 +66,7 @@ function Step({ step }: { step: (typeof STEPS)[number] }) {
         <p className="mt-1 text-sm text-ink-300">{step.note}</p>
       </div>
       <pre className="overflow-x-auto rounded-md border border-ink-800 bg-ink-950 p-4 font-mono text-[12.5px] leading-relaxed text-ink-100">
-        {step.code.split("\n").map((line, i) => (
+        {step.code.trim().split("\n").map((line, i) => (
           <div key={i}>
             {line.startsWith("#") ? (
               <span className="text-ink-400">{line}</span>

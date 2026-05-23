@@ -1,11 +1,27 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useEffect, useState } from "react";
 import { GitHubIcon } from "./Icons";
 import { REPO_HTML_URL } from "@/lib/github";
 
 export function Header() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const update = () => setIsScrolled(window.scrollY > 8);
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    return () => window.removeEventListener("scroll", update);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-40 border-b border-ink-800 bg-ink-950">
+    <header
+      className={`sticky top-0 z-40 border-b bg-ink-950 transition-colors duration-150 ${
+        isScrolled ? "border-ink-800" : "border-transparent"
+      }`}
+    >
       <div className="section flex h-14 items-center justify-between">
         <Link href="#top" className="flex items-center gap-2.5">
           <Image
@@ -49,4 +65,3 @@ export function Header() {
     </header>
   );
 }
-

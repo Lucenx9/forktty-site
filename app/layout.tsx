@@ -50,12 +50,21 @@ export const metadata: Metadata = {
     url: SITE_URL,
     siteName: "ForkTTY",
     type: "website",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "ForkTTY — Multi-agent terminal for Linux",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "ForkTTY",
     description:
       "Linux-native multi-agent terminal. Rust + GTK/VTE. Local-first, no app telemetry.",
+    images: ["/og.png"],
   },
   icons: {
     icon: [

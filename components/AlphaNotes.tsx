@@ -55,7 +55,7 @@ function NoteRow({
   children: React.ReactNode;
 }) {
   return (
-    <li className="flex flex-col gap-2 border-b border-ink-800/80 pb-4 last:border-b-0 last:pb-0 sm:flex-row sm:items-start sm:gap-4">
+    <li className="flex flex-col gap-3 border-b border-ink-800/80 pb-4 last:border-b-0 last:pb-0 sm:flex-row sm:items-start sm:gap-4">
       <span className="chip shrink-0">{label}</span>
       <span className="text-ink-200">{children}</span>
     </li>
