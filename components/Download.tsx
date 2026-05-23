@@ -46,9 +46,10 @@ function ReleaseGrid({ release }: { release: Extract<Awaited<ReturnType<typeof f
           href={release.htmlUrl}
           target="_blank"
           rel="noreferrer noopener"
-          className="text-ink-300 underline-offset-4 hover:text-white hover:underline"
+          className="inline-flex items-center gap-1.5 text-ink-300 underline-offset-4 hover:text-white hover:underline"
         >
-          Release notes →
+          Release notes
+          <ArrowRight className="h-3.5 w-3.5" />
         </a>
       </div>
 
@@ -90,7 +91,7 @@ function AssetCard({
     <div className="group terminal-frame flex flex-col justify-between gap-6 p-6 transition-colors hover:border-ink-700">
       <div>
         <div className="flex items-center justify-between gap-2">
-          <h3 className="font-display text-xl text-white">{title}</h3>
+          <h3 className="font-display text-xl font-medium text-white">{title}</h3>
           {badge && <span className="chip">{badge}</span>}
         </div>
         <p className="mt-1 text-sm text-ink-300">{subtitle}</p>
@@ -126,7 +127,7 @@ function ChecksumCard({ asset }: { asset: ReleaseAsset | null }) {
   return (
     <div className="terminal-frame p-6">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="font-display text-lg text-white">SHA256SUMS</h3>
+        <h3 className="font-display text-lg font-medium text-white">SHA256SUMS</h3>
         <span className="chip">verify</span>
       </div>
       <p className="mt-1 text-sm text-ink-300">
@@ -155,7 +156,7 @@ function OtherAssetsCard({ assets }: { assets: ReleaseAsset[] }) {
   return (
     <div className="terminal-frame p-6">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="font-display text-lg text-white">All assets</h3>
+        <h3 className="font-display text-lg font-medium text-white">All assets</h3>
         <span className="chip">manifest</span>
       </div>
       <p className="mt-1 text-sm text-ink-300">
@@ -203,7 +204,7 @@ function ReleaseFallback({ reason, url }: { reason: string; url: string }) {
         <div className="flex items-start gap-3">
           <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-ink-500" />
           <div>
-            <h3 className="font-display text-lg text-white">
+            <h3 className="font-display text-lg font-medium text-white">
               Release metadata unavailable
             </h3>
             <p className="mt-1 text-sm text-ink-300">

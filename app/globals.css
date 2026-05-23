@@ -75,7 +75,7 @@
   }
 
   .h-eyebrow {
-    @apply text-[11px] uppercase tracking-[0.22em] text-ink-400;
+    @apply font-mono text-[11px] uppercase tracking-[0.22em] text-ink-400;
   }
 
   .h-title {

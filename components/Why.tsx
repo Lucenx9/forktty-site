@@ -47,7 +47,7 @@ export function Why() {
 function Point({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="border-l-2 border-ink-800 pl-5">
-      <h3 className="font-display text-lg text-white">{title}</h3>
+      <h3 className="font-display text-lg font-medium text-white">{title}</h3>
       <p className="mt-2 text-sm leading-relaxed text-ink-300">{children}</p>
     </div>
   );

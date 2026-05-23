@@ -28,8 +28,8 @@ export function Screenshot() {
               sizes="(min-width: 1024px) 960px, 100vw"
             />
           </div>
-          <figcaption className="mt-4 flex flex-wrap items-center justify-between gap-3 text-xs text-ink-400">
-            <span className="w-full font-mono sm:w-auto">forktty · GTK4 / VTE · Ubuntu</span>
+          <figcaption className="mt-4 flex flex-wrap items-center justify-between gap-3 font-mono text-xs text-ink-400">
+            <span className="w-full sm:w-auto">forktty · GTK4 / VTE · Ubuntu</span>
             <span className="w-full sm:w-auto">alpha · workspaces + tiling panes</span>
           </figcaption>
         </figure>

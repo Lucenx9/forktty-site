@@ -42,7 +42,7 @@ export function Faq() {
           {ITEMS.map((item, i) => (
             <details key={i} className="group bg-ink-900">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-6 px-6 py-5 text-base text-white transition-colors hover:bg-ink-850">
-                <span className="font-display tracking-tight">{item.q}</span>
+                <span className="font-display font-medium tracking-tight">{item.q}</span>
                 <svg
                   aria-hidden
                   viewBox="0 0 24 24"

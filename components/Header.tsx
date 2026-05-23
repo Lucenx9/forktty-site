@@ -32,7 +32,7 @@ export function Header() {
             className="h-6 w-6"
             priority
           />
-          <span className="font-display text-sm tracking-tight text-white">
+          <span className="font-display text-sm font-medium tracking-tight text-white">
             forktty
             <span className="text-forktty">_</span>
           </span>

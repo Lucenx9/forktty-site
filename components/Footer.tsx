@@ -7,7 +7,7 @@ export function Footer() {
       <div className="section py-12">
         <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
           <div className="max-w-md">
-            <div className="font-display text-base text-white">
+            <div className="font-display text-base font-medium text-white">
               forktty<span className="text-forktty">_</span>
             </div>
             <p className="mt-2 text-sm text-ink-400">
