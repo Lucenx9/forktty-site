@@ -36,15 +36,8 @@ function ReleaseGrid({ release }: { release: Extract<Awaited<ReturnType<typeof f
   return (
     <div className="mt-10 space-y-6">
       <div className="flex flex-wrap items-center gap-3 font-mono text-sm">
-        <span className="chip">
-          <span className="h-1.5 w-1.5 rounded-full bg-signal-green" />
-          {release.version}
-        </span>
-        {release.prerelease && (
-          <span className="chip border-signal-yellow/40 text-signal-yellow">
-            prerelease
-          </span>
-        )}
+        <span className="chip">{release.version}</span>
+        {release.prerelease && <span className="chip">prerelease</span>}
         <span className="text-ink-400">
           Published {formatDate(release.publishedAt)}
         </span>
@@ -63,16 +56,12 @@ function ReleaseGrid({ release }: { release: Extract<Awaited<ReturnType<typeof f
           title=".deb package"
           subtitle="Debian / Ubuntu — the tested path"
           badge="recommended"
-          badgeTone="green"
-          accent="green"
           asset={release.deb}
         />
         <AssetCard
           title="AppImage"
           subtitle="Experimental portable Linux build"
           badge="experimental"
-          badgeTone="yellow"
-          accent="forktty"
           asset={release.appImage}
         />
       </div>
@@ -89,36 +78,19 @@ function AssetCard({
   title,
   subtitle,
   badge,
-  badgeTone,
-  accent,
   asset,
 }: {
   title: string;
   subtitle: string;
   badge?: string;
-  badgeTone?: "green" | "yellow";
-  accent: "forktty" | "green";
   asset: ReleaseAsset | null;
 }) {
-  const accentBorder =
-    accent === "green"
-      ? "hover:border-signal-green/50"
-      : "hover:border-forktty/50";
-  const accentText =
-    accent === "green" ? "text-signal-green" : "text-forktty-soft";
-  const badgeClass =
-    badgeTone === "green"
-      ? "border-signal-green/40 text-signal-green"
-      : "border-signal-yellow/40 text-signal-yellow";
-
   return (
-    <div
-      className={`group terminal-frame flex flex-col justify-between gap-6 p-6 transition-colors hover:bg-ink-900 ${accentBorder}`}
-    >
+    <div className="group terminal-frame flex flex-col justify-between gap-6 p-6 transition-colors hover:border-ink-700">
       <div>
         <div className="flex items-center justify-between gap-2">
           <h3 className="font-display text-xl text-white">{title}</h3>
-          {badge && <span className={`chip ${badgeClass}`}>{badge}</span>}
+          {badge && <span className="chip">{badge}</span>}
         </div>
         <p className="mt-1 text-sm text-ink-300">{subtitle}</p>
       </div>
@@ -133,7 +105,7 @@ function AssetCard({
           </div>
           <a
             href={asset.browser_download_url}
-            className={`btn-secondary ${accentText} group-hover:bg-ink-800`}
+            className="btn-secondary"
             rel="noreferrer noopener"
           >
             <DownloadIcon className="h-4 w-4" />
@@ -228,7 +200,7 @@ function ReleaseFallback({ reason, url }: { reason: string; url: string }) {
     <div className="mt-10">
       <div className="terminal-frame flex flex-col gap-5 p-8">
         <div className="flex items-start gap-3">
-          <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-signal-yellow" />
+          <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-ink-500" />
           <div>
             <h3 className="font-display text-lg text-white">
               Release metadata unavailable

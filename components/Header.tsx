@@ -5,7 +5,7 @@ import { REPO_HTML_URL } from "@/lib/github";
 
 export function Header() {
   return (
-    <header className="sticky top-0 z-40 border-b border-ink-800/60 bg-ink-950/70 backdrop-blur">
+    <header className="sticky top-0 z-40 border-b border-ink-800 bg-ink-950">
       <div className="section flex h-14 items-center justify-between">
         <Link href="#top" className="flex items-center gap-2.5">
           <Image

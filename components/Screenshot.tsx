@@ -16,11 +16,7 @@ export function Screenshot() {
         </div>
 
         <figure className="mt-12">
-          <div className="relative overflow-hidden rounded-xl border border-ink-700/80 bg-ink-900/40 shadow-glow">
-            <div
-              aria-hidden
-              className="pointer-events-none absolute inset-0 bg-gradient-to-br from-forktty/10 via-transparent to-signal-magenta/10"
-            />
+          <div className="relative overflow-hidden rounded-md border border-ink-800 bg-ink-900">
             <Image
               src="/forktty-gtk-ubuntu.png"
               alt="ForkTTY GTK terminal on Ubuntu, showing five workspaces in the sidebar and three terminal panes — one main pane on the left and two stacked panes on the right. The active 'main' workspace is highlighted in purple. Status badges on other workspaces read ALPHA, INPUT, and RUNNING."

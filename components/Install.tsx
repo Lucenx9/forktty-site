@@ -48,8 +48,8 @@ export function Install() {
         </div>
 
         <div className="mt-12 grid gap-4 lg:grid-cols-2">
-          {STEPS.map((s, i) => (
-            <Step key={s.title} index={i + 1} step={s} />
+          {STEPS.map((s) => (
+            <Step key={s.title} step={s} />
           ))}
         </div>
       </div>
@@ -57,30 +57,21 @@ export function Install() {
   );
 }
 
-function Step({
-  index,
-  step,
-}: {
-  index: number;
-  step: (typeof STEPS)[number];
-}) {
+function Step({ step }: { step: (typeof STEPS)[number] }) {
   return (
     <div className="terminal-frame flex flex-col gap-4 p-6">
-      <div className="flex items-start gap-4">
-        <span className="font-mono text-sm text-forktty">{String(index).padStart(2, "0")}</span>
-        <div>
-          <h3 className="font-display text-base text-white">{step.title}</h3>
-          <p className="mt-1 text-sm text-ink-300">{step.note}</p>
-        </div>
+      <div>
+        <h3 className="font-display text-base text-white">{step.title}</h3>
+        <p className="mt-1 text-sm text-ink-300">{step.note}</p>
       </div>
-      <pre className="overflow-x-auto rounded-md border border-ink-800 bg-ink-950/70 p-4 font-mono text-[12.5px] leading-relaxed text-ink-100">
+      <pre className="overflow-x-auto rounded-md border border-ink-800 bg-ink-950 p-4 font-mono text-[12.5px] leading-relaxed text-ink-100">
         {step.code.split("\n").map((line, i) => (
           <div key={i}>
             {line.startsWith("#") ? (
               <span className="text-ink-400">{line}</span>
             ) : (
               <>
-                <span className="text-forktty-soft">$</span> {line}
+                <span className="text-ink-400">$</span> {line}
               </>
             )}
           </div>

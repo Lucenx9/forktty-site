@@ -15,11 +15,6 @@
 
   body {
     @apply bg-ink-950 text-ink-100 font-sans;
-    background-image:
-      radial-gradient(900px 500px at 80% -10%, rgba(167, 139, 250, 0.09), transparent 60%),
-      radial-gradient(700px 400px at 10% 20%, rgba(103, 232, 249, 0.05), transparent 70%),
-      radial-gradient(600px 360px at 90% 80%, rgba(240, 171, 252, 0.05), transparent 70%);
-    background-attachment: fixed;
   }
 
   ::selection {
@@ -52,7 +47,7 @@
   }
 
   .terminal-frame {
-    @apply rounded-xl border border-ink-700/80 bg-ink-900/80 backdrop-blur-sm shadow-panel;
+    @apply rounded-md border border-ink-800 bg-ink-900;
   }
 
   .chip {
@@ -64,7 +59,7 @@
   }
 
   .btn-primary {
-    @apply btn bg-forktty text-ink-950 hover:bg-forktty-soft;
+    @apply btn bg-forktty text-ink-950 hover:bg-forktty/90;
   }
 
   .btn-secondary {
@@ -80,7 +75,7 @@
   }
 
   .h-eyebrow {
-    @apply text-[11px] uppercase tracking-[0.22em] text-forktty-soft;
+    @apply text-[11px] uppercase tracking-[0.22em] text-ink-400;
   }
 
   .h-title {

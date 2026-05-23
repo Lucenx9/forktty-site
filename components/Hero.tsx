@@ -6,11 +6,7 @@ export function Hero() {
     <section id="top" className="relative overflow-hidden">
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 ascii-grid opacity-60 [mask-image:radial-gradient(60%_50%_at_50%_0%,black,transparent_80%)]"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-24 left-1/2 -z-10 h-[420px] w-[800px] -translate-x-1/2 bg-radial-forktty blur-2xl"
+        className="pointer-events-none absolute inset-0 -z-10 ascii-grid opacity-30"
       />
 
       <div className="section pt-24 pb-12 sm:pt-32 sm:pb-16">
@@ -21,8 +17,7 @@ export function Hero() {
           </span>
 
           <h1 className="font-display text-4xl font-medium leading-[1.05] tracking-tight text-white sm:text-6xl">
-            Linux-native terminal
-            <span className="block text-forktty-soft">for multi-agent coding.</span>
+            Multi-agent terminal for Linux.
           </h1>
 
           <p className="max-w-2xl text-base text-ink-200 sm:text-lg">

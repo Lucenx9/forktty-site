@@ -18,23 +18,23 @@ export function AlphaNotes() {
 
           <div className="terminal-frame p-6 sm:p-8">
             <ul className="space-y-4 text-sm">
-              <NoteRow tone="yellow" label="experimental">
+              <NoteRow label="experimental">
                 AppImage builds are best-effort and not yet signed. Prefer the
                 .deb if you&rsquo;re on Debian/Ubuntu.
               </NoteRow>
-              <NoteRow tone="yellow" label="breaking">
+              <NoteRow label="breaking">
                 Config format, keybinds, and CLI flags will change without
                 migration paths during alpha.
               </NoteRow>
-              <NoteRow tone="cyan" label="linux only">
+              <NoteRow label="linux only">
                 No macOS, no Windows, no WSL build. Wayland and X11 both work
                 via GTK4.
               </NoteRow>
-              <NoteRow tone="green" label="no telemetry">
+              <NoteRow label="no telemetry">
                 ForkTTY does not collect or transmit usage data. Crashes stay
                 local unless you choose to share them.
               </NoteRow>
-              <NoteRow tone="cyan" label="byo keys">
+              <NoteRow label="byo keys">
                 Agent CLIs use your own credentials and subscriptions. ForkTTY
                 never proxies your prompts.
               </NoteRow>
@@ -47,28 +47,15 @@ export function AlphaNotes() {
 }
 
 function NoteRow({
-  tone,
   label,
   children,
 }: {
-  tone: "yellow" | "cyan" | "green";
   label: string;
   children: React.ReactNode;
 }) {
-  const toneClass =
-    tone === "yellow"
-      ? "border-signal-yellow/40 text-signal-yellow"
-      : tone === "cyan"
-        ? "border-signal-cyan/40 text-signal-cyan"
-        : "border-signal-green/40 text-signal-green";
-
   return (
     <li className="flex flex-col gap-2 border-b border-ink-800/80 pb-4 last:border-b-0 last:pb-0 sm:flex-row sm:items-start sm:gap-4">
-      <span
-        className={`chip shrink-0 ${toneClass}`}
-      >
-        {label}
-      </span>
+      <span className="chip shrink-0">{label}</span>
       <span className="text-ink-200">{children}</span>
     </li>
   );

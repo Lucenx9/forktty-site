@@ -37,20 +37,11 @@ export function Faq() {
           <h2 className="h-title">Common questions</h2>
         </div>
 
-        <div className="mt-12 divide-y divide-ink-800 overflow-hidden rounded-xl border border-ink-800">
+        <div className="mt-12 divide-y divide-ink-800 overflow-hidden rounded-md border border-ink-800">
           {ITEMS.map((item, i) => (
-            <details
-              key={i}
-              className="group bg-ink-900/60 open:bg-ink-900/80"
-            >
-              <summary className="flex cursor-pointer list-none items-start justify-between gap-6 px-6 py-5 text-base text-white">
+            <details key={i} className="group bg-ink-900">
+              <summary className="flex cursor-pointer list-none items-start gap-6 px-6 py-5 text-base text-white hover:bg-ink-850">
                 <span className="font-display tracking-tight">{item.q}</span>
-                <span
-                  aria-hidden
-                  className="mt-1 inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full border border-ink-700 text-ink-300 transition-transform group-open:rotate-45"
-                >
-                  +
-                </span>
               </summary>
               <div className="px-6 pb-6 text-sm leading-relaxed text-ink-300">
                 {item.a}
