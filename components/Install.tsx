@@ -9,10 +9,10 @@ const STEPS = [
   },
   {
     title: "AppImage",
-    note: "Portable across most distros. Experimental in this alpha.",
+    note: "Experimental portable Linux build. Prefer the .deb on Debian/Ubuntu.",
     code: [
-      "chmod +x ForkTTY-*.AppImage",
-      "./ForkTTY-*.AppImage",
+      "chmod +x forktty-*.AppImage",
+      "./forktty-*.AppImage",
     ].join("\n"),
   },
   {
@@ -30,7 +30,7 @@ const STEPS = [
       "git clone https://github.com/Lucenx9/forktty.git",
       "cd forktty",
       "cargo build -p forktty-ui-gtk --features gtk-vte --release",
-      "./target/release/forktty-ui-gtk",
+      "./target/release/forktty",
     ].join("\n"),
   },
 ];
