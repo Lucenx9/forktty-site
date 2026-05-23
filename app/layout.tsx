@@ -76,7 +76,7 @@ export default function RootLayout({
       lang="en"
       className={`bg-ink-950 ${interTight.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="min-h-screen antialiased font-sans">
+      <body className="min-h-screen antialiased">
         <a
           href="#main"
           className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-forktty focus:px-3 focus:py-2 focus:text-sm focus:text-ink-950"

@@ -16,7 +16,7 @@ export function Hero() {
             Early alpha · Linux only
           </span>
 
-          <h1 className="max-w-3xl font-display text-4xl font-medium leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
+          <h1 className="font-display text-4xl font-medium leading-[1.05] tracking-tight text-white sm:text-5xl lg:text-6xl">
             Multi-agent terminal for Linux.
           </h1>
 
