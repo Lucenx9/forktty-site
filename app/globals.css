@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: dark;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-ink-950 text-ink-100 font-sans;
+    background-image:
+      radial-gradient(900px 500px at 80% -10%, rgba(255, 122, 42, 0.07), transparent 60%),
+      radial-gradient(700px 400px at 10% 20%, rgba(95, 199, 217, 0.05), transparent 70%);
+    background-attachment: fixed;
+  }
+
+  ::selection {
+    background: rgba(255, 122, 42, 0.35);
+    color: #fff;
+  }
+}
+
+@layer components {
+  .ascii-grid {
+    background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .terminal-frame {
+    @apply rounded-xl border border-ink-700/80 bg-ink-900/80 backdrop-blur-sm shadow-panel;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full border border-ink-700 bg-ink-850/70 px-2.5 py-1 text-[11px] uppercase tracking-[0.12em] text-ink-300;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-4 py-2.5 text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-ember/60 focus-visible:ring-offset-2 focus-visible:ring-offset-ink-950;
+  }
+
+  .btn-primary {
+    @apply btn bg-ember text-ink-950 hover:bg-ember-soft;
+  }
+
+  .btn-secondary {
+    @apply btn border border-ink-700 bg-ink-850/60 text-ink-100 hover:border-ink-500 hover:bg-ink-800;
+  }
+
+  .btn-ghost {
+    @apply btn text-ink-200 hover:text-white;
+  }
+
+  .section {
+    @apply mx-auto w-full max-w-6xl px-6 sm:px-8;
+  }
+
+  .h-eyebrow {
+    @apply text-[11px] uppercase tracking-[0.22em] text-ember-soft;
+  }
+
+  .h-title {
+    @apply font-display text-3xl sm:text-4xl font-medium tracking-tight text-white;
+  }
+}
