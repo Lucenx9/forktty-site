@@ -46,7 +46,7 @@ function ReleaseGrid({ release }: { release: Extract<Awaited<ReturnType<typeof f
           href={release.htmlUrl}
           target="_blank"
           rel="noreferrer noopener"
-          className="inline-flex items-center gap-1.5 text-ink-300 underline-offset-4 hover:text-white hover:underline"
+          className="inline-flex items-center gap-1.5 text-ink-300 underline-offset-4 hover:text-forktty hover:underline"
         >
           Release notes
           <ArrowRight className="h-3.5 w-3.5" />
@@ -88,10 +88,10 @@ function AssetCard({
   asset: ReleaseAsset | null;
 }) {
   return (
-    <div className="group terminal-frame flex flex-col justify-between gap-6 p-6 transition-colors hover:border-ink-700">
+    <div className="group tui-frame flex flex-col justify-between gap-6 p-6 transition-colors hover:border-ink-700">
       <div>
         <div className="flex items-center justify-between gap-2">
-          <h3 className="font-display text-xl font-medium text-white">{title}</h3>
+          <h3 className="font-display text-xl font-medium text-ink-100">{title}</h3>
           {badge && <span className="chip">{badge}</span>}
         </div>
         <p className="mt-1 text-sm text-ink-300">{subtitle}</p>
@@ -115,7 +115,7 @@ function AssetCard({
           </a>
         </div>
       ) : (
-        <div className="rounded-md border border-dashed border-ink-700 p-4 text-sm text-ink-400">
+        <div className="rounded-none border border-dashed border-ink-700 p-4 text-sm text-ink-400">
           Not published in this release.
         </div>
       )}
@@ -125,9 +125,9 @@ function AssetCard({
 
 function ChecksumCard({ asset }: { asset: ReleaseAsset | null }) {
   return (
-    <div className="terminal-frame p-6">
+    <div className="tui-frame p-6">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="font-display text-lg font-medium text-white">SHA256SUMS</h3>
+        <h3 className="font-display text-lg font-medium text-ink-100">SHA256SUMS</h3>
         <span className="chip">verify</span>
       </div>
       <p className="mt-1 text-sm text-ink-300">
@@ -154,9 +154,9 @@ function ChecksumCard({ asset }: { asset: ReleaseAsset | null }) {
 
 function OtherAssetsCard({ assets }: { assets: ReleaseAsset[] }) {
   return (
-    <div className="terminal-frame p-6">
+    <div className="tui-frame p-6">
       <div className="flex items-center justify-between gap-2">
-        <h3 className="font-display text-lg font-medium text-white">All assets</h3>
+        <h3 className="font-display text-lg font-medium text-ink-100">All assets</h3>
         <span className="chip">manifest</span>
       </div>
       <p className="mt-1 text-sm text-ink-300">
@@ -169,7 +169,7 @@ function OtherAssetsCard({ assets }: { assets: ReleaseAsset[] }) {
             <li key={a.name} className="flex items-center justify-between gap-3 py-2">
               <a
                 href={a.browser_download_url}
-                className="truncate text-ink-200 underline-offset-4 hover:text-white hover:underline"
+                className="truncate text-ink-200 underline-offset-4 hover:text-forktty hover:underline"
                 rel="noreferrer noopener"
               >
                 {a.name}
@@ -188,7 +188,7 @@ function OtherAssetsCard({ assets }: { assets: ReleaseAsset[] }) {
         href={RELEASES_HTML_URL}
         target="_blank"
         rel="noreferrer noopener"
-        className="mt-5 inline-flex items-center gap-1.5 text-sm text-ink-300 hover:text-white"
+        className="mt-5 inline-flex items-center gap-1.5 text-sm text-ink-300 hover:text-forktty"
       >
         Browse every release
         <ArrowRight className="h-3.5 w-3.5" />
@@ -200,11 +200,11 @@ function OtherAssetsCard({ assets }: { assets: ReleaseAsset[] }) {
 function ReleaseFallback({ reason, url }: { reason: string; url: string }) {
   return (
     <div className="mt-10">
-      <div className="terminal-frame flex flex-col gap-5 p-8">
+      <div className="tui-frame flex flex-col gap-5 p-8">
         <div className="flex items-start gap-3">
           <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-ink-500" />
           <div>
-            <h3 className="font-display text-lg font-medium text-white">
+            <h3 className="font-display text-lg font-medium text-ink-100">
               Release metadata unavailable
             </h3>
             <p className="mt-1 text-sm text-ink-300">

@@ -32,17 +32,17 @@ export function Header() {
             className="h-6 w-6"
             priority
           />
-          <span className="font-display text-sm font-medium tracking-tight text-white">
+          <span className="font-display text-sm font-semibold tracking-tight text-ink-100">
             forktty
-            <span className="text-forktty">_</span>
+            <span className="animate-blink text-forktty">_</span>
           </span>
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-7 text-sm text-ink-300 md:flex">
-          <a href="#download" className="hover:text-white">Download</a>
-          <a href="#why" className="hover:text-white">Why</a>
-          <a href="#install" className="hover:text-white">Install</a>
-          <a href="#faq" className="hover:text-white">FAQ</a>
+          <a href="#download" className="hover:text-forktty">Download</a>
+          <a href="#why" className="hover:text-forktty">Why</a>
+          <a href="#install" className="hover:text-forktty">Install</a>
+          <a href="#faq" className="hover:text-forktty">FAQ</a>
         </nav>
 
         <div className="flex items-center gap-2">

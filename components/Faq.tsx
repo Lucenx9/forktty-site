@@ -38,10 +38,10 @@ export function Faq() {
           <h2 className="h-title">Common questions</h2>
         </div>
 
-        <div className="mt-12 divide-y divide-ink-800 overflow-hidden rounded-md border border-ink-800">
+        <div className="mt-12 divide-y divide-ink-800 overflow-hidden rounded-none border border-ink-800">
           {ITEMS.map((item, i) => (
             <details key={i} className="group bg-ink-900">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 px-6 py-5 text-base text-white transition-colors hover:bg-ink-850">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-6 px-6 py-5 text-base text-ink-100 transition-colors hover:bg-ink-850">
                 <span className="font-display font-medium tracking-tight">{item.q}</span>
                 <svg
                   aria-hidden

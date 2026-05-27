@@ -17,7 +17,7 @@ export function AlphaNotes() {
             </p>
           </div>
 
-          <div className="terminal-frame p-6 sm:p-8">
+          <div className="tui-frame p-6 sm:p-8">
             <ul className="space-y-4 text-sm">
               <NoteRow label="experimental">
                 AppImage builds are best-effort and not yet signed. Prefer the

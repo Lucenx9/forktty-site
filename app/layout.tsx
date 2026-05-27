@@ -1,23 +1,18 @@
 import type { Metadata, Viewport } from "next";
-import { Inter_Tight, JetBrains_Mono } from "next/font/google";
+import { IBM_Plex_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
-const interTight = Inter_Tight({
+const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
-  variable: "--font-inter-tight",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-plex-mono",
   display: "swap",
 });
 
 export const viewport: Viewport = {
-  themeColor: "#0c0e12",
+  themeColor: "#15140f",
 };
 
 export const metadata: Metadata = {
@@ -83,7 +78,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`bg-ink-950 ${interTight.variable} ${jetbrainsMono.variable}`}
+      className={`bg-ink-950 ${plexMono.variable}`}
     >
       <body className="min-h-screen antialiased">
         <a

@@ -7,8 +7,8 @@ export function Footer() {
       <div className="section py-12">
         <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
           <div className="max-w-md">
-            <div className="font-display text-base font-medium text-white">
-              forktty<span className="text-forktty">_</span>
+            <div className="font-display text-base font-medium text-ink-100">
+              forktty<span className="animate-blink text-forktty">_</span>
             </div>
             <p className="mt-2 text-sm text-ink-400">
               A Linux-native terminal for multi-agent coding. Rust, GTK/VTE,
@@ -35,7 +35,17 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-col items-start justify-between gap-3 border-t border-ink-800/60 pt-6 text-xs text-ink-500 sm:flex-row sm:items-center">
+        <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-1 border border-ink-700 bg-ink-850 px-3 py-2 text-[11px] tracking-[0.04em] text-ink-400">
+          <span className="bg-forktty px-1.5 py-0.5 font-semibold text-ink-950">NORMAL</span>
+          <span className="text-signal-green">main</span>
+          <span className="text-ink-500">·</span>
+          <span>linux/x86_64</span>
+          <span className="text-ink-500">·</span>
+          <span>AGPL-3.0</span>
+          <span className="ml-auto text-ink-500">no telemetry</span>
+        </div>
+
+        <div className="mt-6 flex flex-col items-start justify-between gap-3 pt-2 text-xs text-ink-500 sm:flex-row sm:items-center">
           <div className="flex flex-col gap-2">
             <span>
               © {new Date().getFullYear()} ForkTTY contributors. Linux-native, AGPL-3.0.
@@ -74,7 +84,7 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
       href={href}
       target={href.startsWith("#") ? undefined : "_blank"}
       rel={href.startsWith("#") ? undefined : "noreferrer noopener"}
-      className="text-ink-300 hover:text-white"
+      className="text-ink-300 hover:text-forktty"
     >
       {children}
     </a>

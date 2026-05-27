@@ -60,12 +60,12 @@ export function Install() {
 
 function Step({ step }: { step: (typeof STEPS)[number] }) {
   return (
-    <div className="terminal-frame flex flex-col gap-4 p-6">
+    <div className="tui-frame flex flex-col gap-4 p-6">
       <div>
-        <h3 className="font-display text-base font-medium text-white">{step.title}</h3>
+        <h3 className="font-display text-base font-medium text-ink-100">{step.title}</h3>
         <p className="mt-1 text-sm text-ink-300">{step.note}</p>
       </div>
-      <pre className="overflow-x-auto rounded-md border border-ink-800 bg-ink-950 p-4 font-mono text-[12.5px] leading-relaxed text-ink-100">
+      <pre className="overflow-x-auto rounded-none border border-ink-800 bg-ink-950 p-4 font-mono text-[12.5px] leading-relaxed text-ink-100">
         {step.code.trim().split("\n").map((line, i) => (
           <div key={i}>
             {line.startsWith("#") ? (

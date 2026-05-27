@@ -8,46 +8,61 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
+        // warm, gruvbox-material-flavoured neutrals — never blue-slate
         ink: {
-          950: "#08090b",
-          900: "#0c0e12",
-          850: "#101318",
-          800: "#151921",
-          700: "#1d222c",
-          600: "#262c39",
-          500: "#3a4252",
-          400: "#5b6478",
-          300: "#8a93a6",
-          200: "#b9c0cf",
-          100: "#e3e7ef",
+          950: "#15140f",
+          900: "#1b1a15",
+          850: "#211f19",
+          800: "#28251e",
+          700: "#363127",
+          600: "#4a4336",
+          500: "#6f6552",
+          400: "#928569",
+          300: "#a89984",
+          200: "#cabfa6",
+          100: "#ece3d4",
         },
+        // primary accent: terminal orange, not the old violet
         forktty: {
-          DEFAULT: "#a78bfa",
-          soft: "#c4b5fd",
-          deep: "#7c3aed",
+          DEFAULT: "#e78a4e",
+          soft: "#f0a868",
+          deep: "#c2703a",
         },
+        // ANSI semantic set — used for real status meaning, not decoration
         signal: {
-          green: "#7fe3a3",
-          cyan: "#67e8f9",
-          violet: "#a78bfa",
-          magenta: "#f0abfc",
-          yellow: "#f3c969",
+          green: "#a9b665",
+          aqua: "#89b482",
+          cyan: "#7daea3",
+          yellow: "#d8a657",
+          orange: "#e78a4e",
+          red: "#ea6962",
+          magenta: "#d3869b",
         },
       },
       fontFamily: {
-        display: ['var(--font-jetbrains-mono)', '"JetBrains Mono"', '"Fira Code"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
-        mono: ['var(--font-jetbrains-mono)', '"JetBrains Mono"', '"Fira Code"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
-        sans: ['var(--font-inter-tight)', '"Inter Tight"', "ui-sans-serif", "system-ui", "sans-serif"],
+        // one family everywhere — this is a terminal
+        display: ['var(--font-plex-mono)', '"IBM Plex Mono"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        mono: ['var(--font-plex-mono)', '"IBM Plex Mono"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        sans: ['var(--font-plex-mono)', '"IBM Plex Mono"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       boxShadow: {
-        glow: "0 0 0 1px rgba(167,139,250,0.22), 0 8px 32px -12px rgba(167,139,250,0.4)",
-        panel: "0 1px 0 rgba(255,255,255,0.04) inset, 0 24px 48px -32px rgba(0,0,0,0.7)",
+        glow: "0 0 0 1px rgba(231,138,78,0.25), 0 10px 40px -16px rgba(231,138,78,0.35)",
+        panel: "0 1px 0 rgba(255,255,255,0.03) inset, 0 24px 48px -32px rgba(0,0,0,0.8)",
       },
       backgroundImage: {
         "grid-faint":
-          "linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px)",
-        "radial-forktty":
-          "radial-gradient(60% 50% at 50% 0%, rgba(167,139,250,0.22) 0%, rgba(167,139,250,0) 70%)",
+          "linear-gradient(rgba(232,227,212,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(232,227,212,0.04) 1px, transparent 1px)",
+        "scanlines":
+          "repeating-linear-gradient(0deg, rgba(0,0,0,0.16) 0px, rgba(0,0,0,0.16) 1px, transparent 1px, transparent 3px)",
+      },
+      keyframes: {
+        blink: {
+          "0%, 49%": { opacity: "1" },
+          "50%, 100%": { opacity: "0" },
+        },
+      },
+      animation: {
+        blink: "blink 1.1s step-end infinite",
       },
     },
   },
