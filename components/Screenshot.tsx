@@ -10,7 +10,7 @@ export function Screenshot() {
             One window. Many workspaces. Many agents.
           </h2>
           <p className="max-w-2xl text-ink-300">
-            Real ForkTTY on Ubuntu. Each workspace owns a tiling pane layout —
+            ForkTTY on Linux. Each workspace owns a tiling pane layout —
             switch with a single shortcut and pick up exactly where you left
             off.
           </p>
