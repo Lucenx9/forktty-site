@@ -20,7 +20,7 @@ export function Screenshot() {
           <div className="relative overflow-hidden rounded-none border border-ink-800 bg-ink-900">
             <Image
               src="/forktty-gtk-ubuntu.png"
-              alt="ForkTTY GTK terminal on Ubuntu, showing five workspaces in the sidebar and three terminal panes — one main pane on the left and two stacked panes on the right. The active 'main' workspace is highlighted in purple. Status badges on other workspaces read ALPHA, INPUT, and RUNNING."
+              alt="ForkTTY GTK terminal on Linux: a workspace sidebar lists 'main' (active, 5 panes) plus workspace-2, -3 and -4 under ~/forktty. The window holds three terminal panes — one on the left, two stacked on the right — each running the FORGE agent on gpt-5.5. A bottom status bar reads 'main · ~ · Pane 1/3 · Ctrl+Shift+P'."
               width={1600}
               height={1000}
               priority
@@ -29,8 +29,8 @@ export function Screenshot() {
             />
           </div>
           <figcaption className="mt-4 flex flex-wrap items-center justify-between gap-3 font-mono text-xs text-ink-400">
-            <span className="w-full sm:w-auto">forktty · GTK4 / VTE · Ubuntu</span>
-            <span className="w-full sm:w-auto">alpha · workspaces + tiling panes</span>
+            <span className="w-full sm:w-auto">forktty · GTK4 / VTE · Linux</span>
+            <span className="w-full sm:w-auto">workspaces · tiling panes · per-pane agents</span>
           </figcaption>
         </figure>
       </div>
