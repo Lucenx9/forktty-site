@@ -4,7 +4,6 @@ import { Screenshot } from "@/components/Screenshot";
 import { Download } from "@/components/Download";
 import { Why } from "@/components/Why";
 import { Capabilities } from "@/components/Capabilities";
-import { Install } from "@/components/Install";
 import { AlphaNotes } from "@/components/AlphaNotes";
 import { Faq } from "@/components/Faq";
 import { Footer } from "@/components/Footer";
@@ -21,7 +20,6 @@ export default function Page() {
         <Download />
         <Why />
         <Capabilities />
-        <Install />
         <AlphaNotes />
         <Faq />
       </main>

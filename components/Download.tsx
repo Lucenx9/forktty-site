@@ -7,6 +7,19 @@ import {
   type ReleaseAsset,
 } from "@/lib/github";
 
+const QUICK_START = [
+  "chmod +x forktty-*.AppImage",
+  "sha256sum -c SHA256SUMS --ignore-missing",
+  "./forktty-*.AppImage",
+];
+
+const BUILD = [
+  "git clone https://github.com/Lucenx9/forktty.git",
+  "cd forktty",
+  "# full build with browser panes (terminal-only: --features gtk-vte)",
+  "cargo run -p forktty-ui-gtk --features browser",
+];
+
 export async function Download() {
   const release = await fetchLatestRelease();
 
@@ -15,16 +28,16 @@ export async function Download() {
       <div className="section py-20 sm:py-24">
         <div className="flex flex-col items-start gap-4">
           <span className="h-eyebrow">DOWNLOAD</span>
-          <h2 className="h-title">Latest release</h2>
+          <h2 className="h-title">Get ForkTTY</h2>
           <p className="max-w-2xl text-ink-300">
-            Pre-built binaries for x86_64 Linux. Verify checksums against
-            SHA256SUMS, then run the AppImage — the primary alpha download — or
-            install the .deb for apt integration on Debian/Ubuntu.
+            Pre-built x86_64 Linux binaries. Run the AppImage — the primary
+            alpha download — or install the .deb for apt integration on
+            Debian/Ubuntu. No account, no first-run wizard.
           </p>
         </div>
 
         {release.ok ? (
-          <ReleaseGrid release={release} />
+          <Release release={release} />
         ) : (
           <ReleaseFallback reason={release.reason} url={release.releasesUrl} />
         )}
@@ -33,10 +46,14 @@ export async function Download() {
   );
 }
 
-function ReleaseGrid({ release }: { release: Extract<Awaited<ReturnType<typeof fetchLatestRelease>>, { ok: true }> }) {
+function Release({
+  release,
+}: {
+  release: Extract<Awaited<ReturnType<typeof fetchLatestRelease>>, { ok: true }>;
+}) {
   return (
-    <div className="mt-10 space-y-6">
-      <div className="flex flex-wrap items-center gap-3 font-mono text-sm">
+    <div className="mt-10 space-y-8">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-sm">
         <span className="chip">{release.version}</span>
         {release.prerelease && <span className="chip">prerelease</span>}
         <span className="text-ink-400">
@@ -56,7 +73,7 @@ function ReleaseGrid({ release }: { release: Extract<Awaited<ReturnType<typeof f
       <div className="grid gap-4 md:grid-cols-2">
         <AssetCard
           title="AppImage"
-          subtitle="Portable Linux build — the primary alpha download"
+          subtitle="Portable build — the primary alpha download"
           badge="recommended"
           asset={release.appImage}
         />
@@ -67,11 +84,67 @@ function ReleaseGrid({ release }: { release: Extract<Awaited<ReturnType<typeof f
         />
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
-        <ChecksumCard asset={release.checksums} />
-        <OtherAssetsCard assets={release.otherAssets} />
+      {/* one compact quick-start instead of a second 'Install' section */}
+      <div className="tui-frame p-6">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <h3 className="font-display text-base font-medium text-ink-100">
+            Quick start
+          </h3>
+          {release.checksums && (
+            <a
+              href={release.checksums.browser_download_url}
+              rel="noreferrer noopener"
+              className="inline-flex items-center gap-1.5 font-mono text-xs text-ink-300 underline-offset-4 hover:text-forktty hover:underline"
+            >
+              <DownloadIcon className="h-3.5 w-3.5" />
+              SHA256SUMS
+            </a>
+          )}
+        </div>
+        <CodeBlock lines={QUICK_START} />
+
+        <details className="group mt-4 border-t border-ink-800 pt-4">
+          <summary className="flex cursor-pointer list-none items-center gap-2 font-mono text-sm text-ink-200 hover:text-forktty">
+            <span className="text-ink-500 transition-transform group-open:rotate-90" aria-hidden>
+              ❯
+            </span>
+            Build from source
+            <span className="font-sans text-xs text-ink-400">
+              — Rust 1.88+, GTK4 / libadwaita / VTE 0.76+, WebKitGTK 6
+            </span>
+          </summary>
+          <CodeBlock lines={BUILD} />
+        </details>
       </div>
+
+      <a
+        href={RELEASES_HTML_URL}
+        target="_blank"
+        rel="noreferrer noopener"
+        className="inline-flex items-center gap-1.5 text-sm text-ink-300 hover:text-forktty"
+      >
+        Browse every release & checksums
+        <ArrowRight className="h-3.5 w-3.5" />
+      </a>
     </div>
+  );
+}
+
+function CodeBlock({ lines }: { lines: string[] }) {
+  return (
+    <pre className="mt-4 overflow-x-auto rounded-none border border-ink-800 bg-ink-950 p-4 font-mono text-[12.5px] leading-relaxed text-ink-100">
+      {lines.map((line, i) => (
+        <div key={i}>
+          {line.startsWith("#") ? (
+            <span className="text-ink-400">{line}</span>
+          ) : (
+            <>
+              <span className="text-ink-500">$</span> {line}
+            </>
+          )}
+        </div>
+      ))}
+    </pre>
   );
 }
 
@@ -100,9 +173,7 @@ function AssetCard({
         <div className="space-y-4">
           <div className="font-mono text-xs text-ink-400">
             <div className="truncate text-ink-200">{asset.name}</div>
-            <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1">
-              <span>{formatBytes(asset.size)}</span>
-            </div>
+            <div className="mt-1">{formatBytes(asset.size)}</div>
           </div>
           <a
             href={asset.browser_download_url}
@@ -122,80 +193,6 @@ function AssetCard({
   );
 }
 
-function ChecksumCard({ asset }: { asset: ReleaseAsset | null }) {
-  return (
-    <div className="tui-frame p-6">
-      <div className="flex items-center justify-between gap-2">
-        <h3 className="font-display text-lg font-medium text-ink-100">SHA256SUMS</h3>
-        <span className="chip">verify</span>
-      </div>
-      <p className="mt-1 text-sm text-ink-300">
-        Always verify downloads before running them.
-      </p>
-
-      {asset ? (
-        <a
-          href={asset.browser_download_url}
-          className="mt-5 btn-secondary"
-          rel="noreferrer noopener"
-        >
-          <DownloadIcon className="h-4 w-4" />
-          {asset.name}
-        </a>
-      ) : (
-        <p className="mt-5 text-sm text-ink-400">
-          Checksum file not attached to this release.
-        </p>
-      )}
-    </div>
-  );
-}
-
-function OtherAssetsCard({ assets }: { assets: ReleaseAsset[] }) {
-  return (
-    <div className="tui-frame p-6">
-      <div className="flex items-center justify-between gap-2">
-        <h3 className="font-display text-lg font-medium text-ink-100">All assets</h3>
-        <span className="chip">manifest</span>
-      </div>
-      <p className="mt-1 text-sm text-ink-300">
-        Source tarballs and additional artifacts.
-      </p>
-
-      {assets.length > 0 ? (
-        <ul className="mt-5 divide-y divide-ink-800 font-mono text-xs">
-          {assets.slice(0, 6).map((a) => (
-            <li key={a.name} className="flex items-center justify-between gap-3 py-2">
-              <a
-                href={a.browser_download_url}
-                className="truncate text-ink-200 underline-offset-4 hover:text-forktty hover:underline"
-                rel="noreferrer noopener"
-              >
-                {a.name}
-              </a>
-              <span className="shrink-0 text-ink-500">{formatBytes(a.size)}</span>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="mt-5 text-sm text-ink-400">
-          No additional assets in this release.
-        </p>
-      )}
-
-      <a
-        href={RELEASES_HTML_URL}
-        target="_blank"
-        rel="noreferrer noopener"
-        className="mt-5 inline-flex items-center gap-1.5 text-sm text-ink-300 hover:text-forktty"
-      >
-        Browse every release
-        <ArrowRight className="h-3.5 w-3.5" />
-      </a>
-    </div>
-  );
-}
-
 function ReleaseFallback({ reason, url }: { reason: string; url: string }) {
   return (
     <div className="mt-10">
@@ -207,9 +204,8 @@ function ReleaseFallback({ reason, url }: { reason: string; url: string }) {
               Release metadata unavailable
             </h3>
             <p className="mt-1 text-sm text-ink-300">
-              The GitHub Releases API didn&rsquo;t respond. You can still find
-              every signed artifact and changelog on the project&rsquo;s
-              releases page.
+              The GitHub Releases API didn&rsquo;t respond. Every signed
+              artifact and changelog is on the project&rsquo;s releases page.
             </p>
             <p className="mt-2 font-mono text-xs text-ink-500">{reason}</p>
           </div>

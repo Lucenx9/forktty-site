@@ -29,7 +29,7 @@ export function Footer() {
             </FooterCol>
             <FooterCol heading="Page">
               <FooterLink href="#download">Download</FooterLink>
-              <FooterLink href="#install">Install</FooterLink>
+              <FooterLink href="#capabilities">Features</FooterLink>
               <FooterLink href="#faq">FAQ</FooterLink>
             </FooterCol>
           </div>

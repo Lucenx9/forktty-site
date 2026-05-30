@@ -42,7 +42,6 @@ export function Header() {
           <a href="#download" className="hover:text-forktty">Download</a>
           <a href="#why" className="hover:text-forktty">Why</a>
           <a href="#capabilities" className="hover:text-forktty">Features</a>
-          <a href="#install" className="hover:text-forktty">Install</a>
           <a href="#faq" className="hover:text-forktty">FAQ</a>
         </nav>
 

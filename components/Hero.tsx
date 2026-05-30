@@ -7,7 +7,7 @@ const WORKSPACES = [
   { name: "main", path: "~", panes: 5, href: "#top", active: true },
   { name: "why", path: "~/forktty", panes: null, href: "#why", active: false },
   { name: "features", path: "~/forktty", panes: null, href: "#capabilities", active: false },
-  { name: "install", path: "~/forktty", panes: null, href: "#install", active: false },
+  { name: "download", path: "~/forktty", panes: null, href: "#download", active: false },
   { name: "faq", path: "~/forktty", panes: null, href: "#faq", active: false },
 ];
 
