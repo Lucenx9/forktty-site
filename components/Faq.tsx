@@ -17,15 +17,15 @@ const ITEMS = [
   },
   {
     q: "Is anything sent to a server?",
-    a: "No. ForkTTY itself has no telemetry, no auto-update server, no analytics. Agent CLIs talk to whatever endpoint you configure them to, and browser panes only load URLs you (or your own socket automation) open.",
+    a: "No. ForkTTY itself has no telemetry, no auto-update server, no analytics. Agent CLIs talk only to whatever endpoint you configure them to.",
   },
   {
     q: "Can I script or automate it?",
     a: "Yes — that's a core feature. The same forktty binary speaks a JSON-RPC API over a user-local Unix socket: forktty list, focus, split-surface, send-text, worktree-status, notify, events, and more. Diagnostics like forktty doctor work even when the GUI isn't running.",
   },
   {
-    q: "What's the browser pane in the screenshots?",
-    a: "An experimental WebKitGTK6 browser pane that tiles alongside your terminals. It ships in packaged builds (behind the 'browser' feature), keeps per-profile persistent sessions, can import history and bookmarks from local Firefox/Chromium profiles, and is scriptable over the socket with snapshot/click/fill/eval verbs.",
+    q: "What happened to the browser pane?",
+    a: "It is still in the source tree as an experimental WebKitGTK6 feature, but alpha downloads are GTK/VTE-only for now. Build with --features browser only if you intentionally want to test that path.",
   },
   {
     q: "Does it really do git worktrees?",

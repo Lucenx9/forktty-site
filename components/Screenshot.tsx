@@ -7,13 +7,12 @@ export function Screenshot() {
         <div className="flex flex-col items-start gap-4">
           <span className="h-eyebrow">SCREENSHOT</span>
           <h2 className="h-title max-w-2xl">
-            Terminals and a browser in one tiling layout.
+            Agent terminals in one tiling layout.
           </h2>
           <p className="max-w-2xl text-ink-300">
-            Each workspace holds a tree of panes — terminals running agents, and
-            optional WebKitGTK browser panes — switched with one shortcut. Agent
-            status from the hooks shows up in the sidebar instead of scrolling
-            past in a pane.
+            Each workspace holds a tree of VTE panes and pane tabs for agents,
+            shells, and long-running tasks. Hook status shows up in the sidebar
+            instead of getting buried in scrollback.
           </p>
         </div>
 
@@ -22,7 +21,7 @@ export function Screenshot() {
             <div className="relative overflow-hidden border border-ink-700 bg-ink-950">
               <Image
                 src="/forktty-alpha6.png"
-                alt="ForkTTY on Linux: a workspace sidebar lists 'main' (active, 5 panes) plus workspace-2 through -6, with a 'Claude: Ready' status line. The window tiles four terminal panes labelled 'simone' alongside an embedded WebKitGTK browser pane showing google.com with its own back/forward and address bar. A bottom status bar reads 'main · ~ · Pane 2/5 · Ctrl+Shift+P'."
+                alt="ForkTTY on Linux showing a workspace sidebar with project workspaces, a top bar, pane tabs, and four tiled terminal panes with the focused pane outlined in orange."
                 width={2560}
                 height={1394}
                 quality={95}
@@ -34,7 +33,7 @@ export function Screenshot() {
           </div>
           <figcaption className="mt-4 flex flex-wrap items-center justify-between gap-3 font-mono text-xs text-ink-400">
             <span className="w-full sm:w-auto">forktty · GTK4 / VTE · Linux</span>
-            <span className="w-full sm:w-auto">workspaces · tiling panes · agents + browser</span>
+            <span className="w-full sm:w-auto">workspaces · tabs · tiling panes · agents</span>
           </figcaption>
         </figure>
       </div>

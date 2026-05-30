@@ -28,8 +28,8 @@ npm run start
 
 Push to GitHub and import the repo in Vercel. No environment variables are required.
 
-The page fetches the latest release from
-`https://api.github.com/repos/Lucenx9/forktty/releases/latest` at build /
+The page fetches recent releases from
+`https://api.github.com/repos/Lucenx9/forktty/releases?per_page=10` at build /
 revalidation time (30 min cache). If the API is unreachable or the repo
 isn't public yet, the download section degrades to a "View all releases on
 GitHub" CTA.

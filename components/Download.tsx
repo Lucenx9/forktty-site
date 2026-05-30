@@ -16,8 +16,10 @@ const QUICK_START = [
 const BUILD = [
   "git clone https://github.com/Lucenx9/forktty.git",
   "cd forktty",
-  "# full build with browser panes (terminal-only: --features gtk-vte)",
-  "cargo run -p forktty-ui-gtk --features browser",
+  "# same GTK/VTE feature set shipped in the AppImage and .deb",
+  "cargo run -p forktty-ui-gtk --no-default-features --features gtk-vte",
+  "# optional source-only browser experiment:",
+  "# cargo run -p forktty-ui-gtk --features browser",
 ];
 
 export async function Download() {
@@ -110,7 +112,7 @@ function Release({
             </span>
             Build from source
             <span className="font-sans text-xs text-ink-400">
-              — Rust 1.88+, GTK4 / libadwaita / VTE 0.76+, WebKitGTK 6
+              — Rust 1.88+, GTK4 / libadwaita / VTE 0.76+
             </span>
           </summary>
           <CodeBlock lines={BUILD} />

@@ -1,5 +1,5 @@
 import type { SVGProps } from "react";
-import { PlugIcon, BranchIcon, BellIcon, GlobeIcon } from "./Icons";
+import { PlugIcon, BranchIcon, BellIcon, LayersIcon } from "./Icons";
 
 type Capability = {
   icon: (props: SVGProps<SVGSVGElement>) => React.ReactNode;
@@ -29,10 +29,10 @@ const CAPABILITIES: Capability[] = [
     cmd: "forktty hooks setup",
   },
   {
-    icon: GlobeIcon,
-    title: "Scriptable browser panes",
-    body: "Experimental WebKitGTK6 browser panes sit beside your terminals with snapshot / click / fill / eval verbs, per-profile persistent sessions, and history & bookmark import from local Firefox or Chromium profiles.",
-    cmd: "forktty browser open https://example.com",
+    icon: LayersIcon,
+    title: "Panes, tabs, and restore",
+    body: "Split the focused pane, open tabs inside a pane, switch surfaces from scripts, and restore workspace order, active pane state, tabs, and split ratios across restarts.",
+    cmd: "forktty split-surface --axis vertical",
   },
 ];
 
