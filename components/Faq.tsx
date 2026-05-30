@@ -1,7 +1,7 @@
 const ITEMS = [
   {
     q: "What is ForkTTY, in one sentence?",
-    a: "A Linux-native GTK/VTE terminal, written in Rust, designed to run multiple coding agents — like Codex, Claude Code, or Gemini CLI — side by side.",
+    a: "A Linux-native GTK/VTE terminal, written in Rust, for running multiple coding agents side by side — with a programmable local socket API, first-class git worktrees, and prompt-aware notifications.",
   },
   {
     q: "Does ForkTTY ship with an AI model?",
@@ -17,15 +17,31 @@ const ITEMS = [
   },
   {
     q: "Is anything sent to a server?",
-    a: "No. ForkTTY itself has no telemetry, no auto-update server, no analytics. Agent CLIs talk to whatever endpoint you configure them to.",
+    a: "No. ForkTTY itself has no telemetry, no auto-update server, no analytics. Agent CLIs talk to whatever endpoint you configure them to, and browser panes only load URLs you (or your own socket automation) open.",
   },
   {
-    q: "Can I script it / extend it?",
-    a: "Yes. ForkTTY is open source under AGPL-3.0. Fork it, add panes, wire your own orchestrator on top — that's exactly the point.",
+    q: "Can I script or automate it?",
+    a: "Yes — that's a core feature. The same forktty binary speaks a JSON-RPC API over a user-local Unix socket: forktty list, focus, split-surface, send-text, worktree-status, notify, events, and more. Diagnostics like forktty doctor work even when the GUI isn't running.",
+  },
+  {
+    q: "What's the browser pane in the screenshots?",
+    a: "An experimental WebKitGTK6 browser pane that tiles alongside your terminals. It ships in packaged builds (behind the 'browser' feature), keeps per-profile persistent sessions, can import history and bookmarks from local Firefox/Chromium profiles, and is scriptable over the socket with snapshot/click/fill/eval verbs.",
+  },
+  {
+    q: "Does it really do git worktrees?",
+    a: "Yes. Workspaces can be backed by isolated git worktrees that ForkTTY creates, attaches, merges, and removes via native git2 operations — with dirty-state protection and optional .forktty/setup and teardown hooks run inside the verified worktree.",
+  },
+  {
+    q: "How do agents report status into the sidebar?",
+    a: "Through installable hooks. Run forktty hooks setup to wire up Codex, Claude Code, Gemini CLI, or OpenCode; they then push status, progress, logs, and prompt notifications back through the socket, so a blocked or waiting agent shows up in the workspace rail.",
+  },
+  {
+    q: "Can I extend or fork it?",
+    a: "Yes. ForkTTY is open source under AGPL-3.0. Build on the socket API, wire your own orchestrator on top, or fork the Rust source outright — that's exactly the point.",
   },
   {
     q: "AppImage or .deb?",
-    a: "If you're on Debian/Ubuntu, prefer the .deb — it's the most tested path. AppImage is an experimental Linux build and may not work on every distro yet.",
+    a: "The AppImage is the primary alpha download and works on most modern distros with VTE 0.76+. Prefer the .deb on Debian/Ubuntu if you want apt package-manager integration. Verify either against SHA256SUMS first.",
   },
 ];
 

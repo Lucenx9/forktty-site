@@ -6,6 +6,7 @@ import { REPO_HTML_URL } from "@/lib/github";
 const WORKSPACES = [
   { name: "main", path: "~", panes: 5, href: "#top", active: true },
   { name: "why", path: "~/forktty", panes: null, href: "#why", active: false },
+  { name: "features", path: "~/forktty", panes: null, href: "#capabilities", active: false },
   { name: "install", path: "~/forktty", panes: null, href: "#install", active: false },
   { name: "faq", path: "~/forktty", panes: null, href: "#faq", active: false },
 ];
@@ -26,8 +27,8 @@ export function Hero() {
       />
 
       <div className="section pt-10 pb-12 sm:pt-16 sm:pb-16">
-        {/* The hero IS a ForkTTY window. */}
-        <div className="tui-frame overflow-hidden shadow-panel">
+        {/* The hero IS a ForkTTY window — mono throughout, like the real chrome. */}
+        <div className="tui-frame overflow-hidden font-mono shadow-panel">
           {/* titlebar: logo · centered workspace · actions + window controls */}
           <div className="grid grid-cols-[1fr_auto_1fr] items-center border-b border-ink-700 bg-ink-850 px-4 py-2">
             <div className="flex items-center gap-2 text-xs text-ink-300">
@@ -122,8 +123,8 @@ export function Hero() {
                     <span className="text-ink-200">forktty</span>
                   </span>
                   <span className="hidden font-mono text-[11px] tracking-[0.06em] text-ink-500 sm:inline">
-                    ⚒ <span className="text-ink-300">FORGE</span> · gpt-5.5 ·{" "}
-                    <span className="text-signal-green">MED</span>
+                    ◍ <span className="text-ink-300">claude</span> ·{" "}
+                    <span className="text-signal-green">ready</span>
                   </span>
                 </div>
 
@@ -135,11 +136,12 @@ export function Hero() {
                   </span>
                 </h1>
 
-                <p className="max-w-2xl text-sm leading-relaxed text-ink-300 sm:text-base">
+                <p className="max-w-2xl font-sans text-sm leading-relaxed text-ink-300 sm:text-base">
                   A GTK/VTE terminal written in Rust. Each workspace is a tiling
-                  pane layout you can dedicate to one agent — Codex, Claude Code,
-                  Gemini CLI, or anything else that runs in a shell. Your keys,
-                  your subscription, your machine.
+                  layout you can dedicate to one agent — Codex, Claude Code,
+                  Gemini CLI, or anything that runs in a shell. Scriptable over a
+                  local socket, backed by git worktrees. Your keys, your
+                  subscription, your machine.
                 </p>
 
                 {/* tiling pane preview — bordered panes, like the product */}

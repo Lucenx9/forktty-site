@@ -18,8 +18,8 @@ export async function Download() {
           <h2 className="h-title">Latest release</h2>
           <p className="max-w-2xl text-ink-300">
             Pre-built binaries for x86_64 Linux. Verify checksums against
-            SHA256SUMS, then install the .deb on Debian/Ubuntu, or run the
-            AppImage if you&rsquo;re on another distro.
+            SHA256SUMS, then run the AppImage — the primary alpha download — or
+            install the .deb for apt integration on Debian/Ubuntu.
           </p>
         </div>
 
@@ -55,16 +55,15 @@ function ReleaseGrid({ release }: { release: Extract<Awaited<ReturnType<typeof f
 
       <div className="grid gap-4 md:grid-cols-2">
         <AssetCard
-          title=".deb package"
-          subtitle="Debian / Ubuntu — the tested path"
+          title="AppImage"
+          subtitle="Portable Linux build — the primary alpha download"
           badge="recommended"
-          asset={release.deb}
+          asset={release.appImage}
         />
         <AssetCard
-          title="AppImage"
-          subtitle="Experimental portable Linux build"
-          badge="experimental"
-          asset={release.appImage}
+          title=".deb package"
+          subtitle="Debian / Ubuntu — apt integration"
+          asset={release.deb}
         />
       </div>
 

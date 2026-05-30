@@ -7,9 +7,8 @@ export function AlphaNotes() {
             <span className="h-eyebrow">ALPHA</span>
             <h2 className="h-title">This is early software.</h2>
             <p className="text-ink-300">
-              ForkTTY is in early alpha. Expect rough edges, breaking changes,
-              and the occasional crash. We&rsquo;d rather ship honestly than
-              ship a polished facade.
+              ForkTTY is in early alpha. Expect breaking changes between
+              releases, unsigned builds, and the occasional crash.
             </p>
             <p className="text-ink-300">
               If you hit something, please open an issue on GitHub — minimal
@@ -20,8 +19,9 @@ export function AlphaNotes() {
           <div className="tui-frame p-6 sm:p-8">
             <ul className="space-y-4 text-sm">
               <NoteRow label="experimental">
-                AppImage builds are best-effort and not yet signed. Prefer the
-                .deb if you&rsquo;re on Debian/Ubuntu.
+                WebKitGTK browser panes ship in packaged builds but are still
+                experimental. The AppImage is unsigned — always verify it
+                against SHA256SUMS before running.
               </NoteRow>
               <NoteRow label="breaking">
                 Config format, keybinds, and CLI flags will change without

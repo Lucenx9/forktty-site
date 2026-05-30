@@ -41,6 +41,7 @@ export function Header() {
         <nav aria-label="Primary" className="hidden items-center gap-7 text-sm text-ink-300 md:flex">
           <a href="#download" className="hover:text-forktty">Download</a>
           <a href="#why" className="hover:text-forktty">Why</a>
+          <a href="#capabilities" className="hover:text-forktty">Features</a>
           <a href="#install" className="hover:text-forktty">Install</a>
           <a href="#faq" className="hover:text-forktty">FAQ</a>
         </nav>

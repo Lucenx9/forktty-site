@@ -11,8 +11,8 @@ export function Footer() {
               forktty<span className="animate-blink text-forktty">_</span>
             </div>
             <p className="mt-2 text-sm text-ink-400">
-              A Linux-native terminal for multi-agent coding. Rust, GTK/VTE,
-              open source, local-first.
+              A Linux-native terminal for multi-agent coding. Rust, GTK/VTE, a
+              scriptable socket API, git worktrees — open source, local-first.
             </p>
           </div>
 
@@ -35,7 +35,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-1 border border-ink-700 bg-ink-850 px-3 py-2 text-[11px] tracking-[0.04em] text-ink-400">
+        <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-1 border border-ink-700 bg-ink-850 px-3 py-2 font-mono text-[11px] tracking-[0.04em] text-ink-400">
           <span className="bg-forktty px-1.5 py-0.5 font-semibold text-ink-950">NORMAL</span>
           <span className="text-signal-green">main</span>
           <span className="text-ink-500">·</span>

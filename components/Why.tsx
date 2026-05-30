@@ -7,11 +7,11 @@ export function Why() {
             <span className="h-eyebrow">WHY</span>
             <h2 className="h-title">Native Linux, not a port.</h2>
             <p className="text-ink-300">
-              ForkTTY is a GTK4 application that uses VTE — the same terminal
-              widget behind GNOME Terminal and Tilix — so xterm emulation,
-              true colour, ligatures, and scrollback work the way every other
-              VTE terminal does. No Electron, no web shell, no embedded
-              browser.
+              ForkTTY is a GTK4 / libadwaita application that uses VTE — the
+              same terminal widget behind GNOME Terminal and Tilix — so xterm
+              emulation, true colour, ligatures, and scrollback work the way
+              every other VTE terminal does. No Electron, no web shell, no
+              terminal reimplemented in JavaScript.
             </p>
             <p className="text-ink-300">
               The orchestration sits in Rust on top of that: workspaces hold

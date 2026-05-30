@@ -8,29 +8,29 @@ const STEPS = [
     ].join("\n"),
   },
   {
-    title: ".deb package",
-    note: "Recommended on Debian / Ubuntu and derivatives.",
-    code: [
-      "sudo apt install ./forktty_*.deb",
-      "forktty",
-    ].join("\n"),
-  },
-  {
     title: "AppImage",
-    note: "Experimental portable Linux build. Prefer the .deb on Debian/Ubuntu.",
+    note: "The primary alpha download. Portable across modern Linux distros.",
     code: [
       "chmod +x forktty-*.AppImage",
       "./forktty-*.AppImage",
     ].join("\n"),
   },
   {
+    title: ".deb package",
+    note: "For apt integration on Debian / Ubuntu and derivatives.",
+    code: [
+      "sudo apt install ./forktty_*.deb",
+      "forktty",
+    ].join("\n"),
+  },
+  {
     title: "Build from source",
-    note: "Requires Rust toolchain and GTK4 / VTE 0.74+ development packages.",
+    note: "Rust 1.88+, GTK4 / libadwaita / VTE 0.76+, and WebKitGTK 6 dev files.",
     code: [
       "git clone https://github.com/Lucenx9/forktty.git",
       "cd forktty",
-      "cargo build -p forktty-ui-gtk --features gtk-vte --release",
-      "./target/release/forktty",
+      "# full build with browser panes (terminal-only: --features gtk-vte)",
+      "cargo run -p forktty-ui-gtk --features browser",
     ].join("\n"),
   },
 ];
@@ -43,8 +43,8 @@ export function Install() {
           <span className="h-eyebrow">INSTALL</span>
           <h2 className="h-title max-w-2xl">Install &amp; verify</h2>
           <p className="max-w-2xl text-ink-300">
-            ForkTTY is distributed as standard Linux artifacts. No account,
-            no cloud setup, no first-run wizard.
+            ForkTTY ships as a standard AppImage or .deb — download, verify the
+            checksum, run. There&rsquo;s no account and no first-run wizard.
           </p>
         </div>
 

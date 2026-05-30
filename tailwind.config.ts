@@ -16,8 +16,8 @@ const config: Config = {
           800: "#28251e",
           700: "#363127",
           600: "#4a4336",
-          500: "#6f6552",
-          400: "#928569",
+          500: "#8c8068",
+          400: "#9c8f76",
           300: "#a89984",
           200: "#cabfa6",
           100: "#ece3d4",
@@ -40,10 +40,11 @@ const config: Config = {
         },
       },
       fontFamily: {
-        // one family everywhere — this is a terminal
+        // Monospace is the identity voice: headings, hero window, code, chrome.
         display: ['var(--font-plex-mono)', '"IBM Plex Mono"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
         mono: ['var(--font-plex-mono)', '"IBM Plex Mono"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
-        sans: ['var(--font-plex-mono)', '"IBM Plex Mono"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+        // Plex Sans carries long-form prose — same superfamily, readable body.
+        sans: ['var(--font-plex-sans)', '"IBM Plex Sans"', "ui-sans-serif", "system-ui", "sans-serif"],
       },
       boxShadow: {
         glow: "0 0 0 1px rgba(231,138,78,0.25), 0 10px 40px -16px rgba(231,138,78,0.35)",

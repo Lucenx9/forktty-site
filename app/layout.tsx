@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
@@ -8,6 +8,15 @@ const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-plex-mono",
+  display: "swap",
+});
+
+// Body/prose face. Shares the Plex superfamily with Plex Mono, so the
+// mono "terminal" voice and the readable body voice stay coherent.
+const plexSans = IBM_Plex_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-plex-sans",
   display: "swap",
 });
 
@@ -22,7 +31,7 @@ export const metadata: Metadata = {
     template: "%s — ForkTTY",
   },
   description:
-    "ForkTTY is a Linux-native GTK/VTE terminal for running Codex, Claude Code, Gemini CLI, and other coding agents in tiled panes. Rust, local-first, no app telemetry.",
+    "ForkTTY is a Linux-native GTK/VTE terminal for running Codex, Claude Code, Gemini CLI, and other coding agents in tiled panes — with a programmable local socket API, git worktree workspaces, and prompt-aware notifications. Rust, local-first, no app telemetry.",
   keywords: [
     "ForkTTY",
     "terminal",
@@ -34,6 +43,9 @@ export const metadata: Metadata = {
     "Claude Code",
     "Gemini CLI",
     "Rust",
+    "git worktree",
+    "socket API",
+    "agent hooks",
   ],
   alternates: {
     canonical: "/",
@@ -41,7 +53,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ForkTTY — Linux-native multi-agent terminal",
     description:
-      "A GTK/VTE terminal in Rust for running coding agents in tiled panes. Bring your own CLI and subscription.",
+      "A GTK/VTE terminal in Rust for running coding agents in tiled panes — scriptable over a local socket, backed by git worktrees. Bring your own CLI and subscription.",
     url: SITE_URL,
     siteName: "ForkTTY",
     type: "website",
@@ -78,7 +90,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`bg-ink-950 ${plexMono.variable}`}
+      className={`bg-ink-950 ${plexMono.variable} ${plexSans.variable}`}
     >
       <body className="min-h-screen antialiased">
         <a
