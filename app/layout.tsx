@@ -90,6 +90,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`bg-ink-950 ${plexMono.variable} ${plexSans.variable}`}
     >
       <body className="min-h-screen antialiased">
