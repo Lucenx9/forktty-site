@@ -1,10 +1,18 @@
+import { PaneBar } from "./PaneBar";
+
 export function Why() {
   return (
-    <section id="why" className="border-t border-ink-800/60">
+    <section
+      id="why"
+      data-pane
+      data-index="04"
+      data-label="why"
+      className="pane scroll-mt-16"
+    >
       <div className="section py-20 sm:py-24">
         <div className="grid gap-12 lg:grid-cols-[1fr_1.4fr]">
           <div className="flex flex-col gap-4">
-            <span className="h-eyebrow">WHY</span>
+            <PaneBar index="04" label="why" />
             <h2 className="h-title">Native Linux, not a port.</h2>
             <p className="text-ink-300">
               ForkTTY is a GTK4 / libadwaita application built on Ghostty&rsquo;s
@@ -46,7 +54,7 @@ export function Why() {
 function Point({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div className="border-l-2 border-ink-800 pl-5">
-      <h3 className="font-display text-lg font-medium text-ink-100">{title}</h3>
+      <h3 className="font-mono text-base font-medium tracking-tight text-ink-100">{title}</h3>
       <p className="mt-2 text-sm leading-relaxed text-ink-300">{children}</p>
     </div>
   );

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { IBM_Plex_Mono, IBM_Plex_Sans } from "next/font/google";
+import { IBM_Plex_Mono, IBM_Plex_Sans, Martian_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
@@ -8,6 +8,15 @@ const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
   variable: "--font-plex-mono",
+  display: "swap",
+});
+
+// Engineered display voice. A monospaced grotesque used only for the big
+// headline moments, so the type keeps its terminal DNA but gains character.
+const martianMono = Martian_Mono({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-martian",
   display: "swap",
 });
 
@@ -91,7 +100,7 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`bg-ink-950 ${plexMono.variable} ${plexSans.variable}`}
+      className={`bg-ink-950 ${plexMono.variable} ${plexSans.variable} ${martianMono.variable}`}
     >
       <body className="min-h-screen antialiased">
         <a

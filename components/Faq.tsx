@@ -1,3 +1,5 @@
+import { PaneBar } from "./PaneBar";
+
 const ITEMS = [
   {
     q: "What is ForkTTY, in one sentence?",
@@ -47,10 +49,16 @@ const ITEMS = [
 
 export function Faq() {
   return (
-    <section id="faq" className="border-t border-ink-800/60">
+    <section
+      id="faq"
+      data-pane
+      data-index="07"
+      data-label="faq"
+      className="pane scroll-mt-16"
+    >
       <div className="section py-20 sm:py-24">
         <div className="flex flex-col items-start gap-4">
-          <span className="h-eyebrow">FAQ</span>
+          <PaneBar index="07" label="faq" />
           <h2 className="h-title">Common questions</h2>
         </div>
 
@@ -58,7 +66,7 @@ export function Faq() {
           {ITEMS.map((item, i) => (
             <details key={i} className="group bg-ink-900">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-6 px-6 py-5 text-base text-ink-100 transition-colors hover:bg-ink-850">
-                <span className="font-display font-medium tracking-tight">{item.q}</span>
+                <span className="font-mono text-[15px] font-medium tracking-tight">{item.q}</span>
                 <svg
                   aria-hidden
                   viewBox="0 0 24 24"

@@ -1,5 +1,6 @@
 import type { SVGProps } from "react";
 import { PlugIcon, BranchIcon, BellIcon, LayersIcon } from "./Icons";
+import { PaneBar } from "./PaneBar";
 
 type Capability = {
   icon: (props: SVGProps<SVGSVGElement>) => React.ReactNode;
@@ -48,10 +49,16 @@ const ALSO = [
 
 export function Capabilities() {
   return (
-    <section id="capabilities" className="border-t border-ink-800/60">
+    <section
+      id="capabilities"
+      data-pane
+      data-index="05"
+      data-label="capabilities"
+      className="pane scroll-mt-16"
+    >
       <div className="section py-20 sm:py-24">
         <div className="flex flex-col items-start gap-4">
-          <span className="h-eyebrow">CAPABILITIES</span>
+          <PaneBar index="05" label="capabilities" />
           <h2 className="h-title max-w-2xl">
             A terminal you can drive from a script.
           </h2>
@@ -98,7 +105,7 @@ function Card({ cap }: { cap: Capability }) {
         <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-ink-700 bg-ink-850 text-forktty">
           <Icon className="h-4 w-4" />
         </span>
-        <h3 className="font-display text-lg font-medium text-ink-100">
+        <h3 className="font-mono text-base font-medium tracking-tight text-ink-100">
           {cap.title}
         </h3>
       </div>

@@ -1,4 +1,5 @@
 import { DownloadIcon, ArrowRight, GitHubIcon } from "./Icons";
+import { PaneBar } from "./PaneBar";
 import {
   fetchLatestRelease,
   formatBytes,
@@ -26,10 +27,16 @@ export async function Download() {
   const release = await fetchLatestRelease();
 
   return (
-    <section id="download" className="border-t border-ink-800/60">
+    <section
+      id="download"
+      data-pane
+      data-index="03"
+      data-label="download"
+      className="pane scroll-mt-16"
+    >
       <div className="section py-20 sm:py-24">
         <div className="flex flex-col items-start gap-4">
-          <span className="h-eyebrow">DOWNLOAD</span>
+          <PaneBar index="03" label="download" />
           <h2 className="h-title">Get ForkTTY</h2>
           <p className="max-w-2xl text-ink-300">
             Pre-built x86_64 Linux binaries. Run the AppImage — the primary
@@ -89,7 +96,7 @@ function Release({
       {/* one compact quick-start instead of a second 'Install' section */}
       <div className="tui-frame p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
-          <h3 className="font-display text-base font-medium text-ink-100">
+          <h3 className="font-mono text-base font-medium text-ink-100">
             Quick start
           </h3>
           {release.checksums && (
@@ -165,7 +172,7 @@ function AssetCard({
     <div className="group tui-frame flex flex-col justify-between gap-6 p-6 transition-colors hover:border-ink-700">
       <div>
         <div className="flex items-center justify-between gap-2">
-          <h3 className="font-display text-xl font-medium text-ink-100">{title}</h3>
+          <h3 className="font-mono text-xl font-medium text-ink-100">{title}</h3>
           {badge && <span className="chip">{badge}</span>}
         </div>
         <p className="mt-1 text-sm text-ink-300">{subtitle}</p>
@@ -202,7 +209,7 @@ function ReleaseFallback({ reason, url }: { reason: string; url: string }) {
         <div className="flex items-start gap-3">
           <span className="mt-1 h-2 w-2 shrink-0 rounded-full bg-ink-500" />
           <div>
-            <h3 className="font-display text-lg font-medium text-ink-100">
+            <h3 className="font-mono text-lg font-medium text-ink-100">
               Release metadata unavailable
             </h3>
             <p className="mt-1 text-sm text-ink-300">

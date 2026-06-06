@@ -1,10 +1,18 @@
+import { PaneBar } from "./PaneBar";
+
 export function AlphaNotes() {
   return (
-    <section id="alpha" className="border-t border-ink-800/60">
+    <section
+      id="alpha"
+      data-pane
+      data-index="06"
+      data-label="alpha"
+      className="pane scroll-mt-16"
+    >
       <div className="section py-20 sm:py-24">
         <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr]">
           <div className="flex flex-col gap-4">
-            <span className="h-eyebrow">ALPHA</span>
+            <PaneBar index="06" label="alpha" />
             <h2 className="h-title">This is early software.</h2>
             <p className="text-ink-300">
               ForkTTY is in early alpha. Expect breaking changes between

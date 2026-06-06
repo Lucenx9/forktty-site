@@ -3,11 +3,16 @@ import { REPO_HTML_URL, RELEASES_HTML_URL } from "@/lib/github";
 
 export function Footer() {
   return (
-    <footer className="border-t border-ink-800/60">
-      <div className="section py-12">
+    <footer
+      data-pane
+      data-index="08"
+      data-label="footer"
+      className="pane scroll-mt-16"
+    >
+      <div className="section pt-12 pb-16">
         <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-end">
           <div className="max-w-md">
-            <div className="font-display text-base font-medium text-ink-100">
+            <div className="font-mono text-base font-semibold tracking-tight text-ink-100">
               forktty<span className="animate-blink text-forktty">_</span>
             </div>
             <p className="mt-2 text-sm text-ink-400">
@@ -35,17 +40,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 flex flex-wrap items-center gap-x-4 gap-y-1 border border-ink-700 bg-ink-850 px-3 py-2 font-mono text-[11px] tracking-[0.04em] text-ink-400">
-          <span className="bg-forktty px-1.5 py-0.5 font-semibold text-ink-950">NORMAL</span>
-          <span className="text-signal-green">main</span>
-          <span className="text-ink-500">·</span>
-          <span>linux/x86_64</span>
-          <span className="text-ink-500">·</span>
-          <span>AGPL-3.0</span>
-          <span className="ml-auto text-ink-500">no telemetry</span>
-        </div>
-
-        <div className="mt-6 flex flex-col items-start justify-between gap-3 pt-2 text-xs text-ink-500 sm:flex-row sm:items-center">
+        <div className="mt-10 flex flex-col items-start justify-between gap-3 border-t border-ink-800/70 pt-6 text-xs text-ink-500 sm:flex-row sm:items-center">
           <div className="flex flex-col gap-2">
             <span>
               © {new Date().getFullYear()} ForkTTY contributors. Linux-native, AGPL-3.0.

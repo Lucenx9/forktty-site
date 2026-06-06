@@ -18,8 +18,10 @@ export function Header() {
 
   return (
     <header
-      className={`sticky top-0 z-40 border-b bg-ink-950 transition-colors duration-150 ${
-        isScrolled ? "border-ink-800" : "border-transparent"
+      className={`sticky top-0 z-40 border-b backdrop-blur transition-colors duration-200 ${
+        isScrolled
+          ? "border-ink-800 bg-ink-950/80"
+          : "border-transparent bg-ink-950/40"
       }`}
     >
       <div className="section flex h-14 items-center justify-between">
@@ -32,7 +34,7 @@ export function Header() {
             className="h-6 w-6"
             priority
           />
-          <span className="font-display text-sm font-semibold tracking-tight text-ink-100">
+          <span className="font-mono text-sm font-semibold tracking-tight text-ink-100">
             forktty
             <span className="animate-blink text-forktty">_</span>
           </span>
