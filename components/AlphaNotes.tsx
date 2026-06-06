@@ -19,7 +19,7 @@ export function AlphaNotes() {
           <div className="tui-frame p-6 sm:p-8">
             <ul className="space-y-4 text-sm">
               <NoteRow label="experimental">
-                Packaged alpha builds are GTK/VTE-only. The browser pane remains
+                Packaged alpha builds are GTK/Ghostty-only. The browser pane remains
                 a source-only experiment behind <code>--features browser</code>.
                 The AppImage is unsigned — verify it against SHA256SUMS before
                 running.

@@ -1,15 +1,15 @@
 const ITEMS = [
   {
     q: "What is ForkTTY, in one sentence?",
-    a: "A Linux-native GTK/VTE terminal, written in Rust, for running multiple coding agents side by side — with a programmable local socket API, first-class git worktrees, and prompt-aware notifications.",
+    a: "A Linux-native GTK/Ghostty terminal, written in Rust, for running multiple coding agents side by side — with a programmable local socket API, first-class git worktrees, and prompt-aware notifications.",
   },
   {
     q: "Does ForkTTY ship with an AI model?",
     a: "No. ForkTTY is bring-your-own-CLI: you install the agent of your choice, authenticate with your own keys or subscription, and ForkTTY just hosts the PTYs. Nothing is proxied.",
   },
   {
-    q: "Why GTK/VTE instead of a web stack?",
-    a: "VTE is the same terminal widget that powers GNOME Terminal and Tilix. It's fast, faithful to the xterm spec, and lets us focus on the orchestration layer instead of reimplementing a terminal in JavaScript.",
+    q: "Why GTK/Ghostty instead of a web stack?",
+    a: "Ghostty is a fast, modern terminal engine. ForkTTY embeds it (libghostty-vt) for faithful xterm emulation and true-colour rendering, so we can focus on the orchestration layer instead of reimplementing a terminal in JavaScript.",
   },
   {
     q: "Will there be a macOS or Windows build?",
@@ -25,7 +25,7 @@ const ITEMS = [
   },
   {
     q: "What happened to the browser pane?",
-    a: "It is still in the source tree as an experimental WebKitGTK6 feature, but alpha downloads are GTK/VTE-only for now. Build with --features browser only if you intentionally want to test that path.",
+    a: "It is still in the source tree as an experimental WebKitGTK6 feature, but alpha downloads are GTK/Ghostty-only for now. Build with --features browser only if you intentionally want to test that path.",
   },
   {
     q: "Does it really do git worktrees?",
@@ -41,7 +41,7 @@ const ITEMS = [
   },
   {
     q: "AppImage or .deb?",
-    a: "The AppImage is the primary alpha download and works on most modern distros with VTE 0.76+. Prefer the .deb on Debian/Ubuntu if you want apt package-manager integration. Verify either against SHA256SUMS first.",
+    a: "The AppImage is the primary alpha download and works on most modern distros that ship a recent glibc — it bundles the GTK4, libadwaita, and Ghostty libraries it needs. Prefer the .deb on Debian/Ubuntu if you want apt package-manager integration. Verify either against SHA256SUMS first.",
   },
 ];
 

@@ -10,7 +10,7 @@ export function Screenshot() {
             Agent terminals in one tiling layout.
           </h2>
           <p className="max-w-2xl text-ink-300">
-            Each workspace holds a tree of VTE panes and pane tabs for agents,
+            Each workspace holds a tree of Ghostty panes and pane tabs for agents,
             shells, and long-running tasks. Hook status shows up in the sidebar
             instead of getting buried in scrollback.
           </p>
@@ -32,7 +32,7 @@ export function Screenshot() {
             </div>
           </div>
           <figcaption className="mt-4 flex flex-wrap items-center justify-between gap-3 font-mono text-xs text-ink-400">
-            <span className="w-full sm:w-auto">forktty · GTK4 / VTE · Linux</span>
+            <span className="w-full sm:w-auto">forktty · GTK4 / Ghostty · Linux</span>
             <span className="w-full sm:w-auto">workspaces · tabs · tiling panes · agents</span>
           </figcaption>
         </figure>

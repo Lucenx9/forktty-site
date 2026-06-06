@@ -31,13 +31,13 @@ export const metadata: Metadata = {
     template: "%s — ForkTTY",
   },
   description:
-    "ForkTTY is a Linux-native GTK/VTE terminal for running Codex, Claude Code, Gemini CLI, and other coding agents in tiled panes — with a programmable local socket API, git worktree workspaces, and prompt-aware notifications. Rust, local-first, no app telemetry.",
+    "ForkTTY is a Linux-native GTK/Ghostty terminal for running Codex, Claude Code, Gemini CLI, and other coding agents in tiled panes — with a programmable local socket API, git worktree workspaces, and prompt-aware notifications. Rust, local-first, no app telemetry.",
   keywords: [
     "ForkTTY",
     "terminal",
     "Linux",
     "GTK",
-    "VTE",
+    "Ghostty",
     "agents",
     "Codex",
     "Claude Code",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ForkTTY — Linux-native multi-agent terminal",
     description:
-      "A GTK/VTE terminal in Rust for running coding agents in tiled panes — scriptable over a local socket, backed by git worktrees. Bring your own CLI and subscription.",
+      "A GTK/Ghostty terminal in Rust for running coding agents in tiled panes — scriptable over a local socket, backed by git worktrees. Bring your own CLI and subscription.",
     url: SITE_URL,
     siteName: "ForkTTY",
     type: "website",
@@ -70,7 +70,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ForkTTY",
     description:
-      "Linux-native multi-agent terminal. Rust + GTK/VTE. Local-first, no app telemetry.",
+      "Linux-native multi-agent terminal. Rust + GTK/Ghostty. Local-first, no app telemetry.",
     images: ["/og.png"],
   },
   icons: {

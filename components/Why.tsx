@@ -7,10 +7,9 @@ export function Why() {
             <span className="h-eyebrow">WHY</span>
             <h2 className="h-title">Native Linux, not a port.</h2>
             <p className="text-ink-300">
-              ForkTTY is a GTK4 / libadwaita application that uses VTE — the
-              same terminal widget behind GNOME Terminal and Tilix — so xterm
-              emulation, true colour, ligatures, and scrollback work the way
-              every other VTE terminal does. No Electron, no web shell, no
+              ForkTTY is a GTK4 / libadwaita application built on Ghostty&rsquo;s
+              terminal engine — so xterm emulation, true colour, and scrollback
+              are fast and faithful to the spec. No Electron, no web shell, no
               terminal reimplemented in JavaScript.
             </p>
             <p className="text-ink-300">

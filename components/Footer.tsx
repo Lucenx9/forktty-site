@@ -11,7 +11,7 @@ export function Footer() {
               forktty<span className="animate-blink text-forktty">_</span>
             </div>
             <p className="mt-2 text-sm text-ink-400">
-              A Linux-native terminal for multi-agent coding. Rust, GTK/VTE, a
+              A Linux-native terminal for multi-agent coding. Rust, GTK/Ghostty, a
               scriptable socket API, git worktrees — open source, local-first.
             </p>
           </div>

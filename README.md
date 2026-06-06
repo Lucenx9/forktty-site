@@ -1,6 +1,6 @@
 # forktty-site
 
-Static-first one-page Next.js (App Router) site for [ForkTTY](https://github.com/Lucenx9/forktty) — a Linux-native GTK/VTE multi-agent terminal.
+Static-first one-page Next.js (App Router) site for [ForkTTY](https://github.com/Lucenx9/forktty) — a Linux-native GTK/Ghostty multi-agent terminal.
 
 ## Stack
 

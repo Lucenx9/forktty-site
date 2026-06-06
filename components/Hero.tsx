@@ -33,7 +33,7 @@ export function Hero() {
           </h1>
 
           <p className="max-w-2xl font-sans text-base leading-relaxed text-ink-300 sm:text-lg">
-            A GTK/VTE terminal written in Rust. Run Codex, Claude Code, Gemini
+            A GTK/Ghostty terminal written in Rust. Run Codex, Claude Code, Gemini
             CLI, or any shell agent in tiling panes — scriptable over a local
             socket, backed by git worktrees. Your keys, your subscription, your
             machine.
@@ -60,7 +60,7 @@ export function Hero() {
           <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1 border-t border-ink-800 pt-4 font-mono text-[11px] tracking-[0.04em] text-ink-500">
             <span className="text-ink-300">linux/x86_64</span>
             <span>·</span>
-            <span>GTK4 / VTE</span>
+            <span>GTK4 / Ghostty</span>
             <span>·</span>
             <span>AGPL-3.0</span>
             <span>·</span>
