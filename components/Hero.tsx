@@ -1,5 +1,6 @@
 import Image from "next/image";
-import { ArrowRight, GitHubIcon, DownloadIcon } from "./Icons";
+import { GitHubIcon, DownloadIcon } from "./Icons";
+import { HeroHotkeys } from "./HeroHotkeys";
 import { REPO_HTML_URL } from "@/lib/github";
 
 export function Hero() {
@@ -20,9 +21,9 @@ export function Hero() {
           className="reveal font-display text-[2.6rem] font-extrabold leading-[1.04] tracking-[-0.045em] text-ink-100 sm:text-6xl lg:text-[4.2rem]"
           style={{ animationDelay: "110ms" }}
         >
-          Multi-agent terminal
+          Stop babysitting
           <br />
-          for <span className="text-forktty">Linux</span>
+          your coding <span className="text-forktty">agents</span>
           <span className="ml-2 inline-block h-[0.78em] w-[0.5ch] translate-y-[0.06em] animate-blink bg-forktty" />
         </h1>
 
@@ -30,17 +31,25 @@ export function Hero() {
           className="reveal max-w-xl font-sans text-base leading-relaxed text-ink-300 sm:text-lg"
           style={{ animationDelay: "210ms" }}
         >
-          Run Codex, Claude Code, Gemini CLI, or any shell agent in tiling
-          panes — scriptable over a local socket, backed by git worktrees.
+          A multi-agent terminal for Linux. Codex, Claude Code, Gemini CLI, or
+          any shell agent in tiling panes — scriptable over a local socket,
+          backed by git worktrees.
         </p>
 
         <div
           className="reveal mt-1 flex flex-wrap items-center justify-center gap-3"
           style={{ animationDelay: "300ms" }}
         >
+          <HeroHotkeys />
           <a href="#download" className="btn-primary">
             <DownloadIcon className="h-4 w-4" />
             Download for Linux
+            <kbd
+              aria-hidden
+              className="ml-1 border border-ink-950/40 px-1.5 font-mono text-[10px] leading-[1.5] opacity-80"
+            >
+              D
+            </kbd>
           </a>
           <a
             href={REPO_HTML_URL}
@@ -50,7 +59,12 @@ export function Hero() {
           >
             <GitHubIcon className="h-4 w-4" />
             View source
-            <ArrowRight className="h-3.5 w-3.5 opacity-60" />
+            <kbd
+              aria-hidden
+              className="ml-1 border border-ink-600 px-1.5 font-mono text-[10px] leading-[1.5] text-ink-400"
+            >
+              G
+            </kbd>
           </a>
         </div>
 

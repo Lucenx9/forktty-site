@@ -2,25 +2,25 @@ const FEATURES = [
   {
     n: "01",
     title: "Agent status, out of the scrollback.",
-    body: "Install hooks for Codex, Claude Code, Gemini CLI, or OpenCode and they report status, progress, and prompt-aware notifications through the socket — a blocked agent surfaces in the sidebar, not buried in a pane.",
+    body: "Install hooks for Codex, Claude Code, Gemini CLI, or OpenCode — status, progress, and prompts surface in the sidebar, not buried in a pane.",
     cmd: "forktty hooks setup",
   },
   {
     n: "02",
     title: "One task, one worktree.",
-    body: "Give each task an isolated git worktree workspace: create, attach, merge, and remove via native git2 — with dirty-state protection and optional setup and teardown hooks.",
+    body: "Each task gets an isolated git worktree workspace: create, attach, merge, remove — with dirty-state protection and setup/teardown hooks.",
     cmd: "forktty worktree-status",
   },
   {
     n: "03",
     title: "A terminal you can drive from a script.",
-    body: "The same orchestration the UI uses is a JSON-RPC API on a user-local Unix socket: open workspaces, split panes, send keystrokes, post notifications. The GTK app is just one client.",
+    body: "Everything the UI does is JSON-RPC on a user-local Unix socket: open workspaces, split panes, send keystrokes. The GTK app is just one client.",
     cmd: 'forktty send-text "cargo test\\n"',
   },
   {
     n: "04",
     title: "Native Linux, not a port.",
-    body: "A GTK4/libadwaita app in Rust on Ghostty's terminal engine — fast, faithful xterm emulation, no Electron. Bring your own agent CLI and keys; nothing is proxied, nothing is phoned home.",
+    body: "GTK4/libadwaita in Rust on Ghostty's terminal engine. No Electron, no telemetry — bring your own agent CLI and keys.",
     cmd: null,
   },
 ];
