@@ -3,42 +3,66 @@ import { GitHubIcon, DownloadIcon } from "./Icons";
 import { HeroHotkeys } from "./HeroHotkeys";
 import { REPO_HTML_URL } from "@/lib/github";
 
+const ART = `  ______ ____  _____  _  _________ _________     __
+ |  ____/ __ \\|  __ \\| |/ /__   __|__   __\\ \\   / /
+ | |__ | |  | | |__) | ' /   | |     | |   \\ \\_/ /
+ |  __|| |  | |  _  /|  <    | |     | |    \\   /
+ | |   | |__| | | \\ \\| . \\   | |     | |     | |
+ |_|    \\____/|_|  \\_\\_|\\_\\  |_|     |_|     |_|`;
+
 export function Hero() {
   return (
     <section id="top" className="scroll-mt-16">
-      <div className="section flex flex-col items-center gap-6 pt-20 pb-16 text-center sm:pt-28">
-        <p
-          className="reveal font-mono text-xs tracking-[0.05em] text-ink-400"
+      <div className="section flex flex-col items-center gap-7 pt-14 pb-16 text-center sm:pt-20">
+        {/* the product introduces itself: a terminal window, Ghostty-style */}
+        <div
+          className="reveal w-full max-w-3xl overflow-hidden rounded-none border border-ink-700 bg-ink-925/80 shadow-panel"
           style={{ animationDelay: "40ms" }}
         >
-          <span className="text-signal-magenta">~</span>{" "}
-          <span className="text-signal-green">❯</span>{" "}
-          <span className="text-ink-200">forktty</span>
-          <span className="text-ink-500"> · early alpha</span>
-        </p>
+          <div className="flex items-center gap-3 border-b border-ink-800 bg-ink-850/80 px-3 py-2 font-mono text-[11px] text-ink-400">
+            <span className="text-ink-500" aria-hidden>
+              ≡
+            </span>
+            <span className="text-ink-200">forktty</span>
+            <span className="text-ink-600">· early alpha</span>
+            <span className="ml-auto flex items-center gap-3 text-ink-600" aria-hidden>
+              <span>—</span>
+              <span>☐</span>
+              <span className="text-ink-500">✕</span>
+            </span>
+          </div>
+
+          <div className="flex flex-col items-center gap-5 px-4 py-10 sm:py-12">
+            <pre
+              aria-hidden
+              className="text-left font-mono font-semibold leading-[1.22] text-forktty"
+              style={{ fontSize: "clamp(8px, 2.4vw, 18px)" }}
+            >
+              {ART}
+            </pre>
+            <p className="font-mono text-[13px] text-ink-300 sm:text-sm">
+              <span className="text-signal-magenta">~</span>{" "}
+              <span className="text-signal-green">❯</span>{" "}
+              <span className="text-ink-100">
+                stop babysitting your coding agents
+              </span>
+              <span className="ml-1 inline-block h-[1.05em] w-[0.55ch] translate-y-[0.18em] animate-blink bg-forktty" />
+            </p>
+          </div>
+        </div>
 
         <h1
-          className="reveal font-display text-[2.6rem] font-extrabold leading-[1.04] tracking-[-0.045em] text-ink-100 sm:text-6xl lg:text-[4.2rem]"
-          style={{ animationDelay: "110ms" }}
+          className="reveal max-w-2xl font-sans text-base leading-relaxed text-ink-300 sm:text-lg"
+          style={{ animationDelay: "150ms" }}
         >
-          Stop babysitting
-          <br />
-          your coding <span className="text-forktty">agents</span>
-          <span className="ml-2 inline-block h-[0.78em] w-[0.5ch] translate-y-[0.06em] animate-blink bg-forktty" />
+          ForkTTY is a multi-agent terminal for Linux that runs Codex, Claude
+          Code, Gemini CLI, or any shell agent in tiling panes — scriptable
+          over a local socket, backed by git worktrees.
         </h1>
 
-        <p
-          className="reveal max-w-xl font-sans text-base leading-relaxed text-ink-300 sm:text-lg"
-          style={{ animationDelay: "210ms" }}
-        >
-          A multi-agent terminal for Linux. Codex, Claude Code, Gemini CLI, or
-          any shell agent in tiling panes — scriptable over a local socket,
-          backed by git worktrees.
-        </p>
-
         <div
-          className="reveal mt-1 flex flex-wrap items-center justify-center gap-3"
-          style={{ animationDelay: "300ms" }}
+          className="reveal flex flex-wrap items-center justify-center gap-3"
+          style={{ animationDelay: "250ms" }}
         >
           <HeroHotkeys />
           <a href="#download" className="btn-primary">
@@ -68,22 +92,9 @@ export function Hero() {
           </a>
         </div>
 
-        <div
-          className="reveal flex flex-wrap items-center justify-center gap-x-4 gap-y-1 pt-2 font-mono text-[11px] tracking-[0.04em] text-ink-500"
-          style={{ animationDelay: "400ms" }}
-        >
-          <span>linux/x86_64</span>
-          <span aria-hidden>·</span>
-          <span>GTK4 / Ghostty</span>
-          <span aria-hidden>·</span>
-          <span>AGPL-3.0</span>
-          <span aria-hidden>·</span>
-          <span className="text-signal-green">no telemetry</span>
-        </div>
-
         <figure
-          className="reveal mt-10 w-full max-w-5xl"
-          style={{ animationDelay: "500ms" }}
+          className="reveal mt-8 w-full max-w-5xl"
+          style={{ animationDelay: "350ms" }}
         >
           <div className="overflow-hidden rounded-none border border-ink-700 bg-ink-900/70 shadow-panel">
             <Image
