@@ -17,7 +17,7 @@ const QUICK_START = [
 const BUILD = [
   "git clone https://github.com/Lucenx9/forktty.git",
   "cd forktty",
-  "# same GTK/Ghostty feature set shipped in the AppImage and .deb",
+  "# main builds the GTK/Ghostty runtime (current alpha downloads still ship GTK/VTE)",
   "cargo run -p forktty-ui-gtk --no-default-features --features gtk-ghostty",
   "# optional source-only browser experiment:",
   "# cargo run -p forktty-ui-gtk --features browser",
@@ -143,7 +143,7 @@ function CodeBlock({ lines }: { lines: string[] }) {
   return (
     <pre className="mt-4 overflow-x-auto rounded-none border border-ink-800 bg-ink-950 p-4 font-mono text-[12.5px] leading-relaxed text-ink-100">
       {lines.map((line, i) => (
-        <div key={i}>
+        <div key={`${i}-${line}`}>
           {line.startsWith("#") ? (
             <span className="text-ink-400">{line}</span>
           ) : (
@@ -213,8 +213,9 @@ function ReleaseFallback({ reason, url }: { reason: string; url: string }) {
               Release metadata unavailable
             </h3>
             <p className="mt-1 text-sm text-ink-300">
-              The GitHub Releases API didn&rsquo;t respond. Every signed
-              artifact and changelog is on the project&rsquo;s releases page.
+              The GitHub Releases API didn&rsquo;t respond. Every artifact,
+              checksum file, and changelog is on the project&rsquo;s releases
+              page.
             </p>
             <p className="mt-2 font-mono text-xs text-ink-500">{reason}</p>
           </div>

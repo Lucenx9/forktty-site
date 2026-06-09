@@ -27,10 +27,11 @@ export function AlphaNotes() {
           <div className="tui-frame p-6 sm:p-8">
             <ul className="space-y-4 text-sm">
               <NoteRow label="experimental">
-                Packaged alpha builds are GTK/Ghostty-only. The browser pane remains
-                a source-only experiment behind <code>--features browser</code>.
-                The AppImage is unsigned — verify it against SHA256SUMS before
-                running.
+                The current alpha.6 packages still ship the earlier GTK/VTE
+                renderer — the GTK/Ghostty runtime on main lands with the next
+                release. The browser pane remains a source-only experiment
+                behind <code>--features browser</code>. The AppImage is
+                unsigned — verify it against SHA256SUMS before running.
               </NoteRow>
               <NoteRow label="breaking">
                 Config format, keybinds, and CLI flags will change without

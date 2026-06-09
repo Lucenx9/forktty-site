@@ -11,7 +11,7 @@ const ITEMS = [
   },
   {
     q: "Why GTK/Ghostty instead of a web stack?",
-    a: "Ghostty is a fast, modern terminal engine. ForkTTY embeds it (libghostty-vt) for faithful xterm emulation and true-colour rendering, so we can focus on the orchestration layer instead of reimplementing a terminal in JavaScript.",
+    a: "Ghostty is a fast, modern terminal engine. ForkTTY embeds it (libghostty-vt) for faithful xterm emulation and true-colour rendering, so we can focus on the orchestration layer instead of reimplementing a terminal in JavaScript. Note: the downloadable alpha.6 builds still use the previous GTK/VTE renderer — the Ghostty runtime ships with the next release.",
   },
   {
     q: "Will there be a macOS or Windows build?",
@@ -63,8 +63,8 @@ export function Faq() {
         </div>
 
         <div className="mt-12 divide-y divide-ink-800 overflow-hidden rounded-none border border-ink-800">
-          {ITEMS.map((item, i) => (
-            <details key={i} className="group bg-ink-900">
+          {ITEMS.map((item) => (
+            <details key={item.q} className="group bg-ink-900">
               <summary className="flex cursor-pointer list-none items-center justify-between gap-6 px-6 py-5 text-base text-ink-100 transition-colors hover:bg-ink-850">
                 <span className="font-mono text-[15px] font-medium tracking-tight">{item.q}</span>
                 <svg

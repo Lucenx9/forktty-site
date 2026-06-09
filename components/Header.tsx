@@ -2,19 +2,21 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 import { GitHubIcon } from "./Icons";
 import { REPO_HTML_URL } from "@/lib/github";
 
-export function Header() {
-  const [isScrolled, setIsScrolled] = useState(false);
+function subscribeToScroll(callback: () => void) {
+  window.addEventListener("scroll", callback, { passive: true });
+  return () => window.removeEventListener("scroll", callback);
+}
 
-  useEffect(() => {
-    const update = () => setIsScrolled(window.scrollY > 8);
-    update();
-    window.addEventListener("scroll", update, { passive: true });
-    return () => window.removeEventListener("scroll", update);
-  }, []);
+export function Header() {
+  const isScrolled = useSyncExternalStore(
+    subscribeToScroll,
+    () => window.scrollY > 8,
+    () => false,
+  );
 
   return (
     <header
@@ -44,6 +46,7 @@ export function Header() {
           <a href="#download" className="hover:text-forktty">Download</a>
           <a href="#why" className="hover:text-forktty">Why</a>
           <a href="#capabilities" className="hover:text-forktty">Features</a>
+          <a href="#alpha" className="hover:text-forktty">Alpha</a>
           <a href="#faq" className="hover:text-forktty">FAQ</a>
         </nav>
 
