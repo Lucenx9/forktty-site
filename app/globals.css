@@ -79,26 +79,13 @@
 
 @layer components {
   /* ── Atmosphere ─────────────────────────────────────────────────────────
-     One fixed layer behind everything: warm vignette, ASCII grid, a slow
-     drifting orange bloom, faint CRT scanlines, and a film grain. */
+     One fixed layer behind everything: warm vignette, a slow drifting
+     orange bloom, and a film grain. */
   .backdrop {
     @apply pointer-events-none fixed inset-0 -z-10 overflow-hidden;
     background:
       radial-gradient(120% 80% at 50% -10%, rgba(231, 138, 78, 0.08), transparent 60%),
       radial-gradient(100% 100% at 50% 120%, rgba(0, 0, 0, 0.55), transparent 55%);
-  }
-  .backdrop::before {
-    /* grid + scanlines, faded toward the edges */
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(232, 227, 212, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(232, 227, 212, 0.05) 1px, transparent 1px),
-      repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.14) 0px, rgba(0, 0, 0, 0.14) 1px, transparent 1px, transparent 3px);
-    background-size: 30px 30px, 30px 30px, 100% 3px;
-    -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 35%, transparent 90%);
-    mask-image: radial-gradient(120% 100% at 50% 0%, #000 35%, transparent 90%);
   }
   .backdrop > .bloom {
     position: absolute;
@@ -125,39 +112,6 @@
      Pair .reveal with an inline animation-delay for a staggered entrance. */
   .reveal {
     animation: reveal 0.72s cubic-bezier(0.22, 1, 0.36, 1) both;
-  }
-
-  /* ── Pane system ────────────────────────────────────────────────────────
-     Every section is a workspace pane; the one in view earns the focused
-     orange outline, mirroring ForkTTY's active-pane highlight. */
-  .pane {
-    @apply relative border-t border-ink-800/60 transition-colors duration-500;
-  }
-  .pane::before {
-    /* left focus rail — transparent until active */
-    content: "";
-    position: absolute;
-    inset: 0 auto 0 0;
-    width: 2px;
-    background: transparent;
-    transition: background 0.5s ease;
-  }
-  .pane[data-active="true"]::before {
-    background: linear-gradient(180deg, transparent, #e78a4e 18%, #e78a4e 82%, transparent);
-  }
-  .pane[data-active="true"] {
-    background: linear-gradient(90deg, rgba(231, 138, 78, 0.035), transparent 38%);
-  }
-
-  /* pane title bar: [02] ~/why ─────────────────── ❯ */
-  .pane-bar {
-    @apply flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.18em] text-ink-500;
-  }
-  .pane-bar .rule {
-    @apply h-px flex-1;
-    background-image: linear-gradient(90deg, currentColor 0 4px, transparent 4px 8px);
-    background-size: 8px 1px;
-    opacity: 0.4;
   }
 
   /* A bordered TUI panel. Box-drawing corner glyphs are stamped in via
@@ -215,55 +169,8 @@
     @apply mx-auto w-full max-w-6xl px-6 sm:px-8;
   }
 
-  /* section eyebrow rendered as a shell prompt: ❯ label */
-  .h-eyebrow {
-    @apply inline-flex items-center font-mono text-xs lowercase tracking-[0.05em] text-ink-300;
-  }
-  .h-eyebrow::before {
-    content: "\276F\00a0"; /* ❯ + nbsp */
-    @apply text-signal-green;
-  }
-
   .h-title {
     @apply font-display text-[1.7rem] sm:text-[2.1rem] font-semibold leading-[1.08] tracking-[-0.03em] text-ink-100;
   }
 
-  /* ── Persistent statusline (tmux / lualine flavour) ─────────────────────── */
-  .statusline {
-    @apply fixed inset-x-0 bottom-0 z-40 flex h-8 items-stretch border-t border-ink-700 bg-ink-925/90 font-mono text-[11px] tracking-[0.04em] text-ink-400 backdrop-blur;
-  }
-  /* Kept unscoped (single class) so Tailwind responsive utilities like
-     `hidden sm:flex` can still override the display on small screens. */
-  .seg {
-    @apply flex items-center gap-1.5 px-3;
-  }
-  .mode {
-    @apply flex items-center bg-forktty px-2.5 font-semibold uppercase tracking-[0.12em] text-ink-950;
-    clip-path: polygon(0 0, 100% 0, calc(100% - 7px) 100%, 0 100%);
-  }
-
-  /* the "running" shimmer used in the hero agent pane */
-  .shimmer-bar {
-    background: linear-gradient(
-      90deg,
-      rgba(169, 182, 101, 0.15) 0%,
-      rgba(169, 182, 101, 0.55) 50%,
-      rgba(169, 182, 101, 0.15) 100%
-    );
-    background-size: 200% 100%;
-    @apply animate-shimmer;
-  }
-
-  /* underline sweep for inline links */
-  .link-sweep {
-    @apply relative text-ink-200 transition-colors hover:text-forktty;
-    background-image: linear-gradient(currentColor, currentColor);
-    background-size: 0% 1px;
-    background-position: 0 100%;
-    background-repeat: no-repeat;
-    transition: background-size 0.25s ease, color 0.2s ease;
-  }
-  .link-sweep:hover {
-    background-size: 100% 1px;
-  }
 }

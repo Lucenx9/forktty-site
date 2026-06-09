@@ -1,13 +1,9 @@
 import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
-import { Screenshot } from "@/components/Screenshot";
+import { Features } from "@/components/Features";
 import { Download } from "@/components/Download";
-import { Why } from "@/components/Why";
-import { Capabilities } from "@/components/Capabilities";
-import { AlphaNotes } from "@/components/AlphaNotes";
 import { Faq } from "@/components/Faq";
 import { Footer } from "@/components/Footer";
-import { StatusLine } from "@/components/StatusLine";
 
 export const revalidate = 1800;
 
@@ -22,16 +18,11 @@ export default function Page() {
       <Header />
       <main id="main">
         <Hero />
-        <Screenshot />
+        <Features />
         <Download />
-        <Why />
-        <Capabilities />
-        <AlphaNotes />
         <Faq />
       </main>
       <Footer />
-
-      <StatusLine />
     </>
   );
 }

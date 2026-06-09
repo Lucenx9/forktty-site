@@ -53,12 +53,6 @@ const config: Config = {
         panel: "0 1px 0 rgba(255,255,255,0.03) inset, 0 24px 48px -32px rgba(0,0,0,0.8)",
         focus: "0 0 0 1px rgba(231,138,78,0.45), 0 0 38px -10px rgba(231,138,78,0.32), inset 0 0 0 1px rgba(231,138,78,0.10)",
       },
-      backgroundImage: {
-        "grid-faint":
-          "linear-gradient(rgba(232,227,212,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(232,227,212,0.04) 1px, transparent 1px)",
-        "scanlines":
-          "repeating-linear-gradient(0deg, rgba(0,0,0,0.16) 0px, rgba(0,0,0,0.16) 1px, transparent 1px, transparent 3px)",
-      },
       keyframes: {
         blink: {
           "0%, 49%": { opacity: "1" },
@@ -68,28 +62,14 @@ const config: Config = {
           from: { opacity: "0", transform: "translateY(14px)" },
           to: { opacity: "1", transform: "translateY(0)" },
         },
-        shimmer: {
-          "0%": { backgroundPosition: "-160% 0" },
-          "100%": { backgroundPosition: "260% 0" },
-        },
-        "pulse-soft": {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.35" },
-        },
         drift: {
           "0%, 100%": { transform: "translate3d(0,0,0) scale(1)" },
           "50%": { transform: "translate3d(4%, -3%, 0) scale(1.08)" },
-        },
-        "type-line": {
-          from: { width: "0" },
-          to: { width: "100%" },
         },
       },
       animation: {
         blink: "blink 1.1s step-end infinite",
         reveal: "reveal 0.72s cubic-bezier(0.22, 1, 0.36, 1) both",
-        shimmer: "shimmer 2.4s linear infinite",
-        "pulse-soft": "pulse-soft 1.6s ease-in-out infinite",
         drift: "drift 24s ease-in-out infinite",
       },
     },
