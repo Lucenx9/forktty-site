@@ -8,3 +8,10 @@ out
 .vercel
 next-env.d.ts
 tsconfig.tsbuildinfo
+
+# agent-tool skill caches (duplicated react-doctor skill)
+.agents/
+.claude/
+.factory/
+.forge/
+.playwright-mcp/
