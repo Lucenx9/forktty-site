@@ -1,0 +1,29 @@
+# ForkTTY
+
+> ForkTTY is a Linux-native terminal multiplexer for coding agents, built in Rust with GTK4/libadwaita and a Ghostty-backed terminal. It runs Codex, Claude Code, Gemini CLI, and other agent CLIs in tiled panes, exposes a JSON-RPC Unix socket API for scripting, manages git worktree workspaces, and surfaces agent lifecycle notifications. Local-first, AGPL-3.0-only, no app telemetry. Currently in alpha; Linux only.
+
+Key facts: bring your own agent CLI and subscription (ForkTTY ships no model access); the `forktty` binary is both the GTK app and a socket CLI (`forktty doctor`, `forktty list`, `forktty surfaces`, `forktty events`); agent hooks for Claude Code, Codex, and Gemini CLI are installed with `forktty hooks setup`; releases ship as AppImage and deb packages.
+
+## Documentation
+
+- [README](https://raw.githubusercontent.com/Lucenx9/forktty/main/README.md): Overview, installation, and quick start
+- [SPEC](https://raw.githubusercontent.com/Lucenx9/forktty/main/SPEC.md): Configuration fields, socket JSON-RPC API, and security boundaries
+- [CHANGELOG](https://raw.githubusercontent.com/Lucenx9/forktty/main/CHANGELOG.md): Release history and unreleased changes
+- [AGENTS guide](https://raw.githubusercontent.com/Lucenx9/forktty/main/AGENTS.md): Architecture and conventions for coding agents working on the codebase
+
+## Downloads and source
+
+- [GitHub repository](https://github.com/Lucenx9/forktty): Source code (Rust workspace, AGPL-3.0-only)
+- [Releases](https://github.com/Lucenx9/forktty/releases): AppImage and deb downloads
+
+## Policies
+
+- [Security policy](https://raw.githubusercontent.com/Lucenx9/forktty/main/SECURITY.md): Security model and how to report vulnerabilities
+- [Privacy](https://raw.githubusercontent.com/Lucenx9/forktty/main/PRIVACY.md): No app telemetry; what stays local
+
+## Optional
+
+- [Roadmap](https://raw.githubusercontent.com/Lucenx9/forktty/main/ROADMAP.md): Planned features and direction
+- [Contributing](https://raw.githubusercontent.com/Lucenx9/forktty/main/CONTRIBUTING.md): How to contribute
+- [Support](https://raw.githubusercontent.com/Lucenx9/forktty/main/SUPPORT.md): Getting help
+- [Landing page](https://forktty-site.vercel.app/): Features, FAQ, and download links
