@@ -4,12 +4,20 @@ const ITEMS = [
     a: "No. ForkTTY is bring-your-own-CLI: you install the agent of your choice, authenticate with your own keys or subscription, and ForkTTY just hosts the PTYs. Nothing is proxied.",
   },
   {
+    q: "Which agents have first-class integration?",
+    a: "Codex, Claude Code, Antigravity, and OpenCode have hook-driven status and persisted session metadata for the Agent HUD and resume flow. Gemini CLI remains available as a legacy opt-in target, and custom tools can still use the socket CLI.",
+  },
+  {
     q: "Can I script or automate it?",
-    a: "Yes — that's a core feature. The same forktty binary speaks a JSON-RPC API over a user-local Unix socket: forktty list, focus, split-surface, send-text, worktree-status, notify, events, and more. Diagnostics like forktty doctor work even when the GUI isn't running.",
+    a: "Yes — that's a core feature. The same forktty binary speaks a JSON-RPC API over a user-local Unix socket and can expose it as a local stdio MCP server: list workspaces, read or capture terminal text, inspect pane trees, split/focus/send text, manage worktrees, notify, resume agents, and publish status.",
   },
   {
     q: "Does it really do git worktrees?",
     a: "Yes. Workspaces can be backed by isolated git worktrees that ForkTTY creates, attaches, merges, and removes via native git2 operations — with dirty-state protection and optional .forktty/setup and teardown hooks.",
+  },
+  {
+    q: "Are browser panes included in the downloads?",
+    a: "No. The alpha AppImage and .deb are GTK/Ghostty terminal builds. WebKitGTK browser panes, browser profiles, history/bookmarks, and import flows remain source-only behind the browser feature for intentional testing.",
   },
   {
     q: "Will there be a macOS or Windows build?",

@@ -1,26 +1,32 @@
 const FEATURES = [
   {
     n: "01",
-    title: "Agent status, out of the scrollback.",
-    body: "Install hooks for Codex, Claude Code, Gemini CLI, or OpenCode — status, progress, and prompts surface in the sidebar, not buried in a pane.",
-    cmd: "forktty hooks setup",
+    title: "Agent HUD, not scrollback archaeology.",
+    body: "Hooks for Codex, Claude Code, Antigravity, and OpenCode persist session ids, cwd, lifecycle, and last activity so the GTK HUD can focus or resume an agent in a new tab.",
+    cmd: "forktty agents",
   },
   {
     n: "02",
-    title: "One task, one worktree.",
+    title: "Worktrees are first-class workspaces.",
     body: "Each task gets an isolated git worktree workspace: create, attach, merge, remove — with dirty-state protection and setup/teardown hooks.",
     cmd: "forktty worktree-status",
   },
   {
     n: "03",
-    title: "A terminal you can drive from a script.",
-    body: "Everything the UI does is JSON-RPC on a user-local Unix socket: open workspaces, split panes, send keystrokes. The GTK app is just one client.",
-    cmd: 'forktty send-text "cargo test\\n"',
+    title: "Socket and MCP automation share one surface.",
+    body: "The user-local JSON-RPC socket backs the CLI and MCP server: inspect pane trees, read screen text, capture tails, split or focus panes, send text, create worktrees, and publish status.",
+    cmd: "forktty mcp setup",
   },
   {
     n: "04",
-    title: "Native Linux, not a port.",
-    body: "GTK4/libadwaita in Rust on Ghostty's terminal engine. No Electron, no telemetry — bring your own agent CLI and keys.",
+    title: "Ghostty terminals with native Linux polish.",
+    body: "GTK4/libadwaita in Rust on Ghostty's terminal engine: split panes, tabs, scrollback search, OSC links, Ctrl-click open, middle-click PRIMARY paste, visual bell, and desktop notifications.",
+    cmd: null,
+  },
+  {
+    n: "05",
+    title: "Local-first by design.",
+    body: "No app telemetry, no update checks, owner-only Unix socket permissions, bounded config/session files, and argv-based command execution. Bring your own agent CLI and keys.",
     cmd: null,
   },
 ];

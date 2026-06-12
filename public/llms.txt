@@ -1,8 +1,8 @@
 # ForkTTY
 
-> ForkTTY is a Linux-native terminal multiplexer for coding agents, built in Rust with GTK4/libadwaita and a Ghostty-backed terminal. It runs Codex, Claude Code, Gemini CLI, and other agent CLIs in tiled panes, exposes a JSON-RPC Unix socket API for scripting, manages git worktree workspaces, and surfaces agent lifecycle notifications. Local-first, AGPL-3.0-only, no app telemetry. Currently in alpha; Linux only.
+> ForkTTY is a Linux-native terminal multiplexer for coding agents, built in Rust with GTK4/libadwaita and Ghostty-backed terminals. It coordinates Codex, Claude Code, Antigravity, OpenCode, legacy Gemini CLI, and shell agents in tiled workspaces; exposes a JSON-RPC Unix socket API and local stdio MCP server; manages git worktree workspaces; and surfaces persisted agent sessions through a GTK Agent HUD with focus and resume actions. Local-first, AGPL-3.0-only, no app telemetry. Currently in alpha; Linux only.
 
-Key facts: bring your own agent CLI and subscription (ForkTTY ships no model access); the `forktty` binary is both the GTK app and a socket CLI (`forktty doctor`, `forktty list`, `forktty surfaces`, `forktty events`); agent hooks for Claude Code, Codex, and Gemini CLI are installed with `forktty hooks setup`; releases ship as AppImage and deb packages.
+Key facts: bring your own agent CLI and subscription (ForkTTY ships no model access); the `forktty` binary is both the GTK app and a socket CLI (`forktty doctor`, `forktty agents`, `forktty read-screen`, `forktty capture-tail`, `forktty tree`, `forktty events`, `forktty statusline`); `forktty mcp` exposes the same local automation surface to agents; default hooks target Codex, Claude Code, Antigravity, and OpenCode, while Gemini CLI is legacy opt-in; releases ship as AppImage and deb packages for Linux x86_64.
 
 ## Documentation
 

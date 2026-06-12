@@ -8,15 +8,15 @@ import {
 } from "@/lib/github";
 
 const QUICK_START = [
-  "chmod +x forktty-*.AppImage",
   "sha256sum -c SHA256SUMS --ignore-missing",
+  "chmod +x forktty-*.AppImage",
   "./forktty-*.AppImage",
 ];
 
 const BUILD = [
   "git clone https://github.com/Lucenx9/forktty.git",
   "cd forktty",
-  "cargo run -p forktty-ui-gtk --release",
+  "cargo run -p forktty-ui-gtk",
 ];
 
 export async function Download() {
@@ -35,8 +35,10 @@ export async function Download() {
 
         <p className="mt-8 max-w-2xl text-sm leading-relaxed text-ink-400">
           Early alpha: expect breaking changes between releases, and builds are
-          unsigned — verify against SHA256SUMS. Linux x86_64 only. ForkTTY has
-          no telemetry; agent CLIs use your own keys and subscriptions.
+          unsigned — verify against SHA256SUMS. Linux x86_64 only. The AppImage
+          is the primary portable download; the .deb is for Debian/Ubuntu.
+          Packaged builds ship the GTK/Ghostty terminal runtime, while browser
+          panes remain source-only behind the browser feature.
         </p>
       </div>
     </section>
@@ -101,7 +103,7 @@ function Release({
             </span>
             Build from source
             <span className="font-sans text-xs text-ink-400">
-              — Rust 1.93+, GTK4 / libadwaita, Zig
+              — Rust 1.96+, GTK4 / libadwaita, Git, Zig
             </span>
           </summary>
           <CodeBlock lines={BUILD} />

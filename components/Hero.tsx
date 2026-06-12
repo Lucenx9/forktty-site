@@ -24,7 +24,7 @@ export function Hero() {
               ≡
             </span>
             <span className="text-ink-200">forktty</span>
-            <span className="text-ink-600">· early alpha</span>
+            <span className="text-ink-600">· v0.2 alpha</span>
             <span className="ml-auto flex items-center gap-3 text-ink-600" aria-hidden>
               <span>—</span>
               <span>☐</span>
@@ -44,7 +44,7 @@ export function Hero() {
               <span className="text-signal-magenta">~</span>{" "}
               <span className="text-signal-green">❯</span>{" "}
               <span className="text-ink-100">
-                stop babysitting your coding agents
+                inspect, focus, and resume your agents
               </span>
               <span className="ml-1 inline-block h-[1.05em] w-[0.55ch] translate-y-[0.18em] animate-blink bg-forktty" />
             </p>
@@ -55,9 +55,9 @@ export function Hero() {
           className="reveal max-w-2xl font-sans text-base leading-relaxed text-ink-300 sm:text-lg"
           style={{ animationDelay: "150ms" }}
         >
-          ForkTTY is a multi-agent terminal for Linux that runs Codex, Claude
-          Code, Gemini CLI, or any shell agent in tiling panes — scriptable
-          over a local socket, backed by git worktrees.
+          ForkTTY is a Linux-native GTK/Ghostty terminal for coordinating
+          Codex, Claude Code, Antigravity, OpenCode, and shell agents in tiled
+          workspaces — backed by git worktrees, a local socket API, and MCP.
         </h1>
 
         <div
