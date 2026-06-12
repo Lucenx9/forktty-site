@@ -3,66 +3,51 @@ import { GitHubIcon, DownloadIcon } from "./Icons";
 import { HeroHotkeys } from "./HeroHotkeys";
 import { REPO_HTML_URL } from "@/lib/github";
 
-const ART = `  ______ ____  _____  _  _________ _________     __
- |  ____/ __ \\|  __ \\| |/ /__   __|__   __\\ \\   / /
- | |__ | |  | | |__) | ' /   | |     | |   \\ \\_/ /
- |  __|| |  | |  _  /|  <    | |     | |    \\   /
- | |   | |__| | | \\ \\| . \\   | |     | |     | |
- |_|    \\____/|_|  \\_\\_|\\_\\  |_|     |_|     |_|`;
+const CAPABILITIES = ["Agent HUD", "Git worktrees", "Local socket", "MCP"];
 
 export function Hero() {
   return (
     <section id="top" className="scroll-mt-16">
-      <div className="section flex flex-col items-center gap-7 pt-14 pb-16 text-center sm:pt-20">
-        {/* the product introduces itself: a terminal window, Ghostty-style */}
-        <div
-          className="reveal w-full max-w-3xl overflow-hidden rounded-none border border-ink-700 bg-ink-925/80 shadow-panel"
-          style={{ animationDelay: "40ms" }}
-        >
-          <div className="flex items-center gap-3 border-b border-ink-800 bg-ink-850/80 px-3 py-2 font-mono text-[11px] text-ink-400">
-            <span className="text-ink-500" aria-hidden>
-              ≡
+      <div className="section flex flex-col items-center gap-8 pt-16 pb-16 text-center sm:pt-20">
+        <div className="reveal flex flex-col items-center gap-6" style={{ animationDelay: "40ms" }}>
+          <div className="inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.16em] text-ink-400">
+            <Image
+              src="/forktty.svg"
+              alt=""
+              width={34}
+              height={34}
+              className="h-8 w-8"
+              priority
+            />
+            <span>Linux-native terminal</span>
+            <span className="text-ink-600" aria-hidden>
+              /
             </span>
-            <span className="text-ink-200">forktty</span>
-            <span className="text-ink-600">· v0.2 alpha</span>
-            <span className="ml-auto flex items-center gap-3 text-ink-600" aria-hidden>
-              <span>—</span>
-              <span>☐</span>
-              <span className="text-ink-500">✕</span>
-            </span>
+            <span className="text-forktty">v0.2 alpha</span>
           </div>
 
-          <div className="flex flex-col items-center gap-5 px-4 py-10 sm:py-12">
-            <pre
-              aria-hidden
-              className="text-left font-mono font-semibold leading-[1.22] text-forktty"
-              style={{ fontSize: "clamp(8px, 2.4vw, 18px)" }}
-            >
-              {ART}
-            </pre>
-            <p className="font-mono text-[13px] text-ink-300 sm:text-sm">
-              <span className="text-signal-magenta">~</span>{" "}
-              <span className="text-signal-green">❯</span>{" "}
-              <span className="text-ink-100">
-                inspect, focus, and resume your agents
+          <h1 className="max-w-4xl font-display text-[3.1rem] font-semibold leading-[0.95] text-ink-100 sm:text-[5.6rem]">
+            ForkTTY
+          </h1>
+
+          <p className="max-w-3xl text-balance text-base leading-relaxed text-ink-300 sm:text-xl">
+            Coordinate Codex, Claude Code, Antigravity, OpenCode, and shell
+            agents in tiled GTK/Ghostty workspaces — with git worktrees, a local
+            socket API, MCP, and resume-aware notifications.
+          </p>
+
+          <div className="flex flex-wrap justify-center gap-2">
+            {CAPABILITIES.map((capability) => (
+              <span key={capability} className="chip">
+                {capability}
               </span>
-              <span className="ml-1 inline-block h-[1.05em] w-[0.55ch] translate-y-[0.18em] animate-blink bg-forktty" />
-            </p>
+            ))}
           </div>
         </div>
 
-        <h1
-          className="reveal max-w-2xl font-sans text-base leading-relaxed text-ink-300 sm:text-lg"
-          style={{ animationDelay: "150ms" }}
-        >
-          ForkTTY is a Linux-native GTK/Ghostty terminal for coordinating
-          Codex, Claude Code, Antigravity, OpenCode, and shell agents in tiled
-          workspaces — backed by git worktrees, a local socket API, and MCP.
-        </h1>
-
         <div
           className="reveal flex flex-wrap items-center justify-center gap-3"
-          style={{ animationDelay: "250ms" }}
+          style={{ animationDelay: "160ms" }}
         >
           <HeroHotkeys />
           <a href="#download" className="btn-primary">
@@ -93,8 +78,8 @@ export function Hero() {
         </div>
 
         <figure
-          className="reveal mt-8 w-full max-w-5xl"
-          style={{ animationDelay: "350ms" }}
+          className="reveal mt-6 w-full max-w-6xl"
+          style={{ animationDelay: "260ms" }}
         >
           <div className="overflow-hidden rounded-none border border-ink-700 bg-ink-900/70 shadow-panel">
             <Image
