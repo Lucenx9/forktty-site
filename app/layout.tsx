@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     template: "%s — ForkTTY",
   },
   description:
-    "ForkTTY is a Linux-native GTK/Ghostty terminal for coordinating Codex, Claude Code, Antigravity, OpenCode, and shell agents in tiled workspaces — with a programmable local socket API, MCP tools, git worktrees, Agent HUD, and resume-aware notifications. Rust, local-first, no app telemetry.",
+    "ForkTTY is a Linux-native GTK/Ghostty terminal for coordinating Codex, Claude Code, Antigravity, OpenCode, and shell agents in tiled workspaces — with a programmable local socket API, MCP tools, git worktrees, Agent HUD, resume-aware notifications, and an opt-out anonymous daily usage ping.",
   keywords: [
     "ForkTTY",
     "terminal",
