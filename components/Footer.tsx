@@ -34,7 +34,8 @@ export function Footer() {
         <div className="flex flex-col items-start justify-between gap-3 border-t border-ink-800/70 pt-5 text-xs text-ink-500 sm:flex-row sm:items-center">
           <span>
             © {new Date().getFullYear()} ForkTTY contributors · AGPL-3.0 · The
-            app has no telemetry; this site uses anonymous page-view analytics.
+            app sends an anonymous daily ping you can disable; this site uses
+            anonymous page-view analytics.
           </span>
           <a
             href={REPO_HTML_URL}

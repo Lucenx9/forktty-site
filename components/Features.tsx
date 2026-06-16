@@ -26,7 +26,7 @@ const FEATURES = [
   {
     n: "05",
     title: "Local-first by design.",
-    body: "No app telemetry, no update checks, owner-only Unix socket permissions, bounded config/session files, and argv-based command execution. Bring your own agent CLI and keys.",
+    body: "No crash reports, no event tracking, no terminal or project data leaving the machine. An anonymous daily usage ping and once-a-day GitHub update check are on by default but one toggle away. Owner-only Unix socket, bounded config/session files, argv-based command execution. Bring your own agent CLI and keys.",
     cmd: null,
   },
 ];

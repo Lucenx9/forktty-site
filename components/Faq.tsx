@@ -25,7 +25,7 @@ const ITEMS = [
   },
   {
     q: "Is anything sent to a server?",
-    a: "No. ForkTTY itself has no telemetry, no auto-update server, no analytics. Agent CLIs talk only to whatever endpoint you configure them to.",
+    a: "Only an anonymous daily usage ping and an optional once-a-day GitHub update check, both on by default and one toggle to disable. The ping carries just a schema tag, app name, version, and date — no crash reports, analytics, identifiers, terminal contents, or project data. A first-launch dialog shows the toggle before anything is sent. Agent CLIs talk only to whatever endpoint you configure them to.",
   },
 ];
 
