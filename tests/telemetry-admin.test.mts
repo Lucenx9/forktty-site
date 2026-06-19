@@ -11,8 +11,8 @@ afterEach(() => {
   globalThis.fetch = OLD_FETCH;
 });
 
-function request(authorization?: string): Request {
-  return new Request("https://forktty-site.vercel.app/admin/telemetry", {
+function request(authorization?: string, path = "/admin/telemetry"): Request {
+  return new Request(`https://forktty-site.vercel.app${path}`, {
     method: "GET",
     headers: authorization ? { authorization } : undefined,
   });
@@ -95,10 +95,59 @@ test("admin dashboard renders ping counts from Redis", async () => {
     ["GET", "telemetry:ping:2026-06-12:test"],
   ]);
   assert.match(body, /ForkTTY telemetry/);
+  assert.match(body, /Last updated/);
+  assert.match(body, /Last 7 days/);
+  assert.match(body, /Last 30 days/);
+  assert.match(body, /Version adoption/);
+  assert.match(body, /Daily trend/);
+  assert.match(body, /Export CSV/);
   assert.match(body, /2026-06-13/);
   assert.match(body, /0\.2\.0-alpha\.12/);
   assert.match(body, />4</);
   assert.match(body, /Treat these as installs that pinged/);
+});
+
+test("admin dashboard filters rows and exports CSV", async () => {
+  configureAdmin();
+  configureRedis();
+  globalThis.fetch = async (_input, init) => {
+    const body = JSON.parse(String(init?.body));
+    if (body[0][0] === "SCAN") {
+      return Response.json([
+        {
+          result: [
+            "0",
+            [
+              "telemetry:ping:2026-06-13:0.2.0-alpha.12",
+              "telemetry:ping:2026-06-12:0.2.0-alpha.12",
+              "telemetry:ping:2026-05-01:0.1.0",
+            ],
+          ],
+        },
+      ]);
+    }
+
+    return Response.json([{ result: "4" }, { result: "2" }, { result: "8" }]);
+  };
+
+  const response = await GET(request(
+    basicAuth("owner", "admin-secret"),
+    "/admin/telemetry?range=7&version=0.2.0-alpha.12&format=csv",
+  ));
+  const body = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get("content-type"), "text/csv; charset=utf-8");
+  assert.match(
+    response.headers.get("content-disposition") ?? "",
+    /attachment; filename="forktty-telemetry-7d-0\.2\.0-alpha\.12\.csv"/,
+  );
+  assert.equal(body, [
+    "date,version,pings",
+    "2026-06-13,0.2.0-alpha.12,4",
+    "2026-06-12,0.2.0-alpha.12,2",
+    "",
+  ].join("\n"));
 });
 
 test("admin dashboard reports missing Redis credentials", async () => {
