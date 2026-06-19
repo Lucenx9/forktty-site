@@ -8,7 +8,7 @@ const CAPABILITIES = ["Agent HUD", "Git worktrees", "Local socket", "MCP"];
 export function Hero() {
   return (
     <section id="top" className="scroll-mt-16">
-      <div className="section flex flex-col items-center gap-8 pt-16 pb-16 text-center sm:pt-20">
+      <div className="section flex flex-col items-center gap-6 pt-16 pb-16 text-center sm:pt-20">
         <div className="reveal flex flex-col items-center gap-6" style={{ animationDelay: "40ms" }}>
           <div className="inline-flex items-center gap-3 font-mono text-xs uppercase tracking-[0.16em] text-ink-400">
             <Image
@@ -78,19 +78,19 @@ export function Hero() {
         </div>
 
         <figure
-          className="reveal mt-6 w-full max-w-6xl"
+          className="reveal mt-2 w-[min(calc(100vw-2rem),88rem)] max-w-[88rem]"
           style={{ animationDelay: "260ms" }}
         >
           <div className="overflow-hidden rounded-none border border-ink-700 bg-ink-900/70 shadow-panel">
             <Image
-              src="/screenshots/forktty-app.png"
+              src="/screenshots/forktty-app-focus.png"
               alt="ForkTTY on Linux showing a workspace sidebar, pane tabs, and four tiled terminal panes with the focused pane outlined in orange."
               width={1920}
-              height={1034}
+              height={820}
               quality={95}
               priority
               className="block h-auto w-full"
-              sizes="(min-width: 1024px) 1024px, 100vw"
+              sizes="(min-width: 1408px) 1408px, 100vw"
             />
           </div>
         </figure>
