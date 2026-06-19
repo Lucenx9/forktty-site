@@ -49,3 +49,15 @@ test("canonical site URL defaults to the public custom domain", async () => {
   assert.match(site, /"https:\/\/forktty\.dev"/);
   assert.doesNotMatch(site, /forktty-site\.vercel\.app/);
 });
+
+test("sitemap uses canonical URLs with stable meaningful lastmod values", async () => {
+  const sitemap = await source("app/sitemap.ts");
+
+  assert.match(sitemap, /`\$\{SITE_URL\}\/`/);
+  assert.match(sitemap, /`\$\{SITE_URL\}\/docs`/);
+  assert.match(sitemap, /`\$\{SITE_URL\}\/privacy`/);
+  assert.match(sitemap, /lastModified:\s*LAST_SIGNIFICANT_UPDATE/);
+  assert.doesNotMatch(sitemap, /lastModified:\s*new Date\(\)/);
+  assert.doesNotMatch(sitemap, /changeFrequency/);
+  assert.doesNotMatch(sitemap, /priority/);
+});

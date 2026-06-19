@@ -1,25 +1,22 @@
 import type { MetadataRoute } from "next";
 import { SITE_URL } from "@/lib/site";
 
+// Keep this tied to significant visible content changes, not sitemap build time.
+const LAST_SIGNIFICANT_UPDATE = "2026-06-19";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
       url: `${SITE_URL}/`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 1,
+      lastModified: LAST_SIGNIFICANT_UPDATE,
     },
     {
       url: `${SITE_URL}/docs`,
-      lastModified: new Date(),
-      changeFrequency: "weekly",
-      priority: 0.8,
+      lastModified: LAST_SIGNIFICANT_UPDATE,
     },
     {
       url: `${SITE_URL}/privacy`,
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.7,
+      lastModified: LAST_SIGNIFICANT_UPDATE,
     },
   ];
 }
