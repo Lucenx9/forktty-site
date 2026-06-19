@@ -9,6 +9,7 @@ async function source(path: string): Promise<string> {
 test("home hero uses the focused app screenshot at a larger display size", async () => {
   const hero = await source("components/Hero.tsx");
 
+  assert.match(hero, />\s*forktty\s*<\/h1>/);
   assert.match(hero, /src="\/screenshots\/forktty-app-focus\.png"/);
   assert.match(hero, /width=\{1920\}/);
   assert.match(hero, /height=\{820\}/);

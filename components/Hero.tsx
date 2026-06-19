@@ -27,7 +27,7 @@ export function Hero() {
           </div>
 
           <h1 className="max-w-4xl font-display text-[3.1rem] font-semibold leading-[0.95] text-ink-100 sm:text-[5.6rem]">
-            ForkTTY
+            forktty
           </h1>
 
           <p className="max-w-3xl text-balance text-base leading-relaxed text-ink-300 sm:text-xl">
