@@ -4,6 +4,9 @@ import { Analytics } from "@vercel/analytics/next";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
+const SITE_DESCRIPTION =
+  "ForkTTY is a Linux-native GTK/Ghostty terminal for coordinating Codex, Claude Code, Antigravity, OpenCode, and shell agents in tiled workspaces - with a programmable local socket API, MCP tools, git worktrees, Agent HUD, resume-aware notifications, and an opt-out anonymous daily usage ping.";
+
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -39,8 +42,7 @@ export const metadata: Metadata = {
     default: "ForkTTY — Linux-native multi-agent terminal",
     template: "%s — ForkTTY",
   },
-  description:
-    "ForkTTY is a Linux-native GTK/Ghostty terminal for coordinating Codex, Claude Code, Antigravity, OpenCode, and shell agents in tiled workspaces — with a programmable local socket API, MCP tools, git worktrees, Agent HUD, resume-aware notifications, and an opt-out anonymous daily usage ping.",
+  description: SITE_DESCRIPTION,
   keywords: [
     "ForkTTY",
     "terminal",
@@ -95,6 +97,37 @@ export const metadata: Metadata = {
   },
 };
 
+const STRUCTURED_DATA = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "ForkTTY",
+    url: SITE_URL,
+    inLanguage: "en",
+    description: SITE_DESCRIPTION,
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "ForkTTY",
+    url: SITE_URL,
+    description: SITE_DESCRIPTION,
+    applicationCategory: "DeveloperApplication",
+    operatingSystem: "Linux",
+    softwareRequirements: "Linux x86_64",
+    programmingLanguage: "Rust",
+    license: "https://github.com/Lucenx9/forktty/blob/main/LICENSE",
+    codeRepository: "https://github.com/Lucenx9/forktty",
+    downloadUrl: "https://github.com/Lucenx9/forktty/releases",
+    releaseNotes: "https://github.com/Lucenx9/forktty/blob/main/CHANGELOG.md",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+  },
+];
+
 export default function RootLayout({
   children,
 }: {
@@ -113,6 +146,10 @@ export default function RootLayout({
         >
           Skip to content
         </a>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
+        />
         {children}
         <Analytics />
       </body>

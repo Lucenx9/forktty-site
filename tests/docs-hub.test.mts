@@ -22,6 +22,7 @@ test("site exposes a docs hub without removing the home quick start", async () =
   assert.match(docsPage, /REPO_HTML_URL/);
   assert.match(docsPage, /blob\/main/);
   assert.match(docsPage, /README\.md#install/);
+  assert.match(docsPage, /canonical:\s*"\/docs"/);
   assert.match(docsPage, /Release notes/);
   assert.match(docsPage, /RELEASES_HTML_URL/);
 });

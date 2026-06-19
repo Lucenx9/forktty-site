@@ -88,6 +88,9 @@ export const metadata: Metadata = {
   title: "Docs",
   description:
     "Curated ForkTTY documentation index for installation, agent integrations, local socket and MCP automation, troubleshooting, privacy, security, and releases.",
+  alternates: {
+    canonical: "/docs",
+  },
 };
 
 export default function DocsPage() {

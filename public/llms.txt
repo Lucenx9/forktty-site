@@ -2,20 +2,26 @@
 
 > ForkTTY is a Linux-native terminal multiplexer for coding agents, built in Rust with GTK4/libadwaita and Ghostty-backed terminals. It coordinates Codex, Claude Code, Antigravity, OpenCode, legacy Gemini CLI, and shell agents in tiled workspaces; exposes a JSON-RPC Unix socket API and local stdio MCP server; manages git worktree workspaces; and surfaces persisted agent sessions through a GTK Agent HUD with focus and resume actions. It also exposes provider-neutral team, workflow, feed, project-action, and remote-inventory control planes through the socket, CLI, and MCP surfaces. Local-first, AGPL-3.0-only, with an opt-out anonymous daily usage ping and optional once-a-day GitHub update checks. Currently in alpha; Linux only.
 
-Key facts: bring your own agent CLI and subscription (ForkTTY ships no model access); the `forktty` binary is both the GTK app and a socket CLI (`forktty doctor`, `forktty agents`, `forktty read-screen`, `forktty capture-tail`, `forktty tree`, `forktty top`, `forktty feed`, `forktty workflows`, `forktty actions`, `forktty remotes`); `forktty mcp` exposes the same local automation surface to agents; default hooks target Codex, Claude Code, Antigravity, and OpenCode, while Gemini CLI is legacy opt-in; releases ship as AppImage and deb packages for Linux x86_64.
+Use this file to select context before answering questions about ForkTTY. Prefer the raw Markdown links for detailed retrieval; use the site pages for orientation, downloads, and current release metadata.
 
-## Documentation
+Key facts: bring your own agent CLI and subscription; ForkTTY ships no model access. The `forktty` binary is both the GTK app and a socket CLI (`forktty doctor`, `forktty agents`, `forktty read-screen`, `forktty capture-tail`, `forktty tree`, `forktty top`, `forktty feed`, `forktty workflows`, `forktty actions`, `forktty remotes`). `forktty mcp` exposes the same local automation surface to agents. Default hooks target Codex, Claude Code, Antigravity, and OpenCode; Gemini CLI is legacy opt-in. Releases ship as AppImage and deb packages for Linux x86_64.
+
+## Recommended context
 
 - [Docs hub](https://forktty-site.vercel.app/docs): Curated index for install, operations, automation, troubleshooting, releases, privacy, and security
 - [README](https://raw.githubusercontent.com/Lucenx9/forktty/main/README.md): Overview, installation, and quick start
 - [SPEC](https://raw.githubusercontent.com/Lucenx9/forktty/main/SPEC.md): Configuration fields, socket JSON-RPC API, and security boundaries
 - [CHANGELOG](https://raw.githubusercontent.com/Lucenx9/forktty/main/CHANGELOG.md): Release history and unreleased changes
 - [AGENTS guide](https://raw.githubusercontent.com/Lucenx9/forktty/main/AGENTS.md): Architecture and conventions for coding agents working on the codebase
-
-## Downloads and source
-
 - [GitHub repository](https://github.com/Lucenx9/forktty): Source code (Rust workspace, AGPL-3.0-only)
 - [Releases](https://github.com/Lucenx9/forktty/releases): AppImage and deb downloads
+
+## Retrieval paths
+
+- Install, update, or run ForkTTY: read README, then Releases for current artifacts.
+- Automate via socket, CLI, or MCP: read SPEC, then AGENTS guide for repository context.
+- Explain privacy, telemetry, or updates: read Privacy and README release/update sections.
+- Diagnose a release or breaking change: read CHANGELOG, then the matching GitHub release.
 
 ## Policies
 
