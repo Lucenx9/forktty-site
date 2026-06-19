@@ -27,7 +27,7 @@ export function Header() {
       }`}
     >
       <div className="section flex h-14 items-center justify-between">
-        <Link href="#top" className="flex items-center gap-2.5">
+        <Link href="/#top" className="flex items-center gap-2.5">
           <Image
             src="/forktty.svg"
             alt=""
@@ -43,9 +43,10 @@ export function Header() {
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center gap-7 text-sm text-ink-300 md:flex">
-          <a href="#features" className="hover:text-forktty">Features</a>
-          <a href="#download" className="hover:text-forktty">Download</a>
-          <a href="#faq" className="hover:text-forktty">FAQ</a>
+          <Link href="/#features" className="hover:text-forktty">Features</Link>
+          <Link href="/docs" className="hover:text-forktty">Docs</Link>
+          <Link href="/#download" className="hover:text-forktty">Download</Link>
+          <Link href="/#faq" className="hover:text-forktty">FAQ</Link>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -59,10 +60,10 @@ export function Header() {
             <GitHubIcon className="h-4 w-4" />
             <span className="hidden sm:inline">Source</span>
           </a>
-          <a href="#download" className="btn-primary text-xs sm:text-sm">
+          <Link href="/#download" className="btn-primary text-xs sm:text-sm">
             <span className="sm:hidden">Download</span>
             <span className="hidden sm:inline">Download for Linux</span>
-          </a>
+          </Link>
         </div>
       </div>
     </header>

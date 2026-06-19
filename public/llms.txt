@@ -6,6 +6,7 @@ Key facts: bring your own agent CLI and subscription (ForkTTY ships no model acc
 
 ## Documentation
 
+- [Docs hub](https://forktty-site.vercel.app/docs): Curated index for install, operations, automation, troubleshooting, releases, privacy, and security
 - [README](https://raw.githubusercontent.com/Lucenx9/forktty/main/README.md): Overview, installation, and quick start
 - [SPEC](https://raw.githubusercontent.com/Lucenx9/forktty/main/SPEC.md): Configuration fields, socket JSON-RPC API, and security boundaries
 - [CHANGELOG](https://raw.githubusercontent.com/Lucenx9/forktty/main/CHANGELOG.md): Release history and unreleased changes
