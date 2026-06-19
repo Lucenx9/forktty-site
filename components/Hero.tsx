@@ -83,10 +83,10 @@ export function Hero() {
         >
           <div className="overflow-hidden rounded-none border border-ink-700 bg-ink-900/70 shadow-panel">
             <Image
-              src="/forktty-alpha6.png"
+              src="/screenshots/forktty-app.png"
               alt="ForkTTY on Linux showing a workspace sidebar, pane tabs, and four tiled terminal panes with the focused pane outlined in orange."
-              width={2560}
-              height={1394}
+              width={1920}
+              height={1034}
               quality={95}
               priority
               className="block h-auto w-full"
