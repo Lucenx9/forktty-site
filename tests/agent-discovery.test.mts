@@ -58,6 +58,16 @@ test("canonical site URL defaults to the public custom domain", async () => {
   assert.doesNotMatch(site, /forktty-site\.vercel\.app/);
 });
 
+test("legacy Vercel host redirects to the canonical custom domain", async () => {
+  const middleware = await source("middleware.ts");
+
+  assert.match(middleware, /LEGACY_HOSTS/);
+  assert.match(middleware, /forktty-site\.vercel\.app/);
+  assert.match(middleware, /request\.headers\.get\("host"\)/);
+  assert.match(middleware, /new URL\(SITE_URL\)/);
+  assert.match(middleware, /NextResponse\.redirect\(canonicalUrl,\s*308\)/);
+});
+
 test("sitemap uses canonical URLs with stable meaningful lastmod values", async () => {
   const sitemap = await source("app/sitemap.ts");
 
