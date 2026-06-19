@@ -46,9 +46,15 @@ test("llms-full file provides single-fetch agent context", async () => {
   assert.match(full, /## Socket CLI and API/);
   assert.match(full, /## Privacy and telemetry/);
   assert.match(full, /## Security model/);
+  assert.match(full, /~\/\.local\/state\/forktty\/session-v2\.json/);
+  assert.match(full, /persistent_scrollback_lines = 0/);
+  assert.match(full, /anonymous_ping = true/);
   assert.match(full, /https:\/\/forktty\.dev\/api\/telemetry\/ping/);
   assert.match(full, /https:\/\/raw\.githubusercontent\.com\/Lucenx9\/forktty\/main\/CHANGELOG\.md/);
   assert.doesNotMatch(full, /forktty-site\.vercel\.app/);
+  assert.doesNotMatch(full, /~\/\.local\/share\/forktty\/session-v2\.json/);
+  assert.doesNotMatch(full, /quake_enabled/);
+  assert.doesNotMatch(full, /enabled = true/);
 });
 
 test("layout exposes visible-page-aligned structured data", async () => {

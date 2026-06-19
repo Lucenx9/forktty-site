@@ -36,10 +36,11 @@ forktty doctor
 
 - Open the command palette with `Ctrl+Shift+P`.
 - Use split panes and tabs to keep multiple agents visible without mixing scrollback.
-- Session restore writes native state to `~/.local/share/forktty/session-v2.json`; live PTYs are not persisted.
+- Session restore writes native state to `~/.local/state/forktty/session-v2.json`; live PTYs are not persisted.
 - Prompt-aware notifications can come from socket calls, hooks, Ghostty OSC events, bell/child-exit events, or bounded prompt fallback detection.
 - Quake/dropdown behavior uses gtk4-layer-shell where the compositor supports it and falls back to normal GTK behavior elsewhere.
 - ForkTTY leaves Ghostty-owned terminal appearance and runtime behavior to Ghostty configuration.
+- Live embedded panes follow Ghostty's `scrollback-limit` budget, default to 10 MB per surface, and honor `scrollbar = system|never`.
 
 ## Agent integrations
 
@@ -156,7 +157,7 @@ forktty worktree-attach feature/my-task --cwd /path/to/repo
 Common local files:
 
 - `~/.config/forktty/config.toml`: user configuration for ForkTTY-owned behavior.
-- `~/.local/share/forktty/session-v2.json`: workspace, pane, and recent scrollback session state.
+- `~/.local/state/forktty/session-v2.json`: workspace, pane, and recent scrollback session state.
 - `~/.local/share/forktty/browser_profiles/profiles.json`: source-only browser profile index.
 - `~/.local/share/forktty/browser_profiles/<id>/`: source-only WebKit profile data.
 - `~/.local/state/forktty/telemetry-ping.json`: last UTC date when the app attempted the anonymous ping.
@@ -165,13 +166,23 @@ Example config:
 
 ```toml
 [general]
-quake_enabled = false
+theme_source = "dark"
+worktree_layout = "nested"
+enable_pr_lookup = false
+notification_command = ""
+
+[appearance]
+persistent_scrollback_lines = 0
+sidebar_position = "left"
+sidebar_visible = true
+window_mode = "normal"
 
 [notifications]
-enabled = true
+desktop = true
+sound = true
 
 [telemetry]
-enabled = true
+anonymous_ping = true
 ```
 
 Legacy TOML keys for terminal font, theme, bell, renderer, and scrollback still load for compatibility but are not exposed in newly saved settings.
