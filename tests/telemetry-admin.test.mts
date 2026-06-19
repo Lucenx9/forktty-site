@@ -39,6 +39,7 @@ test("admin dashboard requires TELEMETRY_ADMIN_PASSWORD", async () => {
   const body = await response.text();
 
   assert.equal(response.status, 503);
+  assert.equal(response.headers.get("x-robots-tag"), "noindex, nofollow, noarchive");
   assert.match(body, /TELEMETRY_ADMIN_PASSWORD/);
 });
 
@@ -49,6 +50,7 @@ test("admin dashboard challenges missing credentials", async () => {
 
   assert.equal(response.status, 401);
   assert.equal(response.headers.get("www-authenticate"), 'Basic realm="ForkTTY telemetry", charset="UTF-8"');
+  assert.equal(response.headers.get("x-robots-tag"), "noindex, nofollow, noarchive");
 });
 
 test("admin dashboard rejects incorrect credentials", async () => {
@@ -57,6 +59,7 @@ test("admin dashboard rejects incorrect credentials", async () => {
   const response = await GET(request(basicAuth("owner", "wrong")));
 
   assert.equal(response.status, 401);
+  assert.equal(response.headers.get("x-robots-tag"), "noindex, nofollow, noarchive");
 });
 
 test("admin dashboard renders ping counts from Redis", async () => {
@@ -88,6 +91,7 @@ test("admin dashboard renders ping counts from Redis", async () => {
   const body = await response.text();
 
   assert.equal(response.status, 200);
+  assert.equal(response.headers.get("x-robots-tag"), "noindex, nofollow, noarchive");
   assert.equal(calls[0]?.url, "https://redis.example/pipeline");
   assert.deepEqual(calls[0]?.body, [["SCAN", "0", "MATCH", "telemetry:ping:*", "COUNT", "200"]]);
   assert.deepEqual(calls[1]?.body, [
@@ -138,6 +142,7 @@ test("admin dashboard filters rows and exports CSV", async () => {
 
   assert.equal(response.status, 200);
   assert.equal(response.headers.get("content-type"), "text/csv; charset=utf-8");
+  assert.equal(response.headers.get("x-robots-tag"), "noindex, nofollow, noarchive");
   assert.match(
     response.headers.get("content-disposition") ?? "",
     /attachment; filename="forktty-telemetry-7d-0\.2\.0-alpha\.12\.csv"/,
@@ -159,5 +164,6 @@ test("admin dashboard reports missing Redis credentials", async () => {
   const body = await response.text();
 
   assert.equal(response.status, 503);
+  assert.equal(response.headers.get("x-robots-tag"), "noindex, nofollow, noarchive");
   assert.match(body, /Redis credentials are not configured/);
 });

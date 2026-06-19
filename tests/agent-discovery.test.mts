@@ -43,6 +43,14 @@ test("layout exposes visible-page-aligned structured data", async () => {
   assert.match(layout, /codeRepository/);
 });
 
+test("home search snippet is concise and product-focused", async () => {
+  const layout = await source("app/layout.tsx");
+
+  assert.match(layout, /const SITE_DESCRIPTION =\n\s+"ForkTTY is a Linux-native terminal/);
+  assert.match(layout, /socket automation, MCP tools, and Agent HUD/);
+  assert.doesNotMatch(layout, /opt-out anonymous daily usage ping/);
+});
+
 test("canonical site URL defaults to the public custom domain", async () => {
   const site = await source("lib/site.ts");
 

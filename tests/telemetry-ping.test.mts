@@ -43,6 +43,7 @@ test("valid ping without Redis credentials returns no content", async () => {
   const response = await POST(request(validPayload()));
 
   assert.equal(response.status, 204);
+  assert.equal(response.headers.get("x-robots-tag"), "noindex, nofollow, noarchive");
   assert.equal(called, false);
 });
 
@@ -59,6 +60,7 @@ test("valid ping increments aggregate Redis key when configured", async () => {
   const headers = call?.init?.headers as Record<string, string> | undefined;
 
   assert.equal(response.status, 204);
+  assert.equal(response.headers.get("x-robots-tag"), "noindex, nofollow, noarchive");
   assert.equal(call?.url, "https://redis.example/pipeline");
   assert.equal(call?.init?.method, "POST");
   assert.equal(headers?.authorization, "Bearer secret-token");
@@ -72,6 +74,7 @@ test("malformed ping is rejected", async () => {
   const response = await POST(request({ ...validPayload(), app: "other" }));
 
   assert.equal(response.status, 400);
+  assert.equal(response.headers.get("x-robots-tag"), "noindex, nofollow, noarchive");
 });
 
 test("oversized ping is rejected", async () => {
@@ -86,10 +89,12 @@ test("oversized ping is rejected", async () => {
   );
 
   assert.equal(response.status, 400);
+  assert.equal(response.headers.get("x-robots-tag"), "noindex, nofollow, noarchive");
 });
 
 test("GET is not allowed", async () => {
   const response = await GET();
 
   assert.equal(response.status, 405);
+  assert.equal(response.headers.get("x-robots-tag"), "noindex, nofollow, noarchive");
 });

@@ -5,7 +5,7 @@ import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const SITE_DESCRIPTION =
-  "ForkTTY is a Linux-native GTK/Ghostty terminal for coordinating Codex, Claude Code, Antigravity, OpenCode, and shell agents in tiled workspaces - with a programmable local socket API, MCP tools, git worktrees, Agent HUD, resume-aware notifications, and an opt-out anonymous daily usage ping.";
+  "ForkTTY is a Linux-native terminal for coordinating coding agents with GTK/Ghostty panes, git worktrees, socket automation, MCP tools, and Agent HUD.";
 
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],

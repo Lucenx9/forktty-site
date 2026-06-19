@@ -5,6 +5,7 @@ export const revalidate = 0;
 export const runtime = "nodejs";
 
 const AUTH_REALM = 'Basic realm="ForkTTY telemetry", charset="UTF-8"';
+const NOINDEX_HEADER = "noindex, nofollow, noarchive";
 const TELEMETRY_KEY_PREFIX = "telemetry:ping:";
 const SCAN_COUNT = "200";
 const MAX_SCAN_PAGES = 20;
@@ -86,6 +87,7 @@ export async function GET(request: Request): Promise<Response> {
       headers: {
         "cache-control": "no-store",
         "www-authenticate": AUTH_REALM,
+        "x-robots-tag": NOINDEX_HEADER,
       },
     });
   }
@@ -622,6 +624,7 @@ function csvResponse(model: DashboardModel): Response {
       "cache-control": "no-store",
       "content-disposition": `attachment; filename="${filename}"`,
       "content-type": "text/csv; charset=utf-8",
+      "x-robots-tag": NOINDEX_HEADER,
     },
   });
 }
@@ -701,6 +704,7 @@ function htmlResponse(body: string, status: number): Response {
     headers: {
       "cache-control": "no-store",
       "content-type": "text/html; charset=utf-8",
+      "x-robots-tag": NOINDEX_HEADER,
     },
   });
 }

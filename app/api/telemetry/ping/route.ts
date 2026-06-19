@@ -1,4 +1,5 @@
 const MAX_BODY_BYTES = 1024;
+const NOINDEX_HEADER = "noindex, nofollow, noarchive";
 const REDIS_KEY_TTL_SECONDS = 400 * 24 * 60 * 60;
 
 type PingPayload = {
@@ -15,10 +16,17 @@ type RedisCredentials = {
 };
 
 export async function GET(): Promise<Response> {
+  return emptyResponse(405, {
+    allow: "POST",
+  });
+}
+
+function emptyResponse(status: number, headers: Record<string, string> = {}): Response {
   return new Response(null, {
-    status: 405,
+    status,
     headers: {
-      allow: "POST",
+      ...headers,
+      "x-robots-tag": NOINDEX_HEADER,
     },
   });
 }
@@ -26,7 +34,7 @@ export async function GET(): Promise<Response> {
 export async function POST(request: Request): Promise<Response> {
   const payload = await parsePayload(request);
   if (!payload) {
-    return new Response(null, { status: 400 });
+    return emptyResponse(400);
   }
 
   const credentials = redisCredentials();
@@ -34,7 +42,7 @@ export async function POST(request: Request): Promise<Response> {
     await incrementDailyCounter(credentials, payload);
   }
 
-  return new Response(null, { status: 204 });
+  return emptyResponse(204);
 }
 
 async function parsePayload(request: Request): Promise<PingPayload | null> {
