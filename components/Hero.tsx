@@ -27,7 +27,10 @@ export function Hero() {
           </div>
 
           <h1 className="max-w-4xl font-display text-[3.1rem] font-semibold leading-[0.95] text-ink-100 sm:text-[5.6rem]">
-            forktty
+            <span className="hero-wordmark">
+              forktty
+              <span className="hero-cursor" aria-hidden="true" />
+            </span>
           </h1>
 
           <p className="max-w-3xl text-balance text-base leading-relaxed text-ink-300 sm:text-xl">
@@ -81,7 +84,7 @@ export function Hero() {
           className="reveal mt-2 w-[min(calc(100vw-2rem),88rem)] max-w-[88rem]"
           style={{ animationDelay: "260ms" }}
         >
-          <div className="overflow-hidden rounded-none border border-ink-700 bg-ink-900/70 shadow-panel">
+          <div className="hero-shot overflow-hidden rounded-none border border-ink-700 bg-ink-900/70 shadow-panel">
             <Image
               src="/screenshots/forktty-app-focus.png"
               alt="ForkTTY on Linux showing a workspace sidebar, pane tabs, and four tiled terminal panes with the focused pane outlined in orange."
