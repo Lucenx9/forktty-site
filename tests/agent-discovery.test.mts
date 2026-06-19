@@ -24,12 +24,31 @@ test("llms file prioritizes agent retrieval context", async () => {
   assert.match(llms, /^> /m);
   assert.match(llms, /^## Recommended context/m);
   assert.match(llms, /Prefer the raw Markdown links for detailed retrieval/);
+  assert.match(llms, /Docs wiki/);
+  assert.match(llms, /llms-full\.txt/);
   assert.match(llms, /README/);
   assert.match(llms, /SPEC/);
   assert.match(llms, /CHANGELOG/);
   assert.match(llms, /## Optional/);
   assert.match(llms, /https:\/\/forktty\.dev\/docs/);
+  assert.match(llms, /https:\/\/forktty\.dev\/sitemap\.xml/);
+  assert.doesNotMatch(llms, /Docs hub/);
   assert.doesNotMatch(llms, /forktty-site\.vercel\.app/);
+});
+
+test("llms-full file provides single-fetch agent context", async () => {
+  const full = await source("public/llms-full.txt");
+
+  assert.match(full, /^# ForkTTY full agent context/m);
+  assert.match(full, /0\.2\.0-alpha\.14/);
+  assert.match(full, /## Install and first run/);
+  assert.match(full, /## MCP setup/);
+  assert.match(full, /## Socket CLI and API/);
+  assert.match(full, /## Privacy and telemetry/);
+  assert.match(full, /## Security model/);
+  assert.match(full, /https:\/\/forktty\.dev\/api\/telemetry\/ping/);
+  assert.match(full, /https:\/\/raw\.githubusercontent\.com\/Lucenx9\/forktty\/main\/CHANGELOG\.md/);
+  assert.doesNotMatch(full, /forktty-site\.vercel\.app/);
 });
 
 test("layout exposes visible-page-aligned structured data", async () => {
@@ -74,7 +93,8 @@ test("sitemap uses canonical URLs with stable meaningful lastmod values", async 
   assert.match(sitemap, /`\$\{SITE_URL\}\/`/);
   assert.match(sitemap, /`\$\{SITE_URL\}\/docs`/);
   assert.match(sitemap, /`\$\{SITE_URL\}\/privacy`/);
-  assert.match(sitemap, /lastModified:\s*LAST_SIGNIFICANT_UPDATE/);
+  assert.match(sitemap, /docs:\s*"2026-06-20"/);
+  assert.match(sitemap, /lastModified:\s*LAST_SIGNIFICANT_UPDATE\.docs/);
   assert.doesNotMatch(sitemap, /lastModified:\s*new Date\(\)/);
   assert.doesNotMatch(sitemap, /changeFrequency/);
   assert.doesNotMatch(sitemap, /priority/);

@@ -2,13 +2,14 @@
 
 > ForkTTY is a Linux-native terminal multiplexer for coding agents, built in Rust with GTK4/libadwaita and Ghostty-backed terminals. It coordinates Codex, Claude Code, Antigravity, OpenCode, legacy Gemini CLI, and shell agents in tiled workspaces; exposes a JSON-RPC Unix socket API and local stdio MCP server; manages git worktree workspaces; and surfaces persisted agent sessions through a GTK Agent HUD with focus and resume actions. It also exposes provider-neutral team, workflow, feed, project-action, and remote-inventory control planes through the socket, CLI, and MCP surfaces. Local-first, AGPL-3.0-only, with an opt-out anonymous daily usage ping and optional once-a-day GitHub update checks. Currently in alpha; Linux only.
 
-Use this file to select context before answering questions about ForkTTY. Prefer the raw Markdown links for detailed retrieval; use the site pages for orientation, downloads, and current release metadata.
+Use this file to select context before answering questions about ForkTTY. Prefer the raw Markdown links for detailed retrieval; use the site pages for orientation, downloads, and current release metadata. If you need a single self-contained context file, fetch `https://forktty.dev/llms-full.txt`.
 
 Key facts: bring your own agent CLI and subscription; ForkTTY ships no model access. The `forktty` binary is both the GTK app and a socket CLI (`forktty doctor`, `forktty agents`, `forktty read-screen`, `forktty capture-tail`, `forktty tree`, `forktty top`, `forktty feed`, `forktty workflows`, `forktty actions`, `forktty remotes`). `forktty mcp` exposes the same local automation surface to agents. Default hooks target Codex, Claude Code, Antigravity, and OpenCode; Gemini CLI is legacy opt-in. Releases ship as AppImage and deb packages for Linux x86_64.
 
 ## Recommended context
 
-- [Docs hub](https://forktty.dev/docs): Curated index for install, operations, automation, troubleshooting, releases, privacy, and security
+- [Docs wiki](https://forktty.dev/docs): Onsite wiki for install, operations, hooks, MCP, socket automation, worktrees, troubleshooting, releases, privacy, and security
+- [Full agent context](https://forktty.dev/llms-full.txt): Single-file Markdown context for agents that prefer one retrieval target
 - [README](https://raw.githubusercontent.com/Lucenx9/forktty/main/README.md): Overview, installation, and quick start
 - [SPEC](https://raw.githubusercontent.com/Lucenx9/forktty/main/SPEC.md): Configuration fields, socket JSON-RPC API, and security boundaries
 - [CHANGELOG](https://raw.githubusercontent.com/Lucenx9/forktty/main/CHANGELOG.md): Release history and unreleased changes
@@ -18,10 +19,12 @@ Key facts: bring your own agent CLI and subscription; ForkTTY ships no model acc
 
 ## Retrieval paths
 
+- One-fetch context for an assistant: read Full agent context, then follow raw source links only for details.
 - Install, update, or run ForkTTY: read README, then Releases for current artifacts.
 - Automate via socket, CLI, or MCP: read SPEC, then AGENTS guide for repository context.
 - Explain privacy, telemetry, or updates: read Privacy and README release/update sections.
 - Diagnose a release or breaking change: read CHANGELOG, then the matching GitHub release.
+- Discover indexable site pages: read Sitemap.
 
 ## Policies
 
@@ -35,3 +38,4 @@ Key facts: bring your own agent CLI and subscription; ForkTTY ships no model acc
 - [Contributing](https://raw.githubusercontent.com/Lucenx9/forktty/main/CONTRIBUTING.md): How to contribute
 - [Support](https://raw.githubusercontent.com/Lucenx9/forktty/main/SUPPORT.md): Getting help
 - [Landing page](https://forktty.dev/): Features, FAQ, and download links
+- [Sitemap](https://forktty.dev/sitemap.xml): Canonical indexable site URLs for crawlers
