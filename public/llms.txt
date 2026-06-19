@@ -25,6 +25,7 @@ Key facts: bring your own agent CLI and subscription; ForkTTY ships no model acc
 
 ## Policies
 
+- [Site privacy](https://forktty-site.vercel.app/privacy): Site hosting, Vercel Web Analytics, app telemetry endpoint, provider links, and trademark notice
 - [Security policy](https://raw.githubusercontent.com/Lucenx9/forktty/main/SECURITY.md): Security model and how to report vulnerabilities
 - [Privacy](https://raw.githubusercontent.com/Lucenx9/forktty/main/PRIVACY.md): Opt-out anonymous daily ping, optional update checks, and what stays local
 

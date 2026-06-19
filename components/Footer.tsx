@@ -2,10 +2,11 @@ import { GitHubIcon } from "./Icons";
 import { REPO_HTML_URL, RELEASES_HTML_URL } from "@/lib/github";
 
 const LINKS = [
-  { label: "GitHub", href: REPO_HTML_URL },
-  { label: "Releases", href: RELEASES_HTML_URL },
-  { label: "Issues", href: `${REPO_HTML_URL}/issues` },
-  { label: "License", href: `${REPO_HTML_URL}/blob/main/LICENSE` },
+  { label: "GitHub", href: REPO_HTML_URL, external: true },
+  { label: "Releases", href: RELEASES_HTML_URL, external: true },
+  { label: "Issues", href: `${REPO_HTML_URL}/issues`, external: true },
+  { label: "License", href: `${REPO_HTML_URL}/blob/main/LICENSE`, external: true },
+  { label: "Privacy", href: "/privacy", external: false },
 ];
 
 export function Footer() {
@@ -21,8 +22,8 @@ export function Footer() {
               <a
                 key={l.label}
                 href={l.href}
-                target="_blank"
-                rel="noreferrer noopener"
+                target={l.external ? "_blank" : undefined}
+                rel={l.external ? "noreferrer noopener" : undefined}
                 className="text-ink-300 hover:text-forktty"
               >
                 {l.label}
@@ -33,9 +34,9 @@ export function Footer() {
 
         <div className="flex flex-col items-start justify-between gap-3 border-t border-ink-800/70 pt-5 text-xs text-ink-500 sm:flex-row sm:items-center">
           <span>
-            © {new Date().getFullYear()} ForkTTY contributors · AGPL-3.0 · The
-            app sends an anonymous daily ping you can disable; this site uses
-            anonymous page-view analytics.
+            © 2026 ForkTTY contributors · AGPL-3.0 · The app sends an anonymous
+            daily ping you can disable; this site uses anonymous page-view
+            analytics. Product names are trademarks of their owners.
           </span>
           <a
             href={REPO_HTML_URL}
