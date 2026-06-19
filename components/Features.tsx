@@ -20,7 +20,7 @@ const FEATURES = [
   {
     n: "04",
     title: "Ghostty terminals with native Linux polish.",
-    body: "GTK4/libadwaita in Rust on Ghostty's terminal engine: split panes, tabs, scrollback search, OSC links, Ctrl-click open, middle-click PRIMARY paste, visual bell, and desktop notifications.",
+    body: "GTK4/libadwaita in Rust around Ghostty's embedded terminal widget: split panes, tabs, retained scrollback, native selection and clipboard behavior, OSC links, visual bell, and desktop notifications.",
     cmd: null,
   },
   {

@@ -28,7 +28,7 @@ test("latest release prefers the AppImage binary over zsync metadata", async () 
   const assets = [
     asset("forktty-0.2.0-alpha.14-x86_64.AppImage.zsync"),
     asset("forktty-0.2.0-alpha.14-x86_64.AppImage"),
-    asset("forktty_0.2.0~alpha.14_amd64.deb"),
+    asset("forktty_0.2.0.alpha.14_amd64.deb"),
     asset("SHA256SUMS"),
   ];
   const releases = [
@@ -50,7 +50,7 @@ test("latest release prefers the AppImage binary over zsync metadata", async () 
   assert.equal(release.ok, true);
   if (!release.ok) throw new Error("expected release metadata");
   assert.equal(release.appImage?.name, "forktty-0.2.0-alpha.14-x86_64.AppImage");
-  assert.equal(release.deb?.name, "forktty_0.2.0~alpha.14_amd64.deb");
+  assert.equal(release.deb?.name, "forktty_0.2.0.alpha.14_amd64.deb");
   assert.deepEqual(
     release.otherAssets.map((otherAsset) => otherAsset.name),
     ["forktty-0.2.0-alpha.14-x86_64.AppImage.zsync"],
