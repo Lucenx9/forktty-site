@@ -4,82 +4,492 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { ArrowRight, GitHubIcon } from "@/components/Icons";
 import { RELEASES_HTML_URL, REPO_HTML_URL } from "@/lib/github";
+import { SITE_URL } from "@/lib/site";
 
 const REPO_DOCS = `${REPO_HTML_URL}/blob/main`;
 
-const DOC_GROUPS = [
+type DocBlock =
+  | { kind: "paragraph"; text: string }
+  | { kind: "list"; items: string[] }
+  | { kind: "code"; lines: string[]; prompt?: boolean }
+  | {
+      kind: "table";
+      columns: [string, string];
+      rows: Array<[string, string]>;
+    };
+
+type DocSection = {
+  id: string;
+  eyebrow: string;
+  title: string;
+  summary: string;
+  blocks: DocBlock[];
+  sources?: Array<{ label: string; href: string }>;
+};
+
+const SOURCE_LINKS = [
+  { label: "README", href: `${REPO_DOCS}/README.md` },
+  { label: "Runtime spec", href: `${REPO_DOCS}/SPEC.md` },
+  { label: "Hooks README", href: `${REPO_DOCS}/hooks/README.md` },
+  { label: "Privacy", href: `${REPO_DOCS}/PRIVACY.md` },
+  { label: "Security", href: `${REPO_DOCS}/SECURITY.md` },
+  { label: "Changelog", href: `${REPO_DOCS}/CHANGELOG.md` },
+];
+
+const DOC_SECTIONS: DocSection[] = [
   {
-    title: "Start",
-    intro: "Install the current alpha, understand the runtime, and get from download to first launch.",
-    links: [
+    id: "overview",
+    eyebrow: "Start here",
+    title: "Overview",
+    summary:
+      "ForkTTY is a Linux-native GTK/Ghostty terminal for coordinating coding agents in tiled workspaces.",
+    blocks: [
       {
-        label: "Install & updates",
-        href: `${REPO_DOCS}/README.md#install`,
-        body: "AppImage, Debian package, update checks, self-update behavior, and build-from-source requirements.",
+        kind: "paragraph",
+        text: "ForkTTY is built for running Codex, Claude Code, Antigravity, OpenCode, Gemini CLI legacy flows, and plain shell tools side by side without losing track of sessions, panes, or repo state. The app is written in Rust and uses GTK4/libadwaita with an embedded Ghostty terminal renderer.",
       },
       {
-        label: "Release notes",
-        href: RELEASES_HTML_URL,
-        body: "Published release assets, checksums, changelog summaries, and prerelease history.",
+        kind: "list",
+        items: [
+          "Use tiled workspaces and split panes for parallel agent work.",
+          "Back tasks with git worktrees so each branch has an isolated workspace.",
+          "Drive the app through the same local socket surface used by the CLI and MCP bridge.",
+          "Keep project contents, terminal text, and agent metadata local by default.",
+        ],
       },
+      {
+        kind: "paragraph",
+        text: "The current alpha is Linux-only. The packaged runtime is focused on GTK/Ghostty terminal panes; source-only browser panes remain behind the optional browser feature for intentional testing.",
+      },
+    ],
+    sources: [
+      { label: "README overview", href: `${REPO_DOCS}/README.md#why-forktty` },
+      { label: "Native runtime", href: `${REPO_DOCS}/docs/native-gtk-ghostty.md` },
     ],
   },
   {
-    title: "Operate",
-    intro: "Run ForkTTY day to day without losing track of agents, workspaces, and privacy boundaries.",
-    links: [
+    id: "install-first-run",
+    eyebrow: "Quick start",
+    title: "Install & first run",
+    summary:
+      "Use the AppImage for the portable alpha path, or the .deb package on modern Debian and Ubuntu baselines.",
+    blocks: [
       {
-        label: "Agent integrations",
-        href: `${REPO_DOCS}/README.md#why-forktty`,
-        body: "Provider setup model for Codex, Claude Code, Antigravity, OpenCode, legacy Gemini CLI, and shell tools.",
+        kind: "table",
+        columns: ["Path", "Use it when"],
+        rows: [
+          [
+            "AppImage",
+            "Recommended portable Linux x86_64 build. Verify SHA256SUMS, mark executable, and launch directly.",
+          ],
+          [
+            ".deb",
+            "Debian 13/Trixie+ and Ubuntu 24.04 LTS+ package path. Debian 12 is below the documented baseline.",
+          ],
+          [
+            "Source build",
+            "Use when developing ForkTTY or testing source-only browser panes. Requires Rust 1.96+, GTK4/libadwaita dev files, git, Zig, and the Ghostty submodule.",
+          ],
+        ],
       },
       {
-        label: "Privacy",
-        href: `${REPO_DOCS}/PRIVACY.md`,
-        body: "Anonymous daily ping, optional GitHub update checks, and what remains local.",
+        kind: "code",
+        lines: [
+          "sha256sum -c SHA256SUMS --ignore-missing",
+          "chmod +x forktty-*.AppImage",
+          "./forktty-*.AppImage",
+        ],
       },
+      {
+        kind: "code",
+        lines: ["forktty --version", "forktty doctor"],
+      },
+      {
+        kind: "paragraph",
+        text: "If a GTK renderer issue appears on a specific distro or driver stack, ForkTTY defaults to the GL renderer through GSK_RENDERER=ngl and still honors an explicit GSK_RENDERER override for QA and debugging.",
+      },
+    ],
+    sources: [
+      { label: "Install docs", href: `${REPO_DOCS}/README.md#install` },
+      { label: "Release assets", href: RELEASES_HTML_URL },
     ],
   },
   {
-    title: "Automate",
-    intro: "Use the local socket, CLI, and MCP surfaces as one automation plane.",
-    links: [
+    id: "daily-use",
+    eyebrow: "Operate",
+    title: "Daily use",
+    summary:
+      "ForkTTY keeps terminal work dense: workspaces, tabs, split panes, search, settings, notifications, and quake mode are all native GTK surfaces.",
+    blocks: [
       {
-        label: "Socket, CLI & MCP",
-        href: `${REPO_DOCS}/SPEC.md`,
-        body: "Configuration fields, JSON-RPC methods, local MCP tools, limits, and security boundaries.",
+        kind: "list",
+        items: [
+          "Open the command palette with Ctrl+Shift+P for actions such as new workspace, split, settings, notifications, and shortcuts.",
+          "Use split panes and tabs to keep multiple agents visible without mixing their scrollback.",
+          "Session restore writes native state to ~/.local/share/forktty/session-v2.json, but live PTYs themselves are not persisted.",
+          "Prompt-aware notifications can come from socket calls, hooks, Ghostty OSC events, bell/child-exit events, or bounded prompt fallback detection.",
+          "Quake/dropdown behavior uses gtk4-layer-shell where the compositor supports it and falls back to normal GTK behavior elsewhere.",
+        ],
       },
       {
-        label: "Agent guide",
-        href: `${REPO_DOCS}/AGENTS.md`,
-        body: "Repository architecture, conventions, and context for coding agents working on ForkTTY.",
+        kind: "paragraph",
+        text: "The app follows a compact native design: quiet chrome, dense status rows, native dialogs, and terminal-owned theme behavior instead of marketing-style panels inside the product UI.",
       },
+    ],
+    sources: [
+      { label: "Runtime notes", href: `${REPO_DOCS}/docs/native-gtk-ghostty.md#runtime-notes` },
+      { label: "Visual rules", href: `${REPO_DOCS}/docs/DESIGN.md` },
     ],
   },
   {
-    title: "Reference",
-    intro: "Use these when diagnosing installs, reporting issues, or checking project direction.",
-    links: [
+    id: "agent-integrations",
+    eyebrow: "Agents",
+    title: "Agent integrations",
+    summary:
+      "The Agent HUD is powered by hooks and socket metadata so running agents can be focused, resumed, and inspected.",
+    blocks: [
       {
-        label: "Troubleshooting",
-        href: `${REPO_DOCS}/README.md#troubleshooting`,
-        body: "GTK renderer notes, package expectations, and source-build prerequisites.",
+        kind: "paragraph",
+        text: "ForkTTY targets Codex, Claude Code, Antigravity, OpenCode, Gemini CLI legacy setups, and shell agents. Managed hooks persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD.",
       },
       {
-        label: "Security policy",
-        href: `${REPO_DOCS}/SECURITY.md`,
-        body: "Security model, reporting path, and local trust assumptions.",
+        kind: "list",
+        items: [
+          "Use forktty agents to list known agent sessions.",
+          "Use forktty agent-health to inspect stale or resumable sessions.",
+          "Use forktty resume-agent when a provider supports reopening a saved session.",
+          "Use forktty set-status, set-progress, log, notify, and notifications for custom tools that publish agent state without a managed hook.",
+        ],
       },
       {
-        label: "Changelog",
-        href: `${REPO_DOCS}/CHANGELOG.md`,
-        body: "Unreleased work and full historical changes from the ForkTTY repository.",
+        kind: "paragraph",
+        text: "Provider keys and remote agent traffic stay outside ForkTTY. Bring your own agent CLI and credentials; ForkTTY coordinates local panes, metadata, hooks, socket calls, and notifications.",
+      },
+    ],
+    sources: [
+      { label: "Agent hooks", href: `${REPO_DOCS}/hooks/README.md` },
+      { label: "Socket spec", href: `${REPO_DOCS}/SPEC.md#socket-api` },
+    ],
+  },
+  {
+    id: "hooks",
+    eyebrow: "Automation",
+    title: "Hooks",
+    summary:
+      "Hooks install provider-specific config entries that report session lifecycle and status back to ForkTTY.",
+    blocks: [
+      {
+        kind: "code",
+        lines: [
+          "forktty hooks setup",
+          "forktty hooks setup --dry-run",
+          "forktty hooks setup codex",
+          "forktty hooks doctor",
+          "forktty hooks test",
+          "forktty hooks remove codex",
+        ],
       },
       {
-        label: "Roadmap",
-        href: `${REPO_DOCS}/ROADMAP.md`,
-        body: "Planned direction and non-goals for the alpha series.",
+        kind: "table",
+        columns: ["Provider", "Managed destination"],
+        rows: [
+          ["Codex", "$CODEX_HOME/hooks.json or ~/.codex/hooks.json"],
+          ["Claude Code", "$CLAUDE_CONFIG_DIR/settings.json or ~/.claude/settings.json"],
+          ["Antigravity", "~/.gemini/config/hooks.json plus generated wrappers"],
+          ["OpenCode", "$OPENCODE_CONFIG_DIR/plugins/forktty.generated.js or ~/.config/opencode/plugins/forktty.generated.js"],
+          ["Gemini CLI", "~/.gemini/settings.json as an explicit legacy target"],
+        ],
       },
+      {
+        kind: "paragraph",
+        text: "Setup is explicit on first install. Once ForkTTY-managed entries exist, newer builds can refresh managed hook and MCP entries while preserving unrelated user configuration.",
+      },
+    ],
+    sources: [{ label: "Hooks README", href: `${REPO_DOCS}/hooks/README.md` }],
+  },
+  {
+    id: "mcp-setup",
+    eyebrow: "MCP",
+    title: "MCP setup",
+    summary:
+      "The MCP bridge exposes ForkTTY socket capabilities to local agent clients over stdio.",
+    blocks: [
+      {
+        kind: "code",
+        lines: [
+          "forktty mcp",
+          "forktty mcp setup",
+          "forktty mcp setup codex",
+          "forktty mcp setup claude",
+          "forktty mcp setup antigravity",
+        ],
+      },
+      {
+        kind: "paragraph",
+        text: "The MCP server is local-only: it bridges stdio to the owner-only ForkTTY Unix socket and does not open a network listener. It exposes workspace, surface, agent, worktree, notification, feed, workflow, team, topology, browser, and status tools where supported by the running app.",
+      },
+      {
+        kind: "table",
+        columns: ["Client", "Config location"],
+        rows: [
+          ["Codex", "$CODEX_HOME/config.toml or ~/.codex/config.toml under [mcp_servers.forktty]"],
+          ["Claude", "~/.claude.json under mcpServers.forktty"],
+          ["Antigravity", "~/.gemini/config/mcp_config.json"],
+          ["Gemini CLI", "Legacy explicit setup target"],
+        ],
+      },
+    ],
+    sources: [
+      { label: "MCP details", href: `${REPO_DOCS}/hooks/README.md#mcp` },
+      { label: "MCP spec", href: `${REPO_DOCS}/SPEC.md#mcp-stdio-bridge` },
+    ],
+  },
+  {
+    id: "socket-cli-api",
+    eyebrow: "Reference",
+    title: "Socket CLI/API",
+    summary:
+      "The CLI and MCP bridge share one newline-delimited JSON-RPC-like socket API.",
+    blocks: [
+      {
+        kind: "paragraph",
+        text: "ForkTTY binds an owner-only Unix socket at $XDG_RUNTIME_DIR/forktty.sock, with fallback /tmp/forktty-<uid>/forktty.sock. Set FORKTTY_SOCKET_PATH=/absolute/path to override it for both the app and CLI.",
+      },
+      {
+        kind: "code",
+        lines: [
+          "forktty ping",
+          "forktty list",
+          "forktty surfaces",
+          "forktty read-screen",
+          "forktty capture-tail",
+          "forktty split-surface --axis vertical",
+          "forktty send-text \"echo hello\"",
+          "forktty capabilities",
+          "forktty events",
+        ],
+      },
+      {
+        kind: "list",
+        items: [
+          "System methods cover ping, capabilities, and event subscriptions.",
+          "Workspace and surface methods cover list, focus, split, close, text input, visible text, and tail capture.",
+          "Agent methods cover agent listing, health, resume, and reclaim planning.",
+          "Metadata methods publish status, progress, logs, and statusline output.",
+          "Worktree methods validate target paths against repos already opened by the user.",
+          "Error codes include method_not_found, missing_param, not_found, payload_too_large, conflict, precondition_failed, already_exists, not_ready, invalid_param, and error.",
+        ],
+      },
+    ],
+    sources: [
+      { label: "Socket API", href: `${REPO_DOCS}/SPEC.md#socket-api` },
+      { label: "CLI examples", href: `${REPO_DOCS}/README.md#socket-cli` },
+    ],
+  },
+  {
+    id: "git-worktrees",
+    eyebrow: "Repos",
+    title: "Git worktrees",
+    summary:
+      "Worktrees are first-class ForkTTY workspaces for isolated parallel tasks.",
+    blocks: [
+      {
+        kind: "code",
+        lines: [
+          "forktty worktree-status",
+          "forktty worktree-list",
+          "forktty worktree-create feature/my-task --cwd /path/to/repo",
+          "forktty worktree-attach feature/my-task --cwd /path/to/repo",
+        ],
+      },
+      {
+        kind: "paragraph",
+        text: "ForkTTY uses native git operations to create, attach, remove, and merge worktrees. Socket worktree calls require an explicit cwd and are constrained to repositories the user has opened, so automation cannot operate on arbitrary repos behind the user's back.",
+      },
+      {
+        kind: "list",
+        items: [
+          "Default layout can place worktrees under a repo-local .worktrees directory or sibling layout depending on configuration.",
+          "Dirty-state protection blocks destructive worktree actions that would drop uncommitted work.",
+          "Optional .forktty/setup and teardown hooks let projects prepare or clean a worktree.",
+          "Repo-local forktty.json can describe project actions and workflow hints for automation.",
+        ],
+      },
+    ],
+    sources: [
+      { label: "Worktree behavior", href: `${REPO_DOCS}/SPEC.md#worktree-behavior` },
+      { label: "Roadmap", href: `${REPO_DOCS}/ROADMAP.md` },
+    ],
+  },
+  {
+    id: "configuration-local-files",
+    eyebrow: "Local state",
+    title: "Configuration & local files",
+    summary:
+      "ForkTTY stores bounded config, session, browser profile, and state files under normal XDG locations.",
+    blocks: [
+      {
+        kind: "table",
+        columns: ["Path", "Purpose"],
+        rows: [
+          ["~/.config/forktty/config.toml", "User configuration for ForkTTY-owned behavior."],
+          ["~/.local/share/forktty/session-v2.json", "Workspace, pane, and recent scrollback session state."],
+          ["~/.local/share/forktty/browser_profiles/profiles.json", "Source-only browser profile index."],
+          ["~/.local/share/forktty/browser_profiles/<id>/", "Source-only WebKit profile data."],
+        ],
+      },
+      {
+        kind: "paragraph",
+        text: "ForkTTY now leaves Ghostty-owned terminal appearance and runtime behavior to Ghostty configuration. Legacy TOML keys for terminal font, theme, bell, renderer, and scrollback still load for compatibility but are not exposed in newly saved settings.",
+      },
+      {
+        kind: "code",
+        prompt: false,
+        lines: [
+          "[general]",
+          "quake_enabled = false",
+          "",
+          "[notifications]",
+          "enabled = true",
+          "",
+          "[telemetry]",
+          "enabled = true",
+        ],
+      },
+    ],
+    sources: [
+      { label: "Configuration", href: `${REPO_DOCS}/README.md#configuration` },
+      { label: "Runtime spec", href: `${REPO_DOCS}/SPEC.md#config` },
+    ],
+  },
+  {
+    id: "privacy-telemetry",
+    eyebrow: "Privacy",
+    title: "Privacy & telemetry",
+    summary:
+      "ForkTTY is local-first and limits network activity to update checks and an anonymous daily ping that can be disabled.",
+    blocks: [
+      {
+        kind: "paragraph",
+        text: "The app does not send crash reports, terminal contents, project paths, socket payloads, agent metadata, usernames, hostnames, or install identifiers to ForkTTY infrastructure.",
+      },
+      {
+        kind: "list",
+        items: [
+          "Anonymous app telemetry is a daily ping to https://forktty.dev/api/telemetry/ping when enabled.",
+          "The ping payload contains only schema, kind, app, version, and date.",
+          "GitHub update checks are once-a-day release metadata checks when enabled.",
+          "Desktop notifications are local OS notifications, except for whatever your desktop environment needs to display them.",
+          "Disable app telemetry from the first-launch privacy prompt or config.",
+        ],
+      },
+    ],
+    sources: [
+      { label: "App privacy", href: `${REPO_DOCS}/PRIVACY.md` },
+      { label: "Site privacy", href: "/privacy" },
+    ],
+  },
+  {
+    id: "security-model",
+    eyebrow: "Security",
+    title: "Security model",
+    summary:
+      "ForkTTY assumes a local same-user trust boundary and defends the socket, config, session, and package runtime accordingly.",
+    blocks: [
+      {
+        kind: "list",
+        items: [
+          "The Unix socket is owner-only and local to the user's desktop session.",
+          "Socket payloads and list limits are bounded to avoid unbounded memory requests.",
+          "Notification commands are executed as argv, not through shell pipelines.",
+          "Config and session recovery quarantine malformed, oversized, or invalid state instead of repeatedly loading it.",
+          "Embedded Ghostty library loading canonicalizes candidate paths and rejects relative, non-regular, untrusted, or writable-by-others paths.",
+          "Security reports should use GitHub private vulnerability reporting.",
+        ],
+      },
+      {
+        kind: "paragraph",
+        text: "Supported security updates track the current 0.2.0-alpha.x line. Older 0.1.x releases are not covered by the current supported-version policy.",
+      },
+    ],
+    sources: [{ label: "Security policy", href: `${REPO_DOCS}/SECURITY.md` }],
+  },
+  {
+    id: "troubleshooting",
+    eyebrow: "Fixes",
+    title: "Troubleshooting",
+    summary:
+      "Start with doctor output, package baseline checks, renderer overrides, and the socket path.",
+    blocks: [
+      {
+        kind: "code",
+        lines: [
+          "forktty doctor",
+          "forktty ping",
+          "GSK_RENDERER=gl ./forktty-*.AppImage",
+          "FORKTTY_SOCKET_PATH=/absolute/path forktty ping",
+        ],
+      },
+      {
+        kind: "list",
+        items: [
+          "If packaged terminal panes fail to start, confirm the release artifact includes ghostty-gtk-embed.so and bundled runtime dependencies.",
+          "If .deb install fails on Debian 12/Bookworm, use a supported Debian 13/Trixie+ or Ubuntu 24.04 LTS+ baseline.",
+          "If socket commands cannot connect, launch ForkTTY first or set an absolute FORKTTY_SOCKET_PATH.",
+          "If config or session files are corrupt, ForkTTY should quarantine the bad file and start from defaults.",
+          "For bug reports, include forktty doctor output, distro and desktop environment, install method, reproduction steps, and relevant logs.",
+        ],
+      },
+    ],
+    sources: [
+      { label: "Troubleshooting", href: `${REPO_DOCS}/README.md#troubleshooting` },
+      { label: "Support", href: `${REPO_DOCS}/SUPPORT.md` },
+      { label: "QA matrix", href: `${REPO_DOCS}/docs/QA.md` },
+    ],
+  },
+  {
+    id: "changelog-highlights",
+    eyebrow: "Releases",
+    title: "Changelog highlights",
+    summary:
+      "The latest recorded release is 0.2.0-alpha.14 from 2026-06-19.",
+    blocks: [
+      {
+        kind: "list",
+        items: [
+          "0.2.0-alpha.14 fixed embedded Ghostty renderer memory growth by defaulting GTK compositing to the GL renderer.",
+          "Embedded Ghostty redraws now follow the 16ms wakeup-check cadence instead of a 100ms floor during continuous output.",
+          "AppImage packaging verifies the embedded Ghostty GTK library dependencies, not only the main binary.",
+          "Embedded panes now honor Ghostty scrollback-limit, with a bounded default of 10 MB per surface.",
+          "Security fixes hardened restored session identifiers, command-spawn values, library loading, OSC99 icon sizing, and Kitty image snapshots.",
+          "Docs, package metadata, the first-run privacy link, and the telemetry endpoint now use the canonical https://forktty.dev domain.",
+        ],
+      },
+    ],
+    sources: [
+      { label: "Changelog", href: `${REPO_DOCS}/CHANGELOG.md` },
+      { label: "GitHub releases", href: RELEASES_HTML_URL },
+    ],
+  },
+  {
+    id: "roadmap-limitations-support",
+    eyebrow: "Project status",
+    title: "Roadmap, limitations, support",
+    summary:
+      "ForkTTY is an early alpha with a Linux-first roadmap and explicit non-goals.",
+    blocks: [
+      {
+        kind: "list",
+        items: [
+          "Known limitations: Linux-only, libadwaita 1.4+ baseline, AppImage host dependencies, PTYs not persisted, partial OSC notification coverage, compositor-dependent quake behavior, and source-only browser panes.",
+          "Near-term roadmap areas include richer Agent HUD/statusline exports, remote daemon depth, sidebar/workspace organization, topology and tmux-like verbs, prompt composer work, agent catalog surfaces, project panels, QA matrix depth, command palette search, branch picker, notification inbox grouping, theme customization, and broader Ghostty options.",
+          "Use GitHub Issues for bugs, GitHub Discussions for questions, and private vulnerability reporting for security issues.",
+        ],
+      },
+    ],
+    sources: [
+      { label: "Roadmap", href: `${REPO_DOCS}/ROADMAP.md` },
+      { label: "Support", href: `${REPO_DOCS}/SUPPORT.md` },
     ],
   },
 ];
@@ -87,9 +497,32 @@ const DOC_GROUPS = [
 export const metadata: Metadata = {
   title: "Docs",
   description:
-    "Curated ForkTTY documentation index for installation, agent integrations, local socket and MCP automation, troubleshooting, privacy, security, and releases.",
+    "ForkTTY wiki for installation, daily use, agent hooks, MCP, socket automation, worktrees, privacy, security, troubleshooting, and releases.",
   alternates: {
     canonical: "/docs",
+  },
+  openGraph: {
+    title: "Docs - ForkTTY",
+    description:
+      "Complete ForkTTY wiki for install paths, agent integrations, hooks, MCP, socket CLI/API, worktrees, privacy, security, and troubleshooting.",
+    url: `${SITE_URL}/docs`,
+    siteName: "ForkTTY",
+    type: "article",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "ForkTTY docs wiki",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Docs - ForkTTY",
+    description:
+      "Install, operate, automate, troubleshoot, and audit ForkTTY from one onsite wiki.",
+    images: ["/og.png"],
   },
 };
 
@@ -104,17 +537,17 @@ export default function DocsPage() {
       <Header />
       <main id="main">
         <section className="section py-16 sm:py-20">
-          <div className="max-w-3xl">
+          <div className="max-w-4xl">
             <div className="font-mono text-xs uppercase tracking-[0.16em] text-forktty">
               Documentation
             </div>
             <h1 className="mt-5 font-display text-[2.7rem] font-semibold leading-[0.98] text-ink-100 sm:text-[4.4rem]">
-              Find the right ForkTTY reference fast.
+              ForkTTY wiki.
             </h1>
-            <p className="mt-6 text-base leading-relaxed text-ink-300 sm:text-lg">
-              The canonical docs live with the ForkTTY source. This page is the
-              stable map: start with install paths, then jump into operation,
-              automation, troubleshooting, release notes, or security details.
+            <p className="mt-6 max-w-3xl text-base leading-relaxed text-ink-300 sm:text-lg">
+              Install ForkTTY, wire up agents, use the local socket and MCP
+              bridge, manage git worktrees, and check the privacy and security
+              model from one stable onsite reference.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/#download" className="btn-primary">
@@ -135,48 +568,187 @@ export default function DocsPage() {
         </section>
 
         <section className="border-t border-ink-800/60">
-          <div className="section grid gap-8 py-16 sm:py-20 lg:grid-cols-2">
-            {DOC_GROUPS.map((group) => (
-              <section key={group.title} className="tui-frame p-6">
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <h2 className="font-display text-2xl font-semibold leading-tight text-ink-100">
-                      {group.title}
+          <div className="section grid gap-10 py-12 sm:py-16 lg:grid-cols-[16rem_minmax(0,1fr)] lg:items-start">
+            <aside className="lg:sticky lg:top-20">
+              <nav
+                aria-label="Documentation sections"
+                className="tui-frame p-4"
+              >
+                <div className="mb-3 font-mono text-xs uppercase tracking-[0.16em] text-ink-500">
+                  On this page
+                </div>
+                <ol className="space-y-1">
+                  {DOC_SECTIONS.map((section) => (
+                    <li key={section.id}>
+                      <a
+                        href={`#${section.id}`}
+                        className="block border-l border-ink-800 px-3 py-1.5 text-sm leading-snug text-ink-300 transition-colors hover:border-forktty hover:text-forktty"
+                      >
+                        {section.title}
+                      </a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            </aside>
+
+            <article className="min-w-0 space-y-10">
+              {DOC_SECTIONS.map((section) => (
+                <section
+                  key={section.id}
+                  id={section.id}
+                  className="scroll-mt-24 border-t border-ink-800/70 pt-10 first:border-t-0 first:pt-0"
+                >
+                  <div className="max-w-3xl">
+                    <div className="font-mono text-xs uppercase tracking-[0.16em] text-forktty">
+                      {section.eyebrow}
+                    </div>
+                    <h2 className="mt-3 font-display text-3xl font-semibold leading-tight text-ink-100 sm:text-4xl">
+                      {section.title}
                     </h2>
-                    <p className="mt-2 text-sm leading-relaxed text-ink-400">
-                      {group.intro}
+                    <p className="mt-4 text-base leading-relaxed text-ink-300">
+                      {section.summary}
                     </p>
                   </div>
-                  <span className="chip shrink-0">{group.links.length} refs</span>
-                </div>
 
-                <div className="mt-6 divide-y divide-ink-800/80">
-                  {group.links.map((item) => (
+                  <div className="mt-6 max-w-4xl space-y-5">
+                    {section.blocks.map((block) => (
+                      <DocBlockView block={block} key={blockKey(section.id, block)} />
+                    ))}
+                  </div>
+
+                  {section.sources ? (
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      {section.sources.map((source) => (
+                        <a
+                          key={source.label}
+                          href={source.href}
+                          target={source.href.startsWith("/") ? undefined : "_blank"}
+                          rel={
+                            source.href.startsWith("/")
+                              ? undefined
+                              : "noreferrer noopener"
+                          }
+                          className="chip hover:border-forktty/70 hover:text-forktty"
+                        >
+                          {source.label}
+                        </a>
+                      ))}
+                    </div>
+                  ) : null}
+                </section>
+              ))}
+
+              <section className="tui-frame p-6">
+                <h2 className="font-display text-2xl font-semibold leading-tight text-ink-100">
+                  Source references
+                </h2>
+                <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink-400">
+                  This page is maintained from the public ForkTTY repository.
+                  Use these files when you need the raw source document behind
+                  the onsite wiki.
+                </p>
+                <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {SOURCE_LINKS.map((source) => (
                     <a
-                      key={item.label}
-                      href={item.href}
+                      key={source.label}
+                      href={source.href}
                       target="_blank"
                       rel="noreferrer noopener"
-                      className="group flex gap-4 py-4 first:pt-0 last:pb-0"
+                      className="group flex items-center justify-between gap-4 border border-ink-800 bg-ink-900/70 px-4 py-3 text-sm text-ink-200 hover:border-forktty/70 hover:text-forktty"
                     >
-                      <div className="min-w-0 flex-1">
-                        <div className="font-mono text-sm font-medium text-ink-100 group-hover:text-forktty">
-                          {item.label}
-                        </div>
-                        <p className="mt-1 text-sm leading-relaxed text-ink-400">
-                          {item.body}
-                        </p>
-                      </div>
-                      <ArrowRight className="mt-0.5 h-4 w-4 shrink-0 text-ink-500 transition-transform group-hover:translate-x-0.5 group-hover:text-forktty" />
+                      <span>{source.label}</span>
+                      <ArrowRight className="h-4 w-4 shrink-0 text-ink-500 transition-transform group-hover:translate-x-0.5 group-hover:text-forktty" />
                     </a>
                   ))}
                 </div>
               </section>
-            ))}
+            </article>
           </div>
         </section>
       </main>
       <Footer />
     </>
   );
+}
+
+function DocBlockView({ block }: { block: DocBlock }) {
+  if (block.kind === "paragraph") {
+    return <p className="text-[15px] leading-relaxed text-ink-300">{block.text}</p>;
+  }
+
+  if (block.kind === "list") {
+    return (
+      <ul className="space-y-2 text-[15px] leading-relaxed text-ink-300">
+        {block.items.map((item) => (
+          <li key={item} className="flex gap-3">
+            <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-forktty" aria-hidden />
+            <span>{item}</span>
+          </li>
+        ))}
+      </ul>
+    );
+  }
+
+  if (block.kind === "code") {
+    return (
+      <pre className="overflow-x-auto border border-ink-800 bg-ink-950 p-4 font-mono text-[12.5px] leading-relaxed text-ink-100">
+        {block.lines.map((line, index) => (
+          <div key={`${line}-${index}`}>
+            {line && block.prompt !== false ? (
+              <>
+                <span className="select-none text-ink-500">$</span> {line}
+              </>
+            ) : line ? (
+              line
+            ) : (
+              <span aria-hidden>&nbsp;</span>
+            )}
+          </div>
+        ))}
+      </pre>
+    );
+  }
+
+  return (
+    <div className="overflow-x-auto border border-ink-800">
+      <table className="w-full min-w-[34rem] border-collapse text-left text-sm">
+        <thead className="bg-ink-900 text-ink-200">
+          <tr>
+            {block.columns.map((column) => (
+              <th
+                key={column}
+                className="border-b border-ink-800 px-4 py-3 font-mono text-xs uppercase tracking-[0.12em]"
+              >
+                {column}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody className="divide-y divide-ink-800 text-ink-300">
+          {block.rows.map(([left, right]) => (
+            <tr key={`${left}-${right}`}>
+              <td className="w-[34%] align-top px-4 py-3 font-mono text-xs text-ink-100">
+                {left}
+              </td>
+              <td className="px-4 py-3 leading-relaxed">{right}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+function blockKey(sectionId: string, block: DocBlock) {
+  if (block.kind === "paragraph") {
+    return `${sectionId}-paragraph-${block.text.slice(0, 48)}`;
+  }
+  if (block.kind === "list") {
+    return `${sectionId}-list-${block.items[0]}`;
+  }
+  if (block.kind === "code") {
+    return `${sectionId}-code-${block.lines.join("|").slice(0, 48)}`;
+  }
+  return `${sectionId}-table-${block.columns.join("-")}-${block.rows[0][0]}`;
 }

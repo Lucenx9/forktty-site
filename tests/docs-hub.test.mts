@@ -6,7 +6,7 @@ async function source(path: string): Promise<string> {
   return readFile(new URL(`../${path}`, import.meta.url), "utf8");
 }
 
-test("site exposes a docs hub without removing the home quick start", async () => {
+test("site exposes an onsite docs wiki without removing the home quick start", async () => {
   const [docsPage, header, download] = await Promise.all([
     source("app/docs/page.tsx"),
     source("components/Header.tsx"),
@@ -15,14 +15,28 @@ test("site exposes a docs hub without removing the home quick start", async () =
 
   assert.match(header, /href="\/docs"/);
   assert.match(download, /Quick start/);
-  assert.match(docsPage, /Install & updates/);
+  assert.match(docsPage, /DOC_SECTIONS/);
+  assert.match(docsPage, /Install & first run/);
+  assert.match(docsPage, /Daily use/);
   assert.match(docsPage, /Agent integrations/);
-  assert.match(docsPage, /Socket, CLI & MCP/);
+  assert.match(docsPage, /Hooks/);
+  assert.match(docsPage, /MCP setup/);
+  assert.match(docsPage, /Socket CLI\/API/);
+  assert.match(docsPage, /Git worktrees/);
+  assert.match(docsPage, /Configuration & local files/);
+  assert.match(docsPage, /Privacy & telemetry/);
+  assert.match(docsPage, /Security model/);
   assert.match(docsPage, /Troubleshooting/);
-  assert.match(docsPage, /REPO_HTML_URL/);
-  assert.match(docsPage, /blob\/main/);
-  assert.match(docsPage, /README\.md#install/);
+  assert.match(docsPage, /Changelog highlights/);
+  assert.match(docsPage, /Roadmap, limitations, support/);
+  assert.match(docsPage, /href=\{`#\$\{section\.id\}`\}/);
   assert.match(docsPage, /canonical:\s*"\/docs"/);
-  assert.match(docsPage, /Release notes/);
-  assert.match(docsPage, /RELEASES_HTML_URL/);
+  assert.match(docsPage, /AppImage/);
+  assert.match(docsPage, /Debian 13\/Trixie\+/);
+  assert.match(docsPage, /Ubuntu 24\.04 LTS\+/);
+  assert.match(docsPage, /forktty hooks setup/);
+  assert.match(docsPage, /forktty mcp setup/);
+  assert.match(docsPage, /FORKTTY_SOCKET_PATH/);
+  assert.match(docsPage, /~\/\.config\/forktty\/config\.toml/);
+  assert.match(docsPage, /0\.2\.0-alpha\.14/);
 });
