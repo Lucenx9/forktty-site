@@ -77,10 +77,12 @@ export async function fetchLatestRelease(): Promise<ReleaseView | ReleaseFallbac
 
     const assets = data.assets ?? [];
 
-    const appImage = pickAsset(
-      assets,
-      (a) => /\.AppImage$/i.test(a.name) || /AppImage/i.test(a.name),
-    );
+    const appImage =
+      pickAsset(assets, (a) => /\.AppImage$/i.test(a.name)) ??
+      pickAsset(
+        assets,
+        (a) => /AppImage/i.test(a.name) && !/\.zsync$/i.test(a.name),
+      );
     const deb = pickAsset(assets, (a) => /\.deb$/i.test(a.name));
     const checksums = pickAsset(
       assets,
