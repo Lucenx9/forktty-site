@@ -8,7 +8,7 @@ Key facts: bring your own agent CLI and subscription; ForkTTY ships no model acc
 
 ## Recommended context
 
-- [Docs hub](https://forktty-site.vercel.app/docs): Curated index for install, operations, automation, troubleshooting, releases, privacy, and security
+- [Docs hub](https://forktty.dev/docs): Curated index for install, operations, automation, troubleshooting, releases, privacy, and security
 - [README](https://raw.githubusercontent.com/Lucenx9/forktty/main/README.md): Overview, installation, and quick start
 - [SPEC](https://raw.githubusercontent.com/Lucenx9/forktty/main/SPEC.md): Configuration fields, socket JSON-RPC API, and security boundaries
 - [CHANGELOG](https://raw.githubusercontent.com/Lucenx9/forktty/main/CHANGELOG.md): Release history and unreleased changes
@@ -25,7 +25,7 @@ Key facts: bring your own agent CLI and subscription; ForkTTY ships no model acc
 
 ## Policies
 
-- [Site privacy](https://forktty-site.vercel.app/privacy): Site hosting, Vercel Web Analytics, app telemetry endpoint, provider links, and trademark notice
+- [Site privacy](https://forktty.dev/privacy): Site hosting, Vercel Web Analytics, app telemetry endpoint, provider links, and trademark notice
 - [Security policy](https://raw.githubusercontent.com/Lucenx9/forktty/main/SECURITY.md): Security model and how to report vulnerabilities
 - [Privacy](https://raw.githubusercontent.com/Lucenx9/forktty/main/PRIVACY.md): Opt-out anonymous daily ping, optional update checks, and what stays local
 
@@ -34,4 +34,4 @@ Key facts: bring your own agent CLI and subscription; ForkTTY ships no model acc
 - [Roadmap](https://raw.githubusercontent.com/Lucenx9/forktty/main/ROADMAP.md): Planned features and direction
 - [Contributing](https://raw.githubusercontent.com/Lucenx9/forktty/main/CONTRIBUTING.md): How to contribute
 - [Support](https://raw.githubusercontent.com/Lucenx9/forktty/main/SUPPORT.md): Getting help
-- [Landing page](https://forktty-site.vercel.app/): Features, FAQ, and download links
+- [Landing page](https://forktty.dev/): Features, FAQ, and download links

@@ -12,7 +12,7 @@ afterEach(() => {
 });
 
 function request(authorization?: string, path = "/admin/telemetry"): Request {
-  return new Request(`https://forktty-site.vercel.app${path}`, {
+  return new Request(`https://forktty.dev${path}`, {
     method: "GET",
     headers: authorization ? { authorization } : undefined,
   });

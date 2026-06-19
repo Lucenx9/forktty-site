@@ -1,3 +1,3 @@
 export const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ??
-  "https://forktty-site.vercel.app";
+  "https://forktty.dev";

@@ -28,6 +28,8 @@ test("llms file prioritizes agent retrieval context", async () => {
   assert.match(llms, /SPEC/);
   assert.match(llms, /CHANGELOG/);
   assert.match(llms, /## Optional/);
+  assert.match(llms, /https:\/\/forktty\.dev\/docs/);
+  assert.doesNotMatch(llms, /forktty-site\.vercel\.app/);
 });
 
 test("layout exposes visible-page-aligned structured data", async () => {
@@ -39,4 +41,11 @@ test("layout exposes visible-page-aligned structured data", async () => {
   assert.match(layout, /operatingSystem: "Linux"/);
   assert.match(layout, /applicationCategory: "DeveloperApplication"/);
   assert.match(layout, /codeRepository/);
+});
+
+test("canonical site URL defaults to the public custom domain", async () => {
+  const site = await source("lib/site.ts");
+
+  assert.match(site, /"https:\/\/forktty\.dev"/);
+  assert.doesNotMatch(site, /forktty-site\.vercel\.app/);
 });

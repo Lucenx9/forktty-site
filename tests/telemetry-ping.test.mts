@@ -12,7 +12,7 @@ afterEach(() => {
 });
 
 function request(body: unknown): Request {
-  return new Request("https://forktty-site.vercel.app/api/telemetry/ping", {
+  return new Request("https://forktty.dev/api/telemetry/ping", {
     method: "POST",
     body: JSON.stringify(body),
     headers: {
@@ -76,7 +76,7 @@ test("malformed ping is rejected", async () => {
 
 test("oversized ping is rejected", async () => {
   const response = await POST(
-    new Request("https://forktty-site.vercel.app/api/telemetry/ping", {
+    new Request("https://forktty.dev/api/telemetry/ping", {
       method: "POST",
       body: JSON.stringify({ ...validPayload(), extra: "x".repeat(2048) }),
       headers: {

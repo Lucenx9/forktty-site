@@ -80,10 +80,10 @@ export default function PrivacyPage() {
               Site privacy.
             </h1>
             <p className="mt-6 text-base leading-relaxed text-ink-300 sm:text-lg">
-              This notice covers forktty-site.vercel.app, including the docs hub,
-              download page, Vercel Web Analytics, and the ForkTTY app telemetry
-              endpoint. The ForkTTY desktop app has its own privacy notice in
-              the source repository.
+              This notice covers forktty.dev, including the docs hub, download
+              page, Vercel Web Analytics, and the ForkTTY app telemetry endpoint.
+              The ForkTTY desktop app has its own privacy notice in the source
+              repository.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a

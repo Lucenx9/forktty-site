@@ -15,6 +15,8 @@ test("site publishes an accessible privacy notice", async () => {
   ]);
 
   assert.match(privacyPage, /Site privacy/i);
+  assert.match(privacyPage, /forktty\.dev/);
+  assert.doesNotMatch(privacyPage, /forktty-site\.vercel\.app/);
   assert.match(privacyPage, /Vercel Web Analytics/);
   assert.match(privacyPage, /does not use cookies/i);
   assert.match(privacyPage, /\/api\/telemetry\/ping/);
