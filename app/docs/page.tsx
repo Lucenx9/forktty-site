@@ -70,7 +70,7 @@ const DOC_SECTIONS: DocSection[] = [
   {
     id: "install-first-run",
     eyebrow: "Quick start",
-    title: "Install & first run",
+    title: "Install and first run",
     summary:
       "Use the AppImage for the portable alpha path, or the .deb package on modern Debian and Ubuntu baselines.",
     blocks: [
@@ -247,7 +247,7 @@ const DOC_SECTIONS: DocSection[] = [
   {
     id: "socket-cli-api",
     eyebrow: "Reference",
-    title: "Socket CLI/API",
+    title: "Socket CLI and API",
     summary:
       "The CLI and MCP bridge share one newline-delimited JSON-RPC-like socket API.",
     blocks: [
@@ -324,7 +324,7 @@ const DOC_SECTIONS: DocSection[] = [
   {
     id: "configuration-local-files",
     eyebrow: "Local state",
-    title: "Configuration & local files",
+    title: "Configuration and local files",
     summary:
       "ForkTTY stores bounded config, session, browser profile, and state files under normal XDG locations.",
     blocks: [
@@ -365,7 +365,7 @@ const DOC_SECTIONS: DocSection[] = [
   {
     id: "privacy-telemetry",
     eyebrow: "Privacy",
-    title: "Privacy & telemetry",
+    title: "Privacy and telemetry",
     summary:
       "ForkTTY is local-first and limits network activity to update checks and an anonymous daily ping that can be disabled.",
     blocks: [
@@ -474,7 +474,7 @@ const DOC_SECTIONS: DocSection[] = [
   {
     id: "roadmap-limitations-support",
     eyebrow: "Project status",
-    title: "Roadmap, limitations, support",
+    title: "Roadmap, limitations, and support",
     summary:
       "ForkTTY is an early alpha with a Linux-first roadmap and explicit non-goals.",
     blocks: [
@@ -504,7 +504,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Docs - ForkTTY",
     description:
-      "Complete ForkTTY wiki for install paths, agent integrations, hooks, MCP, socket CLI/API, worktrees, privacy, security, and troubleshooting.",
+      "Complete ForkTTY wiki for install paths, agent integrations, hooks, MCP, socket CLI and API, worktrees, privacy, security, and troubleshooting.",
     url: `${SITE_URL}/docs`,
     siteName: "ForkTTY",
     type: "article",
