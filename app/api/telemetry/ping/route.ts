@@ -1,6 +1,8 @@
 const MAX_BODY_BYTES = 1024;
 const NOINDEX_HEADER = "noindex, nofollow, noarchive";
 const REDIS_KEY_TTL_SECONDS = 400 * 24 * 60 * 60;
+const TELEMETRY_DATE_SKEW_DAYS = 1;
+const SUPPORTED_VERSION_PATTERN = /^0\.2\.0-alpha\.(?:[1-9]|1[0-4])$/;
 
 type PingPayload = {
   schema: 1;
@@ -46,13 +48,14 @@ export async function POST(request: Request): Promise<Response> {
 }
 
 async function parsePayload(request: Request): Promise<PingPayload | null> {
-  let body: string;
-  try {
-    body = await request.text();
-  } catch {
+  if (contentLengthExceedsLimit(request)) {
     return null;
   }
-  if (body.length > MAX_BODY_BYTES) {
+
+  let body: string;
+  try {
+    body = await readLimitedBody(request);
+  } catch {
     return null;
   }
 
@@ -85,7 +88,7 @@ function validPayload(value: unknown): value is PingPayload {
 }
 
 function validVersion(version: string): boolean {
-  return /^[0-9A-Za-z][0-9A-Za-z.+_-]{0,63}$/.test(version);
+  return SUPPORTED_VERSION_PATTERN.test(version);
 }
 
 function validDate(date: string): boolean {
@@ -93,7 +96,50 @@ function validDate(date: string): boolean {
     return false;
   }
   const parsed = new Date(`${date}T00:00:00.000Z`);
-  return !Number.isNaN(parsed.getTime()) && parsed.toISOString().slice(0, 10) === date;
+  if (Number.isNaN(parsed.getTime()) || parsed.toISOString().slice(0, 10) !== date) {
+    return false;
+  }
+
+  const today = startOfUtcDay(new Date());
+  const ageDays = Math.round((today.getTime() - parsed.getTime()) / (24 * 60 * 60 * 1000));
+  return Math.abs(ageDays) <= TELEMETRY_DATE_SKEW_DAYS;
+}
+
+function contentLengthExceedsLimit(request: Request): boolean {
+  const contentLength = request.headers.get("content-length");
+  if (!contentLength) {
+    return false;
+  }
+  const bytes = Number(contentLength);
+  return Number.isFinite(bytes) && bytes > MAX_BODY_BYTES;
+}
+
+async function readLimitedBody(request: Request): Promise<string> {
+  if (!request.body) {
+    return "";
+  }
+
+  const reader = request.body.getReader();
+  const decoder = new TextDecoder();
+  let bytesRead = 0;
+  let body = "";
+
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) {
+      return body + decoder.decode();
+    }
+    bytesRead += value.byteLength;
+    if (bytesRead > MAX_BODY_BYTES) {
+      await reader.cancel();
+      throw new Error("Telemetry ping body is too large");
+    }
+    body += decoder.decode(value, { stream: true });
+  }
+}
+
+function startOfUtcDay(date: Date): Date {
+  return new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
 }
 
 function redisCredentials(): RedisCredentials | null {

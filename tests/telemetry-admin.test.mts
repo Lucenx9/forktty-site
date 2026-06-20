@@ -9,12 +9,22 @@ const OLD_FETCH = globalThis.fetch;
 afterEach(() => {
   process.env = { ...OLD_ENV };
   globalThis.fetch = OLD_FETCH;
+  delete (globalThis as typeof globalThis & {
+    __forkttyTelemetryAuthFailures?: unknown;
+  }).__forkttyTelemetryAuthFailures;
 });
 
-function request(authorization?: string, path = "/admin/telemetry"): Request {
+function request(
+  authorization?: string,
+  path = "/admin/telemetry",
+  ip = "203.0.113.10",
+): Request {
   return new Request(`https://forktty.dev${path}`, {
     method: "GET",
-    headers: authorization ? { authorization } : undefined,
+    headers: {
+      "x-forwarded-for": ip,
+      ...(authorization ? { authorization } : {}),
+    },
   });
 }
 
@@ -60,6 +70,35 @@ test("admin dashboard rejects incorrect credentials", async () => {
 
   assert.equal(response.status, 401);
   assert.equal(response.headers.get("x-robots-tag"), "noindex, nofollow, noarchive");
+});
+
+test("admin dashboard locks out repeated incorrect credentials by IP", async () => {
+  configureAdmin();
+
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    const response = await GET(request(
+      basicAuth("owner", "wrong"),
+      "/admin/telemetry",
+      "198.51.100.24",
+    ));
+    assert.equal(response.status, 401);
+  }
+
+  const lockedResponse = await GET(request(
+    basicAuth("owner", "wrong"),
+    "/admin/telemetry",
+    "198.51.100.24",
+  ));
+  assert.equal(lockedResponse.status, 429);
+  assert.equal(lockedResponse.headers.get("retry-after"), "900");
+  assert.equal(lockedResponse.headers.get("x-robots-tag"), "noindex, nofollow, noarchive");
+
+  const correctWhileLocked = await GET(request(
+    basicAuth("owner", "admin-secret"),
+    "/admin/telemetry",
+    "198.51.100.24",
+  ));
+  assert.equal(correctWhileLocked.status, 429);
 });
 
 test("admin dashboard renders ping counts from Redis", async () => {
@@ -151,6 +190,58 @@ test("admin dashboard filters rows and exports CSV", async () => {
     "date,version,pings",
     "2026-06-13,0.2.0-alpha.12,4",
     "2026-06-12,0.2.0-alpha.12,2",
+    "",
+  ].join("\n"));
+});
+
+test("admin CSV export neutralizes spreadsheet formula versions", async () => {
+  configureAdmin();
+  configureRedis();
+  globalThis.fetch = async (_input, init) => {
+    const body = JSON.parse(String(init?.body));
+    if (body[0][0] === "SCAN") {
+      return Response.json([
+        {
+          result: [
+            "0",
+            [
+              "telemetry:ping:2026-06-13:=WEBSERVICE(\"https://example.invalid/\")",
+              "telemetry:ping:2026-06-12:\tcmd",
+              "telemetry:ping:2026-06-11:+cmd",
+              "telemetry:ping:2026-06-10:-cmd",
+              "telemetry:ping:2026-06-09:@cmd",
+              "telemetry:ping:2026-06-11:normal,quoted",
+            ],
+          ],
+        },
+      ]);
+    }
+
+    return Response.json([
+      { result: "4" },
+      { result: "2" },
+      { result: "3" },
+      { result: "5" },
+      { result: "8" },
+      { result: "1" },
+    ]);
+  };
+
+  const response = await GET(request(
+    basicAuth("owner", "admin-secret"),
+    "/admin/telemetry?range=all&format=csv",
+  ));
+  const body = await response.text();
+
+  assert.equal(response.status, 200);
+  assert.equal(body, [
+    "date,version,pings",
+    "2026-06-13,\"'=WEBSERVICE(\"\"https://example.invalid/\"\")\",4",
+    "2026-06-12,'\tcmd,2",
+    "2026-06-11,'+cmd,3",
+    "2026-06-11,\"normal,quoted\",1",
+    "2026-06-10,'-cmd,5",
+    "2026-06-09,'@cmd,8",
     "",
   ].join("\n"));
 });

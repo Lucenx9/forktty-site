@@ -5,6 +5,9 @@ export const revalidate = 0;
 export const runtime = "nodejs";
 
 const AUTH_REALM = 'Basic realm="ForkTTY telemetry", charset="UTF-8"';
+const AUTH_FAILURE_LIMIT = 5;
+const AUTH_LOCKOUT_MS = 15 * 60 * 1000;
+const AUTH_RETRY_AFTER_SECONDS = Math.ceil(AUTH_LOCKOUT_MS / 1000);
 const NOINDEX_HEADER = "noindex, nofollow, noarchive";
 const TELEMETRY_KEY_PREFIX = "telemetry:ping:";
 const SCAN_COUNT = "200";
@@ -16,6 +19,11 @@ const DEFAULT_RANGE: DashboardRange = 30;
 type AdminCredentials = {
   user: string;
   password: string;
+};
+
+type AuthFailureRecord = {
+  failures: number;
+  lockedUntil: number;
 };
 
 type TelemetryRow = {
@@ -81,16 +89,16 @@ export async function GET(request: Request): Promise<Response> {
     ]), 503);
   }
 
-  if (!authorized(request.headers.get("authorization"), adminCredentials)) {
-    return new Response("Authentication required", {
-      status: 401,
-      headers: {
-        "cache-control": "no-store",
-        "www-authenticate": AUTH_REALM,
-        "x-robots-tag": NOINDEX_HEADER,
-      },
-    });
+  const authKey = authRateLimitKey(request);
+  if (isAuthLocked(authKey)) {
+    return authFailureResponse(429);
   }
+
+  if (!authorized(request.headers.get("authorization"), adminCredentials)) {
+    recordAuthFailure(authKey);
+    return authFailureResponse(401);
+  }
+  clearAuthFailures(authKey);
 
   const credentials = redisCredentials();
   if (!credentials) {
@@ -180,6 +188,71 @@ async function redisPipeline(
     throw new Error("Redis pipeline response was not an array");
   }
   return body as RedisPipelineEntry[];
+}
+
+function authFailureResponse(status: 401 | 429): Response {
+  return new Response(
+    status === 429 ? "Too many authentication attempts" : "Authentication required",
+    {
+      status,
+      headers: {
+        "cache-control": "no-store",
+        "www-authenticate": AUTH_REALM,
+        "x-robots-tag": NOINDEX_HEADER,
+        ...(status === 429 ? { "retry-after": String(AUTH_RETRY_AFTER_SECONDS) } : {}),
+      },
+    },
+  );
+}
+
+function authRateLimitKey(request: Request): string {
+  const forwardedFor = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  const ip =
+    forwardedFor ||
+    request.headers.get("x-real-ip")?.trim() ||
+    request.headers.get("cf-connecting-ip")?.trim() ||
+    "unknown";
+  return `telemetry-admin:${ip}`;
+}
+
+function authFailureStore(): Map<string, AuthFailureRecord> {
+  const globalState = globalThis as typeof globalThis & {
+    __forkttyTelemetryAuthFailures?: Map<string, AuthFailureRecord>;
+  };
+  globalState.__forkttyTelemetryAuthFailures ??= new Map();
+  return globalState.__forkttyTelemetryAuthFailures;
+}
+
+function isAuthLocked(key: string): boolean {
+  const store = authFailureStore();
+  const record = store.get(key);
+  if (!record) {
+    return false;
+  }
+  if (record.lockedUntil > Date.now()) {
+    return true;
+  }
+  if (record.lockedUntil > 0) {
+    store.delete(key);
+  }
+  return false;
+}
+
+function recordAuthFailure(key: string): void {
+  const store = authFailureStore();
+  const now = Date.now();
+  const current = store.get(key);
+  const failures = (
+    current?.lockedUntil && current.lockedUntil <= now ? 0 : current?.failures ?? 0
+  ) + 1;
+  store.set(key, {
+    failures,
+    lockedUntil: failures >= AUTH_FAILURE_LIMIT ? now + AUTH_LOCKOUT_MS : 0,
+  });
+}
+
+function clearAuthFailures(key: string): void {
+  authFailureStore().delete(key);
 }
 
 function authorized(header: string | null, credentials: AdminCredentials): boolean {
@@ -642,10 +715,11 @@ function renderCsv(rows: TelemetryRow[]): string {
 }
 
 function csvCell(value: string): string {
-  if (!/[",\n\r]/.test(value)) {
-    return value;
+  const safeValue = /^[=+\-@\t]/.test(value) ? `'${value}` : value;
+  if (!/[",\n\r]/.test(safeValue)) {
+    return safeValue;
   }
-  return `"${value.replace(/"/g, '""')}"`;
+  return `"${safeValue.replace(/"/g, '""')}"`;
 }
 
 function dashboardHref(

@@ -21,13 +21,23 @@ function request(body: unknown): Request {
   });
 }
 
+function todayIso(): string {
+  return new Date().toISOString().slice(0, 10);
+}
+
+function offsetDate(days: number): string {
+  const date = new Date();
+  date.setUTCDate(date.getUTCDate() + days);
+  return date.toISOString().slice(0, 10);
+}
+
 function validPayload() {
   return {
     schema: 1,
     kind: "daily_ping",
     app: "forktty",
     version: "0.2.0-alpha.12",
-    date: "2026-06-13",
+    date: todayIso(),
   };
 }
 
@@ -64,9 +74,10 @@ test("valid ping increments aggregate Redis key when configured", async () => {
   assert.equal(call?.url, "https://redis.example/pipeline");
   assert.equal(call?.init?.method, "POST");
   assert.equal(headers?.authorization, "Bearer secret-token");
+  const key = `telemetry:ping:${todayIso()}:0.2.0-alpha.12`;
   assert.deepEqual(JSON.parse(String(call?.init?.body)), [
-    ["INCR", "telemetry:ping:2026-06-13:0.2.0-alpha.12"],
-    ["EXPIRE", "telemetry:ping:2026-06-13:0.2.0-alpha.12", 34560000],
+    ["INCR", key],
+    ["EXPIRE", key, 34560000],
   ]);
 });
 
@@ -90,6 +101,80 @@ test("oversized ping is rejected", async () => {
 
   assert.equal(response.status, 400);
   assert.equal(response.headers.get("x-robots-tag"), "noindex, nofollow, noarchive");
+});
+
+test("ping dates outside the current telemetry window are rejected", async () => {
+  const staleResponse = await POST(request({ ...validPayload(), date: offsetDate(-2) }));
+  const futureResponse = await POST(request({ ...validPayload(), date: offsetDate(2) }));
+
+  assert.equal(staleResponse.status, 400);
+  assert.equal(futureResponse.status, 400);
+});
+
+test("unsupported versions are rejected", async () => {
+  const response = await POST(request({ ...validPayload(), version: "evil_2099" }));
+
+  assert.equal(response.status, 400);
+});
+
+test("oversized content-length is rejected before reading the body stream", async () => {
+  let pulls = 0;
+  const stream = new ReadableStream({
+    pull(controller) {
+      pulls += 1;
+      controller.enqueue(new TextEncoder().encode("{}"));
+      if (pulls >= 5) {
+        controller.close();
+      }
+    },
+  });
+
+  const oversizedRequest = new Request("https://forktty.dev/api/telemetry/ping", {
+    method: "POST",
+    body: stream,
+    duplex: "half",
+    headers: {
+      "content-length": "2048",
+      "content-type": "application/json",
+    },
+  } as RequestInit);
+  await new Promise((resolve) => {
+    setTimeout(resolve, 0);
+  });
+  const pullsBeforePost = pulls;
+
+  const response = await POST(oversizedRequest);
+
+  assert.equal(response.status, 400);
+  assert.equal(pulls, pullsBeforePost);
+});
+
+test("streaming oversized ping is rejected before the full body is read", async () => {
+  let pulls = 0;
+  const stream = new ReadableStream({
+    pull(controller) {
+      pulls += 1;
+      controller.enqueue(new TextEncoder().encode("x".repeat(512)));
+      if (pulls >= 5) {
+        controller.close();
+      }
+    },
+    cancel() {},
+  });
+
+  const response = await POST(
+    new Request("https://forktty.dev/api/telemetry/ping", {
+      method: "POST",
+      body: stream,
+      duplex: "half",
+      headers: {
+        "content-type": "application/json",
+      },
+    } as RequestInit),
+  );
+
+  assert.equal(response.status, 400);
+  assert.equal(pulls, 3);
 });
 
 test("GET is not allowed", async () => {
