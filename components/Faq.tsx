@@ -9,7 +9,7 @@ const ITEMS = [
   },
   {
     q: "Can I script or automate it?",
-    a: "Yes — that's a core feature. The same forktty binary speaks a JSON-RPC API over a user-local Unix socket and can expose it as a local stdio MCP server: list workspaces, read or capture terminal text, inspect pane trees, split/focus/send text, manage worktrees, notify, resume agents, publish status, and operate team, workflow, feed, project-action, and remote-inventory control planes.",
+    a: "Yes — that's a core feature. The same forktty binary speaks a JSON-RPC API over a user-local Unix socket and can expose it as a local stdio MCP server: list workspaces, read context snapshots or terminal text, inspect pane trees, split/focus/send text, manage worktrees, notify, resume agents, publish status, and operate team, workflow, feed, project-action, and remote-inventory control planes.",
   },
   {
     q: "Does it really do git worktrees?",

@@ -226,7 +226,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "The MCP server is local-only: it bridges stdio to the owner-only ForkTTY Unix socket and does not open a network listener. It exposes workspace, surface, agent, worktree, notification, feed, workflow, team, topology, browser, and status tools where supported by the running app.",
+        text: "The MCP server is local-only: it bridges stdio to the owner-only ForkTTY Unix socket and does not open a network listener. It exposes workspace, surface, context snapshot, agent, worktree, notification, feed, workflow, team, topology, browser, and status tools where supported by the running app.",
       },
       {
         kind: "table",

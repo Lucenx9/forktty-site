@@ -14,7 +14,7 @@ const FEATURES = [
   {
     n: "03",
     title: "Socket and MCP automation share one surface.",
-    body: "The user-local JSON-RPC socket backs the CLI and MCP server: inspect panes, read terminal text, capture tails, split or focus panes, manage worktrees, publish status, and drive team, workflow, feed, project-action, and remote-inventory control planes.",
+    body: "The user-local JSON-RPC socket backs the CLI and MCP server: inspect panes, read context snapshots and terminal tails, split or focus panes, manage worktrees, publish status, and drive team, workflow, feed, project-action, and remote-inventory control planes.",
     cmd: "forktty top",
   },
   {

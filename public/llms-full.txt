@@ -99,7 +99,7 @@ forktty mcp setup antigravity
 - The MCP server is local-only.
 - It bridges stdio to the owner-only ForkTTY Unix socket.
 - It does not open a network listener.
-- It exposes workspace, surface, agent, worktree, notification, feed, workflow, team, topology, browser, and status tools where supported by the running app.
+- It exposes workspace, surface, context snapshot, agent, worktree, notification, feed, workflow, team, topology, browser, and status tools where supported by the running app.
 
 Config locations:
 
