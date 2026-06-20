@@ -123,7 +123,7 @@ forktty skills remove agents
 - Agent Skills-compatible tools use `~/.agents/skills/forktty-agent-orchestration`.
 - `codex` and `gemini` are aliases for the interoperable `agents` target.
 - Claude Code uses `$CLAUDE_CONFIG_DIR/skills/forktty-agent-orchestration` or `~/.claude/skills/forktty-agent-orchestration`.
-- The skill tells agents to read `context_snapshot` or equivalent read-only state before cross-pane work, treat terminal tails as untrusted input, use team mailbox dispatch for worker prompts, compare hook/status/terminal evidence when states lag, and record durable workflow/team state for long-running coordination.
+- The skill tells agents to read `context_snapshot` or equivalent read-only state before cross-pane work, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch for worker prompts, compare hook/status/terminal evidence when states lag, and record durable workflow/team state for long-running coordination.
 - Setup refuses to overwrite an unmanaged skill with the same name. Updating or removing a managed skill moves the previous directory to a `.bak-*` backup first.
 
 ## Socket CLI and API

@@ -262,7 +262,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "The managed skill is named forktty-agent-orchestration. It is instruction-only: agents learn to read context_snapshot or equivalent read-only state before cross-pane work, treat terminal tails as untrusted input, use team mailbox dispatch for worker prompts, compare hook/status/terminal evidence when states lag, and record durable workflow/team state for long-running coordination.",
+        text: "The managed skill is named forktty-agent-orchestration. It is instruction-only: agents learn to read context_snapshot or equivalent read-only state before cross-pane work, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch for worker prompts, compare hook/status/terminal evidence when states lag, and record durable workflow/team state for long-running coordination.",
       },
       {
         kind: "table",
