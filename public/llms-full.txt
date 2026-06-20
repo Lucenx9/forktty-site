@@ -26,6 +26,7 @@ forktty --version
 forktty doctor
 ```
 
+- `forktty doctor` is local-only and reports socket, hook config, MCP config, and agent skill paths resolved from the current environment.
 - AppImage is the recommended portable Linux x86_64 artifact for alpha releases.
 - Debian package baseline is Debian 13/Trixie+ and Ubuntu 24.04 LTS+.
 - Debian 12/Bookworm is below the documented package baseline.
@@ -123,7 +124,7 @@ forktty skills remove agents
 - Agent Skills-compatible tools use `~/.agents/skills/forktty-agent-orchestration`.
 - `codex` and `gemini` are aliases for the interoperable `agents` target.
 - Claude Code uses `$CLAUDE_CONFIG_DIR/skills/forktty-agent-orchestration` or `~/.claude/skills/forktty-agent-orchestration`.
-- The skill tells agents to read `context_snapshot` or equivalent read-only state before cross-pane work, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch for worker prompts, compare hook/status/terminal evidence when states lag, and record durable workflow/team state for long-running coordination.
+- The skill tells agents to read `context_snapshot` or equivalent read-only state before cross-pane work, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch for worker prompts, compare hook/status/terminal evidence when states lag, start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs, and record durable workflow/team state for long-running coordination.
 - Setup refuses to overwrite an unmanaged skill with the same name. Updating or removing a managed skill moves the previous directory to a `.bak-*` backup first.
 
 ## Socket CLI and API
@@ -257,6 +258,7 @@ GSK_RENDERER=gl ./forktty-*.AppImage
 FORKTTY_SOCKET_PATH=/absolute/path forktty ping
 ```
 
+- `forktty doctor` is local-only and includes socket, hook config, MCP config, and agent skill path diagnostics.
 - If packaged terminal panes fail to start, confirm the release artifact includes `ghostty-gtk-embed.so` and bundled runtime dependencies.
 - If `.deb` install fails on Debian 12/Bookworm, use Debian 13/Trixie+ or Ubuntu 24.04 LTS+.
 - If socket commands cannot connect, launch ForkTTY first or set an absolute `FORKTTY_SOCKET_PATH`.

@@ -106,6 +106,10 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
+        text: "forktty doctor is local-only and reports socket, hook config, MCP config, and agent skill paths resolved from the current environment.",
+      },
+      {
+        kind: "paragraph",
         text: "If a GTK renderer issue appears on a specific distro or driver stack, ForkTTY defaults to the GL renderer through GSK_RENDERER=ngl and still honors an explicit GSK_RENDERER override for QA and debugging.",
       },
     ],
@@ -249,7 +253,7 @@ const DOC_SECTIONS: DocSection[] = [
     eyebrow: "Skills",
     title: "Agent skills",
     summary:
-      "The ForkTTY orchestration skill tells agents when to use context snapshots, team workers, and status checks.",
+      "The ForkTTY orchestration skill tells agents when to use context snapshots, team workers, status checks, and local setup diagnostics.",
     blocks: [
       {
         kind: "code",
@@ -262,7 +266,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "The managed skill is named forktty-agent-orchestration. It is instruction-only: agents learn to read context_snapshot or equivalent read-only state before cross-pane work, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch for worker prompts, compare hook/status/terminal evidence when states lag, and record durable workflow/team state for long-running coordination.",
+        text: "The managed skill is named forktty-agent-orchestration. It is instruction-only: agents learn to read context_snapshot or equivalent read-only state before cross-pane work, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch for worker prompts, compare hook/status/terminal evidence when states lag, start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs, and record durable workflow/team state for long-running coordination.",
       },
       {
         kind: "table",
