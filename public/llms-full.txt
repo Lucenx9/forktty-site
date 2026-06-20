@@ -155,7 +155,8 @@ forktty completions bash
 - Fallback socket: `/tmp/forktty-<uid>/forktty.sock`.
 - Override: `FORKTTY_SOCKET_PATH=/absolute/path`.
 - High-level team wrappers compose existing socket methods for common coordination flows.
-- `forktty team ask` and `forktty team review` launch a fresh worker surface on each run; use `team-message-send` plus `team-message-dispatch` for follow-up prompts to an existing worker.
+- `forktty team ask` and `forktty team review` upsert the assigned task before launching a fresh worker surface on each run, bound to the invoking ForkTTY pane/workspace when available so the worker opens nearby and inherits that cwd; use `team-message-send` plus `team-message-dispatch` for follow-up prompts to an existing worker.
+- MCP `team_upsert` uses the same pane defaults: `FORKTTY_SURFACE_ID` becomes the leader surface when present, otherwise `FORKTTY_WORKSPACE_ID` is used.
 - `forktty status explain/watch` and `forktty context-snapshot` expose compact context snapshot reads for delayed state, stale-looking agents, risk flags, and bounded untrusted terminal tails.
 - `forktty completions bash|zsh|fish` prints shell completions for the curated ergonomic command set and grouped team/status subcommands.
 - System methods cover ping, capabilities, and event subscriptions.

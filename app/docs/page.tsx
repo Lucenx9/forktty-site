@@ -319,7 +319,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "High-level CLI wrappers compose existing socket methods for common agent coordination flows. team ask and team review create or update the team, launch a fresh worker surface, upsert the task, queue the prompt, and dispatch it; re-run them to launch a new worker, or use team-message-send plus team-message-dispatch for follow-up prompts to an existing worker.",
+        text: "High-level CLI wrappers compose existing socket methods for common agent coordination flows. team ask and team review create or update the team, upsert the assigned task, launch a fresh worker surface bound to the invoking ForkTTY pane or workspace when available, queue the prompt, and dispatch it; MCP team_upsert uses the same pane defaults. Re-run the wrappers to launch a new worker, or use team-message-send plus team-message-dispatch for follow-up prompts to an existing worker.",
       },
       {
         kind: "list",
