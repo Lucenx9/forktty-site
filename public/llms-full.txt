@@ -134,17 +134,30 @@ The `forktty` binary is both the GTK app and a socket CLI. The CLI and MCP bridg
 forktty ping
 forktty list
 forktty surfaces
+forktty status explain --tail-lines 20
+forktty status watch --count 3 --interval-ms 2000
+forktty context-snapshot --workspace-name main --tail-lines 0 --json
+forktty team ask review-team claude-review --agent claude --task-id review-head --prompt "Review HEAD read-only" --submit
+forktty team review review-team claude-review --agent claude --task-id review-head --commit HEAD --submit
+forktty team watch review-team --stale-after-ms 120000 --limit 10
+forktty team finish review-team
 forktty read-screen
 forktty capture-tail
 forktty split-surface --axis vertical
 forktty send-text "echo hello"
 forktty capabilities
 forktty events
+forktty examples
+forktty completions bash
 ```
 
 - Default socket: `$XDG_RUNTIME_DIR/forktty.sock`.
 - Fallback socket: `/tmp/forktty-<uid>/forktty.sock`.
 - Override: `FORKTTY_SOCKET_PATH=/absolute/path`.
+- High-level team wrappers compose existing socket methods for common coordination flows.
+- `forktty team ask` and `forktty team review` launch a fresh worker surface on each run; use `team-message-send` plus `team-message-dispatch` for follow-up prompts to an existing worker.
+- `forktty status explain/watch` and `forktty context-snapshot` expose compact context snapshot reads for delayed state, stale-looking agents, risk flags, and bounded untrusted terminal tails.
+- `forktty completions bash|zsh|fish` prints shell completions for the curated ergonomic command set and grouped team/status subcommands.
 - System methods cover ping, capabilities, and event subscriptions.
 - Workspace and surface methods cover list, focus, split, close, text input, visible text, and tail capture.
 - Agent methods cover agent listing, health, resume, and reclaim planning.
