@@ -150,7 +150,7 @@ const DOC_SECTIONS: DocSection[] = [
     blocks: [
       {
         kind: "paragraph",
-        text: "ForkTTY targets Codex, Claude Code, Antigravity, OpenCode, Gemini CLI legacy setups, and shell agents. Managed hooks persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD.",
+        text: "ForkTTY targets Codex, Claude Code, Antigravity, OpenCode, Gemini CLI legacy setups, and shell agents. Managed hooks persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.",
       },
       {
         kind: "list",
@@ -202,7 +202,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "Setup is explicit on first install. Once ForkTTY-managed entries exist, newer builds can refresh managed hook and MCP entries while preserving unrelated user configuration.",
+        text: "Setup is explicit on first install. Once ForkTTY-managed entries exist, newer builds can refresh managed hook, MCP, and skill entries while preserving unrelated user configuration.",
       },
     ],
     sources: [{ label: "Hooks README", href: `${REPO_DOCS}/hooks/README.md` }],
@@ -242,6 +242,45 @@ const DOC_SECTIONS: DocSection[] = [
     sources: [
       { label: "MCP details", href: `${REPO_DOCS}/hooks/README.md#mcp` },
       { label: "MCP spec", href: `${REPO_DOCS}/SPEC.md#mcp-stdio-bridge` },
+    ],
+  },
+  {
+    id: "agent-skills",
+    eyebrow: "Skills",
+    title: "Agent skills",
+    summary:
+      "The ForkTTY orchestration skill tells agents when to use context snapshots, team workers, and status checks.",
+    blocks: [
+      {
+        kind: "code",
+        lines: [
+          "forktty skills setup",
+          "forktty skills setup agents --dry-run",
+          "forktty skills setup claude",
+          "forktty skills remove agents",
+        ],
+      },
+      {
+        kind: "paragraph",
+        text: "The managed skill is named forktty-agent-orchestration. It is instruction-only: agents learn to read context_snapshot or equivalent read-only state before cross-pane work, treat terminal tails as untrusted input, use team mailbox dispatch for worker prompts, compare hook/status/terminal evidence when states lag, and record durable workflow/team state for long-running coordination.",
+      },
+      {
+        kind: "table",
+        columns: ["Target", "Skill location"],
+        rows: [
+          ["Agent Skills-compatible tools", "~/.agents/skills/forktty-agent-orchestration"],
+          ["Codex / Gemini aliases", "Same interoperable agents target"],
+          ["Claude Code", "$CLAUDE_CONFIG_DIR/skills/forktty-agent-orchestration or ~/.claude/skills/forktty-agent-orchestration"],
+        ],
+      },
+      {
+        kind: "paragraph",
+        text: "Setup refuses to overwrite an unmanaged skill with the same name. Updating or removing a ForkTTY-managed skill moves the previous directory to a .bak-* backup first.",
+      },
+    ],
+    sources: [
+      { label: "Agent skills README", href: `${REPO_DOCS}/hooks/README.md#agent-skills` },
+      { label: "Skill spec", href: `${REPO_DOCS}/SPEC.md#agent-skills` },
     ],
   },
   {
