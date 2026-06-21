@@ -57,6 +57,18 @@ test("llms-full file provides single-fetch agent context", async () => {
   assert.doesNotMatch(full, /enabled = true/);
 });
 
+test("agent context documents keep team health semantics aligned", async () => {
+  const docs = await source("app/docs/page.tsx");
+  const llms = await source("public/llms.txt");
+  const full = await source("public/llms-full.txt");
+
+  for (const text of [docs, llms, full]) {
+    assert.match(text, /team_worker_health/);
+    assert.match(text, /final_state/);
+    assert.match(text, /ready-runtime liveness/);
+  }
+});
+
 test("layout exposes visible-page-aligned structured data", async () => {
   const layout = await source("app/layout.tsx");
 
