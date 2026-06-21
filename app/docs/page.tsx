@@ -46,7 +46,7 @@ const DOC_SECTIONS: DocSection[] = [
     blocks: [
       {
         kind: "paragraph",
-        text: "ForkTTY is built for running Codex, Claude Code, Antigravity, OpenCode, Gemini CLI legacy flows, and plain shell tools side by side without losing track of sessions, panes, or repo state. The app is written in Rust and uses GTK4/libadwaita with an embedded Ghostty terminal renderer.",
+        text: "ForkTTY is built for running Codex, Claude Code, Antigravity, OpenCode, and plain shell tools side by side without losing track of sessions, panes, or repo state. The app is written in Rust and uses GTK4/libadwaita with an embedded Ghostty terminal renderer.",
       },
       {
         kind: "list",
@@ -106,7 +106,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "forktty doctor is local-only and reports socket, hook config, MCP config, and agent skill paths resolved from the current environment.",
+        text: "forktty doctor is local-only and reports config, session, socket, and hook config diagnostics. Use forktty --json doctor for socket, environment, executable, hook config, MCP config, and agent skill paths.",
       },
       {
         kind: "paragraph",
@@ -154,7 +154,7 @@ const DOC_SECTIONS: DocSection[] = [
     blocks: [
       {
         kind: "paragraph",
-        text: "ForkTTY targets Codex, Claude Code, Antigravity, OpenCode, Gemini CLI legacy setups, and shell agents. Managed hooks persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.",
+        text: "ForkTTY targets Codex, Claude Code, Antigravity, OpenCode, and shell agents. Managed hooks persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.",
       },
       {
         kind: "list",
@@ -201,7 +201,6 @@ const DOC_SECTIONS: DocSection[] = [
           ["Claude Code", "$CLAUDE_CONFIG_DIR/settings.json or ~/.claude/settings.json"],
           ["Antigravity", "~/.gemini/config/hooks.json plus generated wrappers"],
           ["OpenCode", "$OPENCODE_CONFIG_DIR/plugins/forktty.generated.js or ~/.config/opencode/plugins/forktty.generated.js"],
-          ["Gemini CLI", "~/.gemini/settings.json as an explicit legacy target"],
         ],
       },
       {
@@ -239,7 +238,6 @@ const DOC_SECTIONS: DocSection[] = [
           ["Codex", "$CODEX_HOME/config.toml or ~/.codex/config.toml under [mcp_servers.forktty]"],
           ["Claude", "~/.claude.json under mcpServers.forktty"],
           ["Antigravity", "~/.gemini/config/mcp_config.json"],
-          ["Gemini CLI", "Legacy explicit setup target"],
         ],
       },
     ],
@@ -273,7 +271,7 @@ const DOC_SECTIONS: DocSection[] = [
         columns: ["Target", "Skill location"],
         rows: [
           ["Agent Skills-compatible tools", "~/.agents/skills/forktty-agent-orchestration"],
-          ["Codex / Gemini aliases", "Same interoperable agents target"],
+          ["Codex alias", "Same interoperable agents target"],
           ["Claude Code", "$CLAUDE_CONFIG_DIR/skills/forktty-agent-orchestration or ~/.claude/skills/forktty-agent-orchestration"],
         ],
       },
@@ -493,6 +491,7 @@ const DOC_SECTIONS: DocSection[] = [
         kind: "code",
         lines: [
           "forktty doctor",
+          "forktty --json doctor",
           "forktty ping",
           "GSK_RENDERER=gl ./forktty-*.AppImage",
           "FORKTTY_SOCKET_PATH=/absolute/path forktty ping",
@@ -505,7 +504,7 @@ const DOC_SECTIONS: DocSection[] = [
           "If .deb install fails on Debian 12/Bookworm, use a supported Debian 13/Trixie+ or Ubuntu 24.04 LTS+ baseline.",
           "If socket commands cannot connect, launch ForkTTY first or set an absolute FORKTTY_SOCKET_PATH.",
           "If config or session files are corrupt, ForkTTY should quarantine the bad file and start from defaults.",
-          "For bug reports, include forktty doctor output, distro and desktop environment, install method, reproduction steps, and relevant logs.",
+          "For bug reports, include forktty doctor output, distro and desktop environment, install method, reproduction steps, and relevant logs. Include forktty --json doctor when MCP or skill path diagnostics matter.",
         ],
       },
     ],

@@ -54,7 +54,6 @@ export const metadata: Metadata = {
     "Claude Code",
     "Antigravity",
     "OpenCode",
-    "Gemini CLI",
     "Rust",
     "git worktree",
     "socket API",

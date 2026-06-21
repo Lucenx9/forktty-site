@@ -1,6 +1,6 @@
 # ForkTTY full agent context
 
-> ForkTTY is a Linux-native terminal multiplexer for coding agents, built in Rust with GTK4/libadwaita and embedded Ghostty terminal panes. It coordinates Codex, Claude Code, Antigravity, OpenCode, legacy Gemini CLI, and shell agents in tiled workspaces with git worktrees, an owner-only local Unix socket API, a stdio MCP bridge, and resume-aware Agent HUD metadata. ForkTTY is local-first, AGPL-3.0-only, Linux-only, and currently alpha.
+> ForkTTY is a Linux-native terminal multiplexer for coding agents, built in Rust with GTK4/libadwaita and embedded Ghostty terminal panes. It coordinates Codex, Claude Code, Antigravity, OpenCode, and shell agents in tiled workspaces with git worktrees, an owner-only local Unix socket API, a stdio MCP bridge, and resume-aware Agent HUD metadata. ForkTTY is local-first, AGPL-3.0-only, Linux-only, and currently alpha.
 
 Use this file when an assistant or crawler wants one high-signal Markdown document instead of parsing HTML. For implementation details, treat the linked raw repository files as the source of truth.
 
@@ -26,7 +26,7 @@ forktty --version
 forktty doctor
 ```
 
-- `forktty doctor` is local-only and reports socket, hook config, MCP config, and agent skill paths resolved from the current environment.
+- `forktty doctor` is local-only and reports config, session, socket, and hook config diagnostics. Use `forktty --json doctor` for socket, environment, executable, hook config, MCP config, and agent skill paths resolved from the current environment.
 - AppImage is the recommended portable Linux x86_64 artifact for alpha releases.
 - Debian package baseline is Debian 13/Trixie+ and Ubuntu 24.04 LTS+.
 - Debian 12/Bookworm is below the documented package baseline.
@@ -45,7 +45,7 @@ forktty doctor
 
 ## Agent integrations
 
-ForkTTY targets Codex, Claude Code, Antigravity, OpenCode, legacy Gemini CLI, and shell agents. Managed hooks persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD; terminal child exit marks attached sessions ended so stopped agents do not remain running. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.
+ForkTTY targets Codex, Claude Code, Antigravity, OpenCode, and shell agents. Managed hooks persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD; terminal child exit marks attached sessions ended so stopped agents do not remain running. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.
 
 ```sh
 forktty agents
@@ -81,7 +81,6 @@ Managed destinations:
 - Claude Code: `$CLAUDE_CONFIG_DIR/settings.json` or `~/.claude/settings.json`.
 - Antigravity: `~/.gemini/config/hooks.json` plus generated wrappers.
 - OpenCode: `$OPENCODE_CONFIG_DIR/plugins/forktty.generated.js` or `~/.config/opencode/plugins/forktty.generated.js`.
-- Gemini CLI: `~/.gemini/settings.json` as an explicit legacy target.
 
 Setup is explicit on first install. Once ForkTTY-managed entries exist, newer builds can refresh managed hook, MCP, and skill entries while preserving unrelated user configuration.
 
@@ -107,7 +106,6 @@ Config locations:
 - Codex: `$CODEX_HOME/config.toml` or `~/.codex/config.toml` under `[mcp_servers.forktty]`.
 - Claude: `~/.claude.json` under `mcpServers.forktty`.
 - Antigravity: `~/.gemini/config/mcp_config.json`.
-- Gemini CLI: legacy explicit setup target.
 
 ## Agent skills
 
@@ -122,7 +120,7 @@ forktty skills remove agents
 
 - The skill is named `forktty-agent-orchestration`.
 - Agent Skills-compatible tools use `~/.agents/skills/forktty-agent-orchestration`.
-- `codex` and `gemini` are aliases for the interoperable `agents` target.
+- `codex` is an alias for the interoperable `agents` target.
 - Claude Code uses `$CLAUDE_CONFIG_DIR/skills/forktty-agent-orchestration` or `~/.claude/skills/forktty-agent-orchestration`.
 - The skill tells agents to read `context_snapshot` or equivalent read-only state before cross-pane work, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch for worker prompts, compare hook/status/terminal evidence when states lag, start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs, and record durable workflow/team state for long-running coordination.
 - Setup refuses to overwrite an unmanaged skill with the same name. Updating or removing a managed skill moves the previous directory to a `.bak-*` backup first.
@@ -258,7 +256,7 @@ GSK_RENDERER=gl ./forktty-*.AppImage
 FORKTTY_SOCKET_PATH=/absolute/path forktty ping
 ```
 
-- `forktty doctor` is local-only and includes socket, hook config, MCP config, and agent skill path diagnostics.
+- `forktty doctor` is local-only and includes config, session, socket, and hook config diagnostics. Use `forktty --json doctor` when MCP config and agent skill path diagnostics matter.
 - If packaged terminal panes fail to start, confirm the release artifact includes `ghostty-gtk-embed.so` and bundled runtime dependencies.
 - If `.deb` install fails on Debian 12/Bookworm, use Debian 13/Trixie+ or Ubuntu 24.04 LTS+.
 - If socket commands cannot connect, launch ForkTTY first or set an absolute `FORKTTY_SOCKET_PATH`.
