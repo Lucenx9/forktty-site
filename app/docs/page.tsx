@@ -154,7 +154,7 @@ const DOC_SECTIONS: DocSection[] = [
     blocks: [
       {
         kind: "paragraph",
-        text: "ForkTTY targets Codex, Claude Code, Pi, Antigravity, OpenCode, and shell agents. Managed hooks for Codex, Claude Code, Antigravity, and OpenCode persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD; agent rows add source/age metadata for freshness checks, and provider-scoped HUD metadata is cleared when the last matching session ends, closes, hibernates, or is forgotten. Claude Code team workers launched without explicit permission args use documented permission-mode defaults; Pi review workers default to read-only tools unless explicit Pi tool args are supplied. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.",
+        text: "ForkTTY targets Codex, Claude Code, Pi, Antigravity, OpenCode, and shell agents. Managed hooks for Codex, Claude Code, Antigravity, and OpenCode persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD; agent rows add source/age metadata and diagnostic lifecycle_evidence for freshness checks against the workspace/provider status row, and provider-scoped HUD metadata is cleared when the last matching session ends, closes, hibernates, or is forgotten. Claude Code team workers launched without explicit permission args use documented permission-mode defaults; Pi review workers default to read-only tools unless explicit Pi tool args are supplied. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.",
       },
       {
         kind: "list",
@@ -267,7 +267,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "The managed skill is named forktty-agent-orchestration. It is instruction-only: agents learn to read context_snapshot or equivalent read-only state before cross-pane work, use provider capability metadata, team_summaries, and persisted agent source/age metadata when available, run a durable team preflight with workflow_upsert, workflow_plan_set, and team_task_upsert before non-trivial worker launches, use explicit worker role contracts, keep mutating parallel workers in separate already-open worktree workspaces when possible, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch with explicit submit/Enter semantics for worker prompts, compare hook/status/terminal evidence when states lag, start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs, prefer isolated temporary config roots for setup probes without redirecting the live ForkTTY socket path, and record durable workflow/team evidence for long-running coordination.",
+        text: "The managed skill is named forktty-agent-orchestration. It is instruction-only: agents learn to read context_snapshot or equivalent read-only state before cross-pane work, use provider capability metadata, team_summaries, and persisted agent source/age/lifecycle_evidence metadata when available, run a durable team preflight with workflow_upsert, workflow_plan_set, and team_task_upsert before non-trivial worker launches, use explicit worker role contracts, keep mutating parallel workers in separate already-open worktree workspaces when possible, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch with explicit submit/Enter semantics for worker prompts, compare hook/status/terminal evidence when states lag, start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs, prefer isolated temporary config roots for setup probes without redirecting the live ForkTTY socket path, and record durable workflow/team evidence for long-running coordination.",
       },
       {
         kind: "table",
@@ -332,7 +332,7 @@ const DOC_SECTIONS: DocSection[] = [
         items: [
           "System methods cover ping, capabilities, provider capability discovery, and event subscriptions.",
           "Workspace and surface methods cover list, focus, split, close, text input, visible text, and tail capture.",
-          "Agent methods cover agent listing, health, source/age metadata, resume, and reclaim planning.",
+          "Agent methods cover agent listing, health, source/age/lifecycle_evidence metadata, resume, and reclaim planning.",
           "Metadata methods publish status, progress, logs, and statusline output.",
           "Status helpers explain context snapshots, watch delayed state, and expose the context-snapshot alias used by CLI and MCP automation with per-surface plus aggregate-bounded terminal tails.",
           "Generated bash, zsh, and fish completions cover the curated ergonomic command set and grouped team/status subcommands.",
