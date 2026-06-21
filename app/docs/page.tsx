@@ -188,8 +188,8 @@ const DOC_SECTIONS: DocSection[] = [
           "forktty hooks setup",
           "forktty hooks setup --dry-run",
           "forktty hooks setup codex",
-          "forktty hooks doctor",
-          "forktty hooks test",
+          "forktty hooks doctor codex",
+          "forktty hooks test codex",
           "forktty hooks remove codex",
           "forktty hooks remove gemini   # legacy cleanup only",
         ],
@@ -253,7 +253,7 @@ const DOC_SECTIONS: DocSection[] = [
     eyebrow: "Skills",
     title: "Agent skills",
     summary:
-      "The ForkTTY orchestration skill tells agents when to use context snapshots, provider capabilities, team workers, status checks, and local setup diagnostics.",
+      "The ForkTTY orchestration skill tells agents when to use context snapshots, provider capabilities, team workers, status checks, worktree boundaries, and local setup diagnostics.",
     blocks: [
       {
         kind: "code",
@@ -267,7 +267,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "The managed skill is named forktty-agent-orchestration. It is instruction-only: agents learn to read context_snapshot or equivalent read-only state before cross-pane work, use provider_capabilities, team_summaries, and persisted agent source/age metadata when available, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch with explicit submit/Enter semantics for worker prompts, compare hook/status/terminal evidence when states lag, start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs, and record durable workflow/team state for long-running coordination.",
+        text: "The managed skill is named forktty-agent-orchestration. It is instruction-only: agents learn to read context_snapshot or equivalent read-only state before cross-pane work, use provider capability metadata, team_summaries, and persisted agent source/age metadata when available, run a durable team preflight with workflow_upsert, workflow_plan_set, and team_task_upsert before non-trivial worker launches, use explicit worker role contracts, keep mutating parallel workers in separate already-open worktree workspaces when possible, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch with explicit submit/Enter semantics for worker prompts, compare hook/status/terminal evidence when states lag, start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs, prefer isolated temporary config roots for setup probes without redirecting the live ForkTTY socket path, and record durable workflow/team evidence for long-running coordination.",
       },
       {
         kind: "table",
