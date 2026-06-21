@@ -106,7 +106,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "forktty doctor is local-only and reports config, session, socket, and hook config diagnostics. Use forktty --json doctor for socket, environment, executable, hook config, MCP config, and agent skill paths.",
+        text: "forktty doctor is local-only and reports config, session, socket, and hook config diagnostics. Use forktty --json doctor for socket, environment, executable, hook config, MCP config, and agent skill paths with managed skill status/checksums/repair commands.",
       },
       {
         kind: "paragraph",
@@ -267,7 +267,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "The managed skill is named forktty-agent-orchestration. It is instruction-only: agents learn to read context_snapshot or equivalent read-only state before cross-pane work, use provider capability metadata, compact team_summaries, and persisted agent source/age/lifecycle_evidence metadata when available, opt into full team details only when needed, inspect consistency warnings before treating a team as finished, run a durable team preflight with workflow_upsert, workflow_plan_set, and team_task_upsert before non-trivial worker launches, use explicit worker role contracts, keep mutating parallel workers in separate already-open worktree workspaces when possible, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch with explicit submit/Enter semantics for worker prompts, compare hook/status/terminal evidence when states lag, start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs, prefer isolated temporary config roots for setup probes without redirecting the live ForkTTY socket path, and record durable workflow/team evidence for long-running coordination.",
+        text: "The managed skill is named forktty-agent-orchestration. It is instruction-only: agents learn to read context_snapshot or equivalent read-only state before cross-pane work, use provider capability metadata, compact team_summaries, effective_project_cwd, compact feed defaults with include_feed_trace only for trace debugging, and persisted agent source/age/lifecycle_evidence metadata when available, opt into full team details only when needed, inspect team and workflow consistency warnings before treating work as finished, run a durable team preflight with workflow_upsert, workflow_plan_set, and team_task_upsert before non-trivial worker launches, use explicit worker role contracts, keep mutating parallel workers in separate already-open worktree workspaces when possible, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch with explicit submit/Enter semantics for worker prompts, compare hook/status/terminal evidence when states lag, start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs, prefer isolated temporary config roots for setup probes without redirecting the live ForkTTY socket path, and record durable workflow/team evidence for long-running coordination.",
       },
       {
         kind: "table",
@@ -281,7 +281,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "Setup refuses to overwrite an unmanaged skill with the same name. Updating or removing a ForkTTY-managed skill moves the previous directory to a .bak-* backup first.",
+        text: "Setup refuses to overwrite an unmanaged skill with the same name. Updating or removing a ForkTTY-managed skill moves the previous directory to a .bak-* backup first. forktty skills setup --dry-run and forktty --json doctor report managed skill status, source and installed checksums, and a repair command when a managed copy is missing or stale.",
       },
     ],
     sources: [
@@ -325,7 +325,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "High-level CLI wrappers compose existing socket methods for common agent coordination flows. team ask and team review create or update the team, create the task before launching a fresh worker surface, assign it after launch, queue the prompt, and dispatch it with an explicit terminal Enter when submit mode is requested; the worker is bound to the invoking ForkTTY pane or workspace when available, and MCP team_upsert uses the same pane defaults. Low-level team_worker_launch with worktree_name opens the worker in that already-open worktree workspace and inherits that cwd. Re-run the wrappers to launch a new worker, or use team-message-send plus team-message-dispatch for follow-up prompts to an existing worker. Dispatch selects the worker workspace/tab and waits briefly for the embedded terminal surface to become socket-ready before typing. Context snapshots include compact team_summaries for leader monitoring; full team records and mailbox message bodies are opt-in with include_team_details, and summaries plus risk_flags flag teams marked done that still have active workers, open tasks, or pending messages.",
+        text: "High-level CLI wrappers compose existing socket methods for common agent coordination flows. team ask and team review create or update the team, create the task before launching a fresh worker surface, assign it after launch, queue the prompt, and dispatch it with an explicit terminal Enter when submit mode is requested; the worker is bound to the invoking ForkTTY pane or workspace when available, and MCP team_upsert uses the same pane defaults. Low-level team_worker_launch with worktree_name opens the worker in that already-open worktree workspace and inherits that cwd. Re-run the wrappers to launch a new worker, or use team-message-send plus team-message-dispatch for follow-up prompts to an existing worker. Dispatch selects the worker workspace/tab and waits briefly for the embedded terminal surface to become socket-ready before typing. Context snapshots include compact team_summaries for leader monitoring; full team records and mailbox message bodies are opt-in with include_team_details, feed status/progress trace rows are opt-in with include_feed_trace, effective_project_cwd clarifies the actual project directory, workflow/team consistency warnings surface in risk_flags, and team_worker_health includes final_state for cleanup decisions.",
       },
       {
         kind: "list",
