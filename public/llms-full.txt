@@ -45,7 +45,7 @@ forktty doctor
 
 ## Agent integrations
 
-ForkTTY targets Codex, Claude Code, Antigravity, OpenCode, and shell agents. Managed hooks persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD; terminal child exit marks attached sessions ended so stopped agents do not remain running. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.
+ForkTTY targets Codex, Claude Code, Antigravity, OpenCode, and shell agents. Managed hooks persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD; terminal child exit marks attached sessions ended so stopped agents do not remain running, and provider-scoped HUD metadata is cleared when the last matching session ends, closes, hibernates, or is forgotten. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.
 
 ```sh
 forktty agents
