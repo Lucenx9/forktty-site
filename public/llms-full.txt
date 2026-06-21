@@ -102,6 +102,7 @@ forktty mcp remove gemini   # legacy cleanup only
 - It bridges stdio to the owner-only ForkTTY Unix socket.
 - It does not open a network listener.
 - It exposes workspace, surface, context snapshot, agent, worktree, notification, feed, workflow, team, topology, browser, and status tools where supported by the running app.
+- Codex MCP setup preserves hand-edited TOML comments/formatting and uses the larger MCP config size budget for `$CODEX_HOME/config.toml` or `~/.codex/config.toml`.
 
 Config locations:
 
@@ -158,7 +159,7 @@ forktty completions bash
 - Fallback socket: `/tmp/forktty-<uid>/forktty.sock`.
 - Override: `FORKTTY_SOCKET_PATH=/absolute/path`.
 - High-level team wrappers compose existing socket methods for common coordination flows.
-- `forktty team ask` and `forktty team review` create the task before launching a fresh worker surface, assign it after launch, and bind the worker to the invoking ForkTTY pane/workspace when available so the worker opens nearby and inherits that cwd; submit mode sends an explicit terminal Enter, and `team-message-send` plus `team-message-dispatch` handle follow-up prompts to an existing worker. Dispatch selects the worker workspace/tab and waits briefly for the embedded terminal surface to become socket-ready before typing.
+- `forktty team ask` and `forktty team review` create the task before launching a fresh worker surface, assign it after launch, and bind the worker to the invoking ForkTTY pane/workspace when available so the worker opens nearby and inherits that cwd; low-level `team_worker_launch` with `worktree_name` opens the worker in that already-open worktree workspace and inherits that cwd. Submit mode sends an explicit terminal Enter, and `team-message-send` plus `team-message-dispatch` handle follow-up prompts to an existing worker. Dispatch selects the worker workspace/tab and waits briefly for the embedded terminal surface to become socket-ready before typing.
 - MCP `team_upsert` uses the same pane defaults: `FORKTTY_SURFACE_ID` becomes the leader surface when present, otherwise `FORKTTY_WORKSPACE_ID` is used.
 - `forktty status explain/watch` and `forktty context-snapshot` expose compact context snapshot reads for delayed state, stale-looking agents, source/age metadata, compact team summaries, risk flags, and bounded untrusted terminal tails.
 - `forktty completions bash|zsh|fish` prints shell completions for the curated ergonomic command set and grouped team/status subcommands.
