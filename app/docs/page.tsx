@@ -154,7 +154,7 @@ const DOC_SECTIONS: DocSection[] = [
     blocks: [
       {
         kind: "paragraph",
-        text: "ForkTTY targets Codex, Claude Code, Antigravity, OpenCode, and shell agents. Managed hooks persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD; agent rows add source/age metadata for freshness checks, and provider-scoped HUD metadata is cleared when the last matching session ends, closes, hibernates, or is forgotten. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.",
+        text: "ForkTTY targets Codex, Claude Code, Antigravity, OpenCode, and shell agents. Managed hooks persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD; agent rows add source/age metadata for freshness checks, and provider-scoped HUD metadata is cleared when the last matching session ends, closes, hibernates, or is forgotten. Claude Code team workers launched without explicit permission args use documented permission-mode defaults: review roles start non-interactive with pre-approved built-in read tools, while other Claude workers start in auto mode. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.",
       },
       {
         kind: "list",
