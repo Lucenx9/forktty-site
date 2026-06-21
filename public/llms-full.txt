@@ -124,7 +124,7 @@ forktty skills remove agents
 - Agent Skills-compatible tools use `~/.agents/skills/forktty-agent-orchestration`.
 - `codex` is an alias for the interoperable `agents` target.
 - Claude Code uses `$CLAUDE_CONFIG_DIR/skills/forktty-agent-orchestration` or `~/.claude/skills/forktty-agent-orchestration`.
-- The skill tells agents to read `context_snapshot` or equivalent read-only state before cross-pane work, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch for worker prompts, compare hook/status/terminal evidence when states lag, start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs, and record durable workflow/team state for long-running coordination.
+- The skill tells agents to read `context_snapshot` or equivalent read-only state before cross-pane work, use `provider_capabilities`, compact `team_summaries`, and persisted agent source/age metadata when available, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch plus explicit submit/Enter semantics for worker prompts, compare hook/status/terminal evidence when states lag, start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs, and record durable workflow/team state for long-running coordination.
 - Setup refuses to overwrite an unmanaged skill with the same name. Updating or removing a managed skill moves the previous directory to a `.bak-*` backup first.
 
 ## Socket CLI and API
@@ -156,13 +156,13 @@ forktty completions bash
 - Fallback socket: `/tmp/forktty-<uid>/forktty.sock`.
 - Override: `FORKTTY_SOCKET_PATH=/absolute/path`.
 - High-level team wrappers compose existing socket methods for common coordination flows.
-- `forktty team ask` and `forktty team review` create the task before launching a fresh worker surface, assign it after launch, and bind the worker to the invoking ForkTTY pane/workspace when available so the worker opens nearby and inherits that cwd; use `team-message-send` plus `team-message-dispatch` for follow-up prompts to an existing worker.
+- `forktty team ask` and `forktty team review` create the task before launching a fresh worker surface, assign it after launch, and bind the worker to the invoking ForkTTY pane/workspace when available so the worker opens nearby and inherits that cwd; submit mode sends an explicit terminal Enter, and `team-message-send` plus `team-message-dispatch` handle follow-up prompts to an existing worker.
 - MCP `team_upsert` uses the same pane defaults: `FORKTTY_SURFACE_ID` becomes the leader surface when present, otherwise `FORKTTY_WORKSPACE_ID` is used.
-- `forktty status explain/watch` and `forktty context-snapshot` expose compact context snapshot reads for delayed state, stale-looking agents, risk flags, and bounded untrusted terminal tails.
+- `forktty status explain/watch` and `forktty context-snapshot` expose compact context snapshot reads for delayed state, stale-looking agents, source/age metadata, compact team summaries, risk flags, and bounded untrusted terminal tails.
 - `forktty completions bash|zsh|fish` prints shell completions for the curated ergonomic command set and grouped team/status subcommands.
-- System methods cover ping, capabilities, and event subscriptions.
+- System methods cover ping, capabilities, provider capability discovery, and event subscriptions.
 - Workspace and surface methods cover list, focus, split, close, text input, visible text, and tail capture.
-- Agent methods cover agent listing, health, resume, and reclaim planning.
+- Agent methods cover agent listing, health, source/age metadata, resume, and reclaim planning.
 - Metadata methods publish status, progress, logs, and statusline output.
 - Worktree methods validate target paths against repos already opened by the user.
 - Error codes include `method_not_found`, `missing_param`, `not_found`, `payload_too_large`, `conflict`, `precondition_failed`, `already_exists`, `not_ready`, `invalid_param`, and `error`.

@@ -154,7 +154,7 @@ const DOC_SECTIONS: DocSection[] = [
     blocks: [
       {
         kind: "paragraph",
-        text: "ForkTTY targets Codex, Claude Code, Antigravity, OpenCode, and shell agents. Managed hooks persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.",
+        text: "ForkTTY targets Codex, Claude Code, Antigravity, OpenCode, and shell agents. Managed hooks persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD; agent rows add source/age metadata for freshness checks. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.",
       },
       {
         kind: "list",
@@ -253,7 +253,7 @@ const DOC_SECTIONS: DocSection[] = [
     eyebrow: "Skills",
     title: "Agent skills",
     summary:
-      "The ForkTTY orchestration skill tells agents when to use context snapshots, team workers, status checks, and local setup diagnostics.",
+      "The ForkTTY orchestration skill tells agents when to use context snapshots, provider capabilities, team workers, status checks, and local setup diagnostics.",
     blocks: [
       {
         kind: "code",
@@ -266,7 +266,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "The managed skill is named forktty-agent-orchestration. It is instruction-only: agents learn to read context_snapshot or equivalent read-only state before cross-pane work, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch for worker prompts, compare hook/status/terminal evidence when states lag, start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs, and record durable workflow/team state for long-running coordination.",
+        text: "The managed skill is named forktty-agent-orchestration. It is instruction-only: agents learn to read context_snapshot or equivalent read-only state before cross-pane work, use provider_capabilities, team_summaries, and persisted agent source/age metadata when available, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch with explicit submit/Enter semantics for worker prompts, compare hook/status/terminal evidence when states lag, start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs, and record durable workflow/team state for long-running coordination.",
       },
       {
         kind: "table",
@@ -323,14 +323,14 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "High-level CLI wrappers compose existing socket methods for common agent coordination flows. team ask and team review create or update the team, create the task before launching a fresh worker surface, assign it after launch, queue the prompt, and dispatch it; the worker is bound to the invoking ForkTTY pane or workspace when available, and MCP team_upsert uses the same pane defaults. Re-run the wrappers to launch a new worker, or use team-message-send plus team-message-dispatch for follow-up prompts to an existing worker.",
+        text: "High-level CLI wrappers compose existing socket methods for common agent coordination flows. team ask and team review create or update the team, create the task before launching a fresh worker surface, assign it after launch, queue the prompt, and dispatch it with an explicit terminal Enter when submit mode is requested; the worker is bound to the invoking ForkTTY pane or workspace when available, and MCP team_upsert uses the same pane defaults. Re-run the wrappers to launch a new worker, or use team-message-send plus team-message-dispatch for follow-up prompts to an existing worker. Context snapshots include compact team_summaries for leader monitoring.",
       },
       {
         kind: "list",
         items: [
-          "System methods cover ping, capabilities, and event subscriptions.",
+          "System methods cover ping, capabilities, provider capability discovery, and event subscriptions.",
           "Workspace and surface methods cover list, focus, split, close, text input, visible text, and tail capture.",
-          "Agent methods cover agent listing, health, resume, and reclaim planning.",
+          "Agent methods cover agent listing, health, source/age metadata, resume, and reclaim planning.",
           "Metadata methods publish status, progress, logs, and statusline output.",
           "Status helpers explain context snapshots, watch delayed state, and expose the context-snapshot alias used by CLI and MCP automation.",
           "Generated bash, zsh, and fish completions cover the curated ergonomic command set and grouped team/status subcommands.",
