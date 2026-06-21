@@ -127,7 +127,7 @@ forktty skills remove agents
 - `codex` is an alias for the interoperable `agents` target.
 - `pi` is an alias for the interoperable `agents` target.
 - Claude Code uses `$CLAUDE_CONFIG_DIR/skills/forktty-agent-orchestration` or `~/.claude/skills/forktty-agent-orchestration`.
-- The skill tells agents to read `context_snapshot` or equivalent read-only state before cross-pane work, use provider capability metadata, compact `team_summaries`, `effective_project_cwd`, compact feed defaults with `include_feed_trace` only for trace debugging, and persisted agent source/age/`lifecycle_evidence` metadata when available, opt into full team details only when needed, inspect team and workflow consistency warnings before treating work as finished, run a durable team preflight with `workflow_upsert`, `workflow_plan_set`, and `team_task_upsert` before non-trivial worker launches, use explicit worker role contracts, keep mutating parallel workers in separate already-open worktree workspaces when possible, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch plus explicit submit/Enter semantics for worker prompts, compare hook/status/terminal evidence when states lag, start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs, prefer isolated temporary config roots for setup probes without redirecting the live ForkTTY socket path, and record durable workflow/team evidence for long-running coordination.
+- The skill tells agents to use `identify` for cheap canonical caller/target context, read `context_snapshot` or equivalent read-only state before broader cross-pane work, use bounded `forktty wait agent-status` for lifecycle waits instead of hand-rolled polling when the CLI is available, use provider capability metadata, compact `team_summaries`, `effective_project_cwd`, compact feed defaults with `include_feed_trace` only for trace debugging, and persisted agent source/age/`lifecycle_evidence` metadata when available, opt into full team details only when needed, inspect team and workflow consistency warnings before treating work as finished, run a durable team preflight with `workflow_upsert`, `workflow_plan_set`, and `team_task_upsert` before non-trivial worker launches, use explicit worker role contracts, keep mutating parallel workers in separate already-open worktree workspaces when possible, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch plus explicit submit/Enter semantics for worker prompts, compare hook/status/terminal evidence when states lag, start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs, prefer isolated temporary config roots for setup probes without redirecting the live ForkTTY socket path, and record durable workflow/team evidence for long-running coordination.
 - Setup refuses to overwrite an unmanaged skill with the same name. Updating or removing a managed skill moves the previous directory to a `.bak-*` backup first. `forktty skills setup --dry-run` and `forktty --json doctor` report managed skill status, source and installed checksums, and a repair command when a managed copy is missing or stale.
 
 ## Socket CLI and API
@@ -138,6 +138,8 @@ The `forktty` binary is both the GTK app and a socket CLI. The CLI and MCP bridg
 forktty ping
 forktty list
 forktty surfaces
+forktty identify --json
+forktty wait agent-status --status needs_input --timeout-ms 30000
 forktty status explain --tail-lines 20
 forktty status watch --count 3 --interval-ms 2000
 forktty context-snapshot --workspace-name main --tail-lines 0 --json
@@ -161,11 +163,12 @@ forktty completions bash
 - High-level team wrappers compose existing socket methods for common coordination flows.
 - `forktty team ask` and `forktty team review` create the task before launching a fresh worker surface, assign it after launch, and bind the worker to the invoking ForkTTY pane/workspace when available so the worker opens nearby and inherits that cwd; low-level `team_worker_launch` with `worktree_name` opens the worker in that already-open worktree workspace and inherits that cwd. Submit mode sends an explicit terminal Enter, and `team-message-send` plus `team-message-dispatch` handle follow-up prompts to an existing worker. Dispatch selects the worker workspace/tab and waits briefly for the embedded terminal surface to become socket-ready before typing.
 - MCP `team_upsert` uses the same pane defaults: `FORKTTY_SURFACE_ID` becomes the leader surface when present, otherwise `FORKTTY_WORKSPACE_ID` is used.
+- `forktty identify`/`system.identify` is the compact read for canonical workspace/surface/effective_project_cwd plus caller id validation; ForkTTY pane environment ids are caller context, so stale caller surface ids fall back to the active workspace focus instead of failing the read. `forktty wait agent-status` performs bounded read-only lifecycle polling through short `context.snapshot` reads without terminal text reads.
 - `forktty status explain/watch` and `forktty context-snapshot` expose compact context snapshot reads for delayed state, stale-looking agents, diagnostic source/age/`lifecycle_evidence` metadata, compact team summaries, risk flags, and per-surface plus aggregate-bounded untrusted terminal tails.
 - `forktty completions bash|zsh|fish` prints shell completions for the curated ergonomic command set and grouped team/status subcommands.
-- System methods cover ping, capabilities, provider capability discovery, and event subscriptions.
+- System methods cover ping, identify, capabilities, provider capability discovery, and event subscriptions.
 - Workspace and surface methods cover list, focus, split, close, text input, visible text, and tail capture.
-- Agent methods cover agent listing, health, diagnostic source/age/`lifecycle_evidence` metadata, resume, and reclaim planning.
+- Agent methods cover agent listing, health, diagnostic source/age/`lifecycle_evidence` metadata, resume, and reclaim planning; the CLI `wait agent-status` wrapper polls those read-only surfaces for lifecycle waits.
 - Metadata methods publish status, progress, logs, and statusline output.
 - Worktree methods validate target paths against repos already opened by the user.
 - Error codes include `method_not_found`, `missing_param`, `not_found`, `payload_too_large`, `conflict`, `precondition_failed`, `already_exists`, `not_ready`, `invalid_param`, and `error`.

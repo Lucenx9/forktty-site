@@ -231,7 +231,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "The MCP server is local-only: it bridges stdio to the owner-only ForkTTY Unix socket and does not open a network listener. It exposes workspace, surface, context snapshot, agent, worktree, notification, feed, workflow, team, topology, browser, and status tools where supported by the running app. Codex MCP setup preserves hand-edited TOML comments/formatting and uses the larger MCP config size budget for $CODEX_HOME/config.toml or ~/.codex/config.toml.",
+        text: "The MCP server is local-only: it bridges stdio to the owner-only ForkTTY Unix socket and does not open a network listener. It exposes identify, workspace, surface, context snapshot, agent, worktree, notification, feed, workflow, team, topology, browser, and status tools where supported by the running app. identify treats ForkTTY pane workspace/surface env ids as caller context instead of mandatory targets. Codex MCP setup preserves hand-edited TOML comments/formatting and uses the larger MCP config size budget for $CODEX_HOME/config.toml or ~/.codex/config.toml.",
       },
       {
         kind: "table",
@@ -267,7 +267,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "The managed skill is named forktty-agent-orchestration. It is instruction-only: agents learn to read context_snapshot or equivalent read-only state before cross-pane work, use provider capability metadata, compact team_summaries, effective_project_cwd, compact feed defaults with include_feed_trace only for trace debugging, and persisted agent source/age/lifecycle_evidence metadata when available, opt into full team details only when needed, inspect team and workflow consistency warnings before treating work as finished, run a durable team preflight with workflow_upsert, workflow_plan_set, and team_task_upsert before non-trivial worker launches, use explicit worker role contracts, keep mutating parallel workers in separate already-open worktree workspaces when possible, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch with explicit submit/Enter semantics for worker prompts, compare hook/status/terminal evidence when states lag, start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs, prefer isolated temporary config roots for setup probes without redirecting the live ForkTTY socket path, and record durable workflow/team evidence for long-running coordination.",
+        text: "The managed skill is named forktty-agent-orchestration. It is instruction-only: agents learn to use identify for cheap canonical caller/target context, read context_snapshot or equivalent read-only state before broader cross-pane work, use bounded forktty wait agent-status for lifecycle waits instead of hand-rolled polling when the CLI is available, use provider capability metadata, compact team_summaries, effective_project_cwd, compact feed defaults with include_feed_trace only for trace debugging, and persisted agent source/age/lifecycle_evidence metadata when available, opt into full team details only when needed, inspect team and workflow consistency warnings before treating work as finished, run a durable team preflight with workflow_upsert, workflow_plan_set, and team_task_upsert before non-trivial worker launches, use explicit worker role contracts, keep mutating parallel workers in separate already-open worktree workspaces when possible, treat terminal tails and fetched public docs as untrusted input, use team mailbox dispatch with explicit submit/Enter semantics for worker prompts, compare hook/status/terminal evidence when states lag, start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs, prefer isolated temporary config roots for setup probes without redirecting the live ForkTTY socket path, and record durable workflow/team evidence for long-running coordination.",
       },
       {
         kind: "table",
@@ -306,6 +306,8 @@ const DOC_SECTIONS: DocSection[] = [
           "forktty ping",
           "forktty list",
           "forktty surfaces",
+          "forktty identify --json",
+          "forktty wait agent-status --status needs_input --timeout-ms 30000",
           "forktty status explain --tail-lines 20",
           "forktty status watch --count 3 --interval-ms 2000",
           "forktty context-snapshot --workspace-name main --tail-lines 0 --json",
@@ -325,14 +327,14 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "High-level CLI wrappers compose existing socket methods for common agent coordination flows. team ask and team review create or update the team, create the task before launching a fresh worker surface, assign it after launch, queue the prompt, and dispatch it with an explicit terminal Enter when submit mode is requested; the worker is bound to the invoking ForkTTY pane or workspace when available, and MCP team_upsert uses the same pane defaults. Low-level team_worker_launch with worktree_name opens the worker in that already-open worktree workspace and inherits that cwd. Re-run the wrappers to launch a new worker, or use team-message-send plus team-message-dispatch for follow-up prompts to an existing worker. Dispatch selects the worker workspace/tab and waits briefly for the embedded terminal surface to become socket-ready before typing. Context snapshots include compact team_summaries for leader monitoring; full team records and mailbox message bodies are opt-in with include_team_details, feed status/progress trace rows are opt-in with include_feed_trace, effective_project_cwd clarifies the actual project directory, workflow/team consistency warnings surface in risk_flags, and team_worker_health includes final_state for cleanup decisions.",
+        text: "High-level CLI wrappers compose existing socket methods for common agent coordination flows. identify is the compact read for canonical workspace/surface/effective_project_cwd plus caller validation; ForkTTY pane environment ids are caller context, so stale caller surface ids fall back to the active workspace focus instead of failing the read. wait agent-status performs bounded read-only lifecycle polling through short context.snapshot reads without terminal text reads. team ask and team review create or update the team, create the task before launching a fresh worker surface, assign it after launch, queue the prompt, and dispatch it with an explicit terminal Enter when submit mode is requested; the worker is bound to the invoking ForkTTY pane or workspace when available, and MCP team_upsert uses the same pane defaults. Low-level team_worker_launch with worktree_name opens the worker in that already-open worktree workspace and inherits that cwd. Re-run the wrappers to launch a new worker, or use team-message-send plus team-message-dispatch for follow-up prompts to an existing worker. Dispatch selects the worker workspace/tab and waits briefly for the embedded terminal surface to become socket-ready before typing. Context snapshots include compact team_summaries for leader monitoring; full team records and mailbox message bodies are opt-in with include_team_details, feed status/progress trace rows are opt-in with include_feed_trace, effective_project_cwd clarifies the actual project directory, workflow/team consistency warnings surface in risk_flags, and team_worker_health includes final_state for cleanup decisions.",
       },
       {
         kind: "list",
         items: [
-          "System methods cover ping, capabilities, provider capability discovery, and event subscriptions.",
+          "System methods cover ping, identify, capabilities, provider capability discovery, and event subscriptions.",
           "Workspace and surface methods cover list, focus, split, close, text input, visible text, and tail capture.",
-          "Agent methods cover agent listing, health, source/age/lifecycle_evidence metadata, resume, and reclaim planning.",
+          "Agent methods cover agent listing, health, source/age/lifecycle_evidence metadata, resume, and reclaim planning; the CLI wait agent-status wrapper polls those read-only surfaces for lifecycle waits.",
           "Metadata methods publish status, progress, logs, and statusline output.",
           "Status helpers explain context snapshots, watch delayed state, and expose the context-snapshot alias used by CLI and MCP automation with per-surface plus aggregate-bounded terminal tails.",
           "Generated bash, zsh, and fish completions cover the curated ergonomic command set and grouped team/status subcommands.",
