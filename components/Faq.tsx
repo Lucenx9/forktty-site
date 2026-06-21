@@ -5,7 +5,7 @@ const ITEMS = [
   },
   {
     q: "Which agents have first-class integration?",
-    a: "Codex, Claude Code, Antigravity, and OpenCode have hook-driven status and persisted session metadata for the Agent HUD and resume flow. Custom tools can still use the socket CLI.",
+    a: "Codex, Claude Code, Antigravity, and OpenCode have hook-driven status and persisted session metadata for the Agent HUD and resume flow. Pi is supported for team launch, provider capabilities, Agent Skills, and safe resume through its documented CLI. Custom tools can still use the socket CLI.",
   },
   {
     q: "Can I script or automate it?",

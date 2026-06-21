@@ -34,7 +34,7 @@ export function Hero() {
           </h1>
 
           <p className="max-w-3xl text-balance text-base leading-relaxed text-ink-300 sm:text-xl">
-            Coordinate Codex, Claude Code, Antigravity, OpenCode, and shell
+            Coordinate Codex, Claude Code, Pi, Antigravity, OpenCode, and shell
             agents in tiled GTK/Ghostty workspaces — with git worktrees, a local
             socket API, MCP, and resume-aware notifications.
           </p>

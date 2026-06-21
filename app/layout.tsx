@@ -52,6 +52,7 @@ export const metadata: Metadata = {
     "agents",
     "Codex",
     "Claude Code",
+    "Pi",
     "Antigravity",
     "OpenCode",
     "Rust",

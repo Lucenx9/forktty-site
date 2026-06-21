@@ -47,7 +47,7 @@ const SECTIONS = [
     body: [
       "The site relies on Vercel for hosting and Web Analytics, GitHub for source code and release metadata, and Redis-compatible storage for aggregate telemetry counters when configured.",
       "Links to GitHub, releases, documentation, and external provider names leave this site and are governed by those providers' own terms and privacy notices.",
-      "Product names including Codex, Claude Code, Antigravity, OpenCode, GitHub, Vercel, GTK, and Ghostty are trademarks of their owners. ForkTTY is not affiliated with those providers unless stated otherwise.",
+      "Product names including Codex, Claude Code, Pi, Antigravity, OpenCode, GitHub, Vercel, GTK, and Ghostty are trademarks of their owners. ForkTTY is not affiliated with those providers unless stated otherwise.",
     ],
   },
 ];
