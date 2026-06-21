@@ -334,7 +334,7 @@ const DOC_SECTIONS: DocSection[] = [
           "Workspace and surface methods cover list, focus, split, close, text input, visible text, and tail capture.",
           "Agent methods cover agent listing, health, source/age metadata, resume, and reclaim planning.",
           "Metadata methods publish status, progress, logs, and statusline output.",
-          "Status helpers explain context snapshots, watch delayed state, and expose the context-snapshot alias used by CLI and MCP automation.",
+          "Status helpers explain context snapshots, watch delayed state, and expose the context-snapshot alias used by CLI and MCP automation with per-surface plus aggregate-bounded terminal tails.",
           "Generated bash, zsh, and fish completions cover the curated ergonomic command set and grouped team/status subcommands.",
           "Worktree methods validate target paths against repos already opened by the user.",
           "Error codes include method_not_found, missing_param, not_found, payload_too_large, conflict, precondition_failed, already_exists, not_ready, invalid_param, and error.",
