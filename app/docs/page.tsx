@@ -323,7 +323,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "High-level CLI wrappers compose existing socket methods for common agent coordination flows. team ask and team review create or update the team, create the task before launching a fresh worker surface, assign it after launch, queue the prompt, and dispatch it with an explicit terminal Enter when submit mode is requested; the worker is bound to the invoking ForkTTY pane or workspace when available, and MCP team_upsert uses the same pane defaults. Re-run the wrappers to launch a new worker, or use team-message-send plus team-message-dispatch for follow-up prompts to an existing worker. Context snapshots include compact team_summaries for leader monitoring.",
+        text: "High-level CLI wrappers compose existing socket methods for common agent coordination flows. team ask and team review create or update the team, create the task before launching a fresh worker surface, assign it after launch, queue the prompt, and dispatch it with an explicit terminal Enter when submit mode is requested; the worker is bound to the invoking ForkTTY pane or workspace when available, and MCP team_upsert uses the same pane defaults. Re-run the wrappers to launch a new worker, or use team-message-send plus team-message-dispatch for follow-up prompts to an existing worker. Dispatch selects the worker workspace/tab and waits briefly for the embedded terminal surface to become socket-ready before typing. Context snapshots include compact team_summaries for leader monitoring.",
       },
       {
         kind: "list",
