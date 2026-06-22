@@ -69,6 +69,19 @@ test("agent context documents keep team health semantics aligned", async () => {
   }
 });
 
+test("agent context documents describe workflow loop state as metadata only", async () => {
+  const docs = await source("app/docs/page.tsx");
+  const llms = await source("public/llms.txt");
+  const full = await source("public/llms-full.txt");
+
+  for (const text of [docs, llms, full]) {
+    assert.match(text, /workflow[_-]loop[_-]set|workflow-loop-set/);
+    assert.match(text, /loop_summaries/);
+    assert.match(text, /metadata only|does not run commands/);
+    assert.match(text, /push, merge, or approve actions/);
+  }
+});
+
 test("layout exposes visible-page-aligned structured data", async () => {
   const layout = await source("app/layout.tsx");
 
