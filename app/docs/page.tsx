@@ -405,14 +405,13 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "ForkTTY now leaves Ghostty-owned terminal appearance and runtime behavior to Ghostty configuration, except that ForkTTY-managed embedded panes force wait-after-command so clean shell exits remain inspectable as Closed panes. Live embedded panes follow Ghostty's scrollback-limit budget, default to 10 MB per surface, and honor scrollbar = system|never. Legacy TOML keys for terminal font, theme, bell, renderer, and scrollback still load for compatibility but are not exposed in newly saved settings.",
+        text: "ForkTTY now leaves Ghostty-owned terminal appearance and runtime behavior to Ghostty configuration, except that ForkTTY-managed embedded panes force wait-after-command so clean shell exits remain inspectable as Closed panes. Live embedded panes follow Ghostty's scrollback-limit budget, default to 10 MB per surface, and honor scrollbar = system|never. Legacy TOML keys for ForkTTY theme source, terminal font, theme, bell, renderer, and scrollback still load for compatibility but are not exposed in newly saved settings.",
       },
       {
         kind: "code",
         prompt: false,
         lines: [
           "[general]",
-          'theme_source = "dark"',
           'worktree_layout = "nested"',
           "enable_pr_lookup = false",
           'notification_command = ""',

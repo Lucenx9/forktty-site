@@ -210,7 +210,6 @@ Example config:
 
 ```toml
 [general]
-theme_source = "dark"
 worktree_layout = "nested"
 enable_pr_lookup = false
 notification_command = ""
