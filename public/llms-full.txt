@@ -40,7 +40,7 @@ forktty doctor
 - Session restore writes native state to `~/.local/state/forktty/session-v2.json`; live PTYs are not persisted.
 - Prompt-aware notifications can come from socket calls, hooks, Ghostty OSC events, bell/child-exit events, or bounded prompt fallback detection.
 - Quake/dropdown behavior uses gtk4-layer-shell where the compositor supports it and falls back to normal GTK behavior elsewhere.
-- ForkTTY leaves Ghostty-owned terminal appearance and runtime behavior to Ghostty configuration.
+- ForkTTY leaves Ghostty-owned terminal appearance and runtime behavior to Ghostty configuration, except ForkTTY-managed embedded panes force `wait-after-command` so clean shell exits remain inspectable as Closed panes.
 - Live embedded panes follow Ghostty's `scrollback-limit` budget, default to 10 MB per surface, and honor `scrollbar = system|never`.
 
 ## Agent integrations
@@ -284,6 +284,7 @@ Latest recorded release: `0.2.0-alpha.14` from 2026-06-19.
 - AppImage packaging verifies the embedded Ghostty GTK library dependencies, not only the main binary.
 - Embedded panes now honor Ghostty `scrollback-limit`, with a bounded default of 10 MB per surface.
 - Embedded panes now pack the raw Ghostty surface inside a GTK scrolled window and honor Ghostty `scrollbar = system|never`.
+- Clean shell exits in embedded panes now remain inspectable as Closed panes instead of immediately removing the split.
 - Agent health, explicit resume, and restore-time auto-resume now preserve hook-reported bypass-permissions sessions for Codex and Claude Code.
 - Security fixes hardened restored session identifiers, command-spawn values, library loading, OSC99 icon sizing, and Kitty image snapshots.
 - Docs, package metadata, the first-run privacy link, and the telemetry endpoint now use `https://forktty.dev`.

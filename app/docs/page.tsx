@@ -404,7 +404,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "ForkTTY now leaves Ghostty-owned terminal appearance and runtime behavior to Ghostty configuration. Live embedded panes follow Ghostty's scrollback-limit budget, default to 10 MB per surface, and honor scrollbar = system|never. Legacy TOML keys for terminal font, theme, bell, renderer, and scrollback still load for compatibility but are not exposed in newly saved settings.",
+        text: "ForkTTY now leaves Ghostty-owned terminal appearance and runtime behavior to Ghostty configuration, except that ForkTTY-managed embedded panes force wait-after-command so clean shell exits remain inspectable as Closed panes. Live embedded panes follow Ghostty's scrollback-limit budget, default to 10 MB per surface, and honor scrollbar = system|never. Legacy TOML keys for terminal font, theme, bell, renderer, and scrollback still load for compatibility but are not exposed in newly saved settings.",
       },
       {
         kind: "code",
@@ -536,6 +536,7 @@ const DOC_SECTIONS: DocSection[] = [
           "Embedded Ghostty redraws now follow the 16ms wakeup-check cadence instead of a 100ms floor during continuous output.",
           "AppImage packaging verifies the embedded Ghostty GTK library dependencies, not only the main binary.",
           "Embedded panes now honor Ghostty scrollback-limit and scrollbar, with a bounded default of 10 MB per surface.",
+          "Clean shell exits in embedded panes now remain inspectable as Closed panes instead of immediately removing the split.",
           "Agent health, explicit resume, and restore-time auto-resume preserve Codex and Claude Code bypass-permissions sessions instead of restarting them in prompted mode.",
           "Security fixes hardened restored session identifiers, command-spawn values, library loading, OSC99 icon sizing, and Kitty image snapshots.",
           "Docs, package metadata, the first-run privacy link, and the telemetry endpoint now use the canonical https://forktty.dev domain.",
