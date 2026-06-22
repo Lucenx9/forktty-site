@@ -36,7 +36,7 @@ forktty doctor
 ## Daily use
 
 - Open the command palette with `Ctrl+Shift+P`.
-- Use split panes and tabs to keep multiple agents visible without mixing scrollback.
+- Use split panes and tabs to keep multiple agents visible without mixing scrollback; drag pane headers to swap panes.
 - Session restore writes native state to `~/.local/state/forktty/session-v2.json`; live PTYs are not persisted.
 - Prompt-aware notifications can come from socket calls, hooks, Ghostty OSC events, bell/child-exit events, or bounded prompt fallback detection.
 - Quake/dropdown behavior uses gtk4-layer-shell where the compositor supports it and falls back to normal GTK behavior elsewhere.

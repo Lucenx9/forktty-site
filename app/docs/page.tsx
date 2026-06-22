@@ -129,7 +129,7 @@ const DOC_SECTIONS: DocSection[] = [
         kind: "list",
         items: [
           "Open the command palette with Ctrl+Shift+P for actions such as new workspace, split, settings, notifications, and shortcuts.",
-          "Use split panes and tabs to keep multiple agents visible without mixing their scrollback.",
+          "Use split panes and tabs to keep multiple agents visible without mixing their scrollback; drag pane headers to swap panes.",
           "Session restore writes native state to ~/.local/state/forktty/session-v2.json, but live PTYs themselves are not persisted.",
           "Prompt-aware notifications can come from socket calls, hooks, Ghostty OSC events, bell/child-exit events, or bounded prompt fallback detection.",
           "Quake/dropdown behavior uses gtk4-layer-shell where the compositor supports it and falls back to normal GTK behavior elsewhere.",
