@@ -163,6 +163,7 @@ const DOC_SECTIONS: DocSection[] = [
           "Use forktty agent-health to inspect stale or resumable sessions.",
           "Use forktty resume-agent when a provider supports reopening a saved session.",
           "Use forktty set-status, set-progress, log, notify, and notifications for custom tools that publish agent state without a managed hook.",
+          "Prompt notifications keep approval state as pending, approved, denied, dismissed, or stale; dismiss/clear syncs in-app state with desktop notifications and OSC 99 close reports.",
         ],
       },
       {
@@ -335,6 +336,7 @@ const DOC_SECTIONS: DocSection[] = [
           "System methods cover ping, identify, capabilities, provider capability discovery, and event subscriptions.",
           "Workspace and surface methods cover list, focus, split, close, text input, visible text, and tail capture.",
           "Agent methods cover agent listing, health, source/age/lifecycle_evidence metadata, resume, and reclaim planning; the CLI wait agent-status wrapper polls those read-only surfaces for lifecycle waits.",
+          "Notification/feed methods align desktop, in-app, OSC 99, and persisted approval state; only pending approvals raise the context snapshot pending_approval risk flag.",
           "Metadata methods publish status, progress, logs, and statusline output.",
           "Status helpers explain context snapshots, watch delayed state, and expose the context-snapshot alias used by CLI and MCP automation with per-surface plus aggregate-bounded terminal tails.",
           "Generated bash, zsh, and fish completions cover the curated ergonomic command set and grouped team/status subcommands.",

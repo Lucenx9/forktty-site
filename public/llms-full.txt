@@ -60,6 +60,7 @@ forktty notifications
 
 - Provider keys and remote agent traffic stay outside ForkTTY.
 - ForkTTY coordinates local panes, metadata, hooks, skills, socket calls, and notifications.
+- Prompt notification feed entries distinguish pending, approved, denied, dismissed, and stale states. Dismiss/clear syncs in-app state with matching desktop notifications and OSC 99 close reports; only pending approvals raise the `pending_approval` snapshot risk flag.
 - The Agent HUD can group, focus, resume, and inspect persisted agent sessions.
 
 ## Hooks
@@ -171,6 +172,7 @@ forktty completions bash
 - System methods cover ping, identify, capabilities, provider capability discovery, and event subscriptions.
 - Workspace and surface methods cover list, focus, split, close, text input, visible text, and tail capture.
 - Agent methods cover agent listing, health, diagnostic source/age/`lifecycle_evidence` metadata, resume, and reclaim planning; the CLI `wait agent-status` wrapper polls those read-only surfaces for lifecycle waits.
+- Notification/feed methods keep desktop, in-app, OSC 99, and persisted approval state aligned: targeted desktop notifications expose a best-effort Open action, clear/dismiss marks pending prompt approvals dismissed, stale target approvals are reported as stale, and only pending approvals set the snapshot `pending_approval` risk flag.
 - Metadata methods publish status, progress, logs, and statusline output.
 - Worktree methods validate target paths against repos already opened by the user.
 - Error codes include `method_not_found`, `missing_param`, `not_found`, `payload_too_large`, `conflict`, `precondition_failed`, `already_exists`, `not_ready`, `invalid_param`, and `error`.
