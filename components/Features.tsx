@@ -2,7 +2,7 @@ const FEATURES = [
   {
     n: "01",
     title: "Agent HUD, not scrollback archaeology.",
-    body: "Hooks for Codex, Claude Code, Antigravity, and OpenCode persist session ids, cwd, lifecycle, and last activity so the GTK HUD can focus or resume an agent in a new tab.",
+    body: "Hooks for Codex, Claude Code, Antigravity, and OpenCode persist session ids, cwd, lifecycle, and last activity so the GTK HUD can focus, resume, and show compact loop state for an agent.",
     cmd: "forktty agents",
   },
   {
