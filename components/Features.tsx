@@ -14,7 +14,7 @@ const FEATURES = [
   {
     n: "03",
     title: "Socket and MCP automation share one surface.",
-    body: "The user-local JSON-RPC socket backs the CLI and MCP server: inspect panes, read context snapshots and terminal tails, split or focus panes, manage worktrees, publish status, and drive team, workflow, feed, project-action, and remote-inventory control planes.",
+    body: "The user-local JSON-RPC socket backs the CLI and MCP server, so tools can inspect panes, read context snapshots and terminal tails, split or focus panes, manage worktrees, resume agents, and publish team status.",
     cmd: "forktty top",
   },
   {
@@ -26,27 +26,46 @@ const FEATURES = [
   {
     n: "05",
     title: "Local-first by design.",
-    body: "No crash reports, no event tracking, no terminal or project data leaving the machine. An anonymous daily usage ping and once-a-day GitHub update check are on by default but one toggle away. Owner-only Unix socket, bounded config/session files, argv-based command execution. Bring your own agent CLI and keys.",
+    body: "Terminal contents, project data, and session files stay local. The default telemetry is limited to an anonymous daily usage ping and a once-a-day GitHub update check, both shown at first launch and controlled by a toggle. The Unix socket is owner-only, command execution is argv-based, and agent CLIs keep their own credentials.",
     cmd: null,
   },
 ];
 
 export function Features() {
   return (
-    <section id="features" className="scroll-mt-16 border-t border-ink-800/60">
+    <section
+      id="features"
+      className="scroll-mt-16 border-t border-ink-800/60"
+      aria-labelledby="features-title"
+    >
       <div className="section py-20 sm:py-24">
+        <div className="mb-10 grid gap-4 md:grid-cols-[1fr_1.6fr] md:gap-12">
+          <div>
+            <p className="font-mono text-xs uppercase tracking-[0.16em] text-forktty">
+              Capabilities
+            </p>
+            <h2 id="features-title" className="h-title mt-2">
+              Built for agent workspaces
+            </h2>
+          </div>
+          <p className="max-w-2xl text-[15px] leading-relaxed text-ink-300">
+            ForkTTY keeps terminal panes, agent sessions, and git worktrees
+            visible without moving project data off your machine.
+          </p>
+        </div>
+
         <div className="flex flex-col divide-y divide-ink-800/80">
           {FEATURES.map((f) => (
             <div
               key={f.n}
               className="grid gap-4 py-10 first:pt-0 last:pb-0 md:grid-cols-[1fr_1.6fr] md:gap-12"
             >
-              <h2 className="font-display text-xl font-semibold leading-snug tracking-[-0.02em] text-ink-100 sm:text-2xl">
+              <h3 className="font-display text-xl font-semibold leading-snug text-ink-100 sm:text-2xl">
                 <span className="mr-3 font-mono text-sm font-normal text-forktty">
                   {f.n}
                 </span>
                 {f.title}
-              </h2>
+              </h3>
               <div className="flex flex-col gap-4">
                 <p className="text-[15px] leading-relaxed text-ink-300">
                   {f.body}

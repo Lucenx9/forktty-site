@@ -211,7 +211,7 @@
   }
 
   .h-title {
-    @apply font-display text-[1.7rem] sm:text-[2.1rem] font-semibold leading-[1.08] tracking-[-0.03em] text-ink-100;
+    @apply font-display text-[1.7rem] sm:text-[2.1rem] font-semibold leading-[1.08] text-ink-100;
   }
 
 }

@@ -82,6 +82,7 @@ function Release({
           title="AppImage"
           subtitle="Portable build — recommended"
           asset={release.appImage}
+          featured
         />
         <AssetCard
           title=".deb package"
@@ -116,11 +117,13 @@ function Release({
 function CodeBlock({ lines }: { lines: string[] }) {
   return (
     <pre className="mt-4 overflow-x-auto rounded-none border border-ink-800 bg-ink-950 p-4 font-mono text-[12.5px] leading-relaxed text-ink-100">
-      {lines.map((line, i) => (
-        <div key={`${i}-${line}`}>
-          <span className="text-ink-500">$</span> {line}
-        </div>
-      ))}
+      <code>
+        {lines.map((line, i) => (
+          <span key={`${i}-${line}`} className="block">
+            <span className="select-none text-ink-500">$</span> {line}
+          </span>
+        ))}
+      </code>
     </pre>
   );
 }
@@ -129,10 +132,12 @@ function AssetCard({
   title,
   subtitle,
   asset,
+  featured = false,
 }: {
   title: string;
   subtitle: string;
   asset: ReleaseAsset | null;
+  featured?: boolean;
 }) {
   return (
     <div className="tui-frame flex flex-col justify-between gap-6 p-6 transition-colors hover:border-ink-700">
@@ -149,7 +154,7 @@ function AssetCard({
           </div>
           <a
             href={asset.browser_download_url}
-            className="btn-secondary"
+            className={featured ? "btn-primary" : "btn-secondary"}
             rel="noreferrer noopener"
           >
             <DownloadIcon className="h-4 w-4" />

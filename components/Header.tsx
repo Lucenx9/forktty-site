@@ -36,7 +36,7 @@ export function Header() {
             className="h-6 w-6"
             priority
           />
-          <span className="font-mono text-sm font-semibold tracking-tight text-ink-100">
+          <span className="font-mono text-sm font-semibold text-ink-100">
             forktty
             <span className="animate-blink text-forktty">_</span>
           </span>
