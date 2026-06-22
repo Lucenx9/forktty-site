@@ -154,7 +154,7 @@ const DOC_SECTIONS: DocSection[] = [
     blocks: [
       {
         kind: "paragraph",
-        text: "ForkTTY targets Codex, Claude Code, Pi, Antigravity, OpenCode, and shell agents. Managed hooks for Codex, Claude Code, Antigravity, and OpenCode persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD; agent rows group lifecycle states, mark the current pane, surface risky permission modes, show compact workflow loop chips for bound surfaces, add source/age metadata and diagnostic lifecycle_evidence for freshness checks against the workspace/provider status row, and provider-scoped HUD metadata is cleared when the last matching session ends, closes, hibernates, or is forgotten. Claude Code team workers launched without explicit permission args use documented permission-mode defaults; Pi review workers default to read-only tools unless explicit Pi tool args are supplied. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.",
+        text: "ForkTTY targets Codex, Claude Code, Pi, Antigravity, OpenCode, and shell agents. Managed hooks for Codex, Claude Code, Antigravity, and OpenCode persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD; agent rows group lifecycle states, mark the current pane, surface risky permission modes, show compact workflow loop chips for bound surfaces, add source/age metadata and diagnostic lifecycle_evidence for freshness checks against the workspace/provider status row, and provider-scoped HUD metadata is cleared when the last matching session ends, closes, hibernates, or is forgotten. Team worker launch can omit --agent or use auto; Settings > Agents controls the default provider, fallback, provider order, disabled providers, and PATH detection, while forktty capabilities reports the active policy and resolved harnesses. Claude Code team workers launched without explicit permission args use documented permission-mode defaults; Pi review workers default to read-only tools unless explicit Pi tool args are supplied. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.",
       },
       {
         kind: "list",
@@ -313,8 +313,8 @@ const DOC_SECTIONS: DocSection[] = [
           "forktty status watch --count 3 --interval-ms 2000",
           "forktty context-snapshot --workspace-name main --tail-lines 0 --json",
           "forktty workflow-loop-set loop-runtime --stage verify --iteration 2 --max-iterations 4",
-          "forktty team ask review-team claude-review --agent claude --task-id review-head --prompt \"Review HEAD read-only\" --submit",
-          "forktty team review review-team claude-review --agent claude --task-id review-head --commit HEAD --submit",
+          "forktty team ask review-team review-worker --task-id review-head --prompt \"Review HEAD read-only\" --submit",
+          "forktty team review review-team review-worker --task-id review-head --commit HEAD --submit",
           "forktty team watch review-team --stale-after-ms 120000 --limit 10",
           "forktty team finish review-team",
           "forktty read-screen",
