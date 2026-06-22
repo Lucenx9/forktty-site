@@ -128,7 +128,7 @@ const DOC_SECTIONS: DocSection[] = [
       {
         kind: "list",
         items: [
-          "Open the command palette with Ctrl+Shift+P for actions such as new workspace, split, settings, notifications, and shortcuts.",
+          "Open the command palette with Ctrl+Shift+P for actions such as new workspace, split, settings, notifications, and shortcuts; Ctrl+? (or F1) opens Keyboard Shortcuts, Ctrl+, opens Settings, and F10 opens the Main Menu when focus is outside terminal content.",
           "Use split panes and tabs to keep multiple agents visible without mixing their scrollback; drag pane headers to swap panes.",
           "Session restore writes native state to ~/.local/state/forktty/session-v2.json, but live PTYs themselves are not persisted.",
           "Prompt-aware notifications can come from socket calls, hooks, Ghostty OSC events, bell/child-exit events, or bounded prompt fallback detection.",
