@@ -28,6 +28,7 @@ forktty doctor
 
 - `forktty doctor` is local-only and reports config, session, socket, and hook config diagnostics. Use `forktty --json doctor` for socket, environment, executable, hook config, MCP config, and agent skill paths resolved from the current environment, including managed skill status/checksums/repair commands; managed skill files are inspected through bounded regular-file reads, and symlinked skill directory entries are reported invalid without a repair command unless a regular `SKILL.md` marker was already verified.
 - AppImage is the recommended portable Linux x86_64 artifact for alpha releases.
+- AppImages prefer the host GTK/libadwaita stack when available and keep the bundled GTK copy as a fallback. Use `FORKTTY_APPIMAGE_GTK_RUNTIME=bundled`, `host`, or `auto` to force or debug the runtime choice.
 - Debian package baseline is Debian 13/Trixie+ and Ubuntu 24.04 LTS+.
 - Debian 12/Bookworm is below the documented package baseline.
 - Source builds require Rust 1.96+, GTK4/libadwaita development files, git, Zig, and the Ghostty submodule.
@@ -265,12 +266,13 @@ Start with diagnostics and package baseline checks.
 ```sh
 forktty doctor
 forktty ping
+FORKTTY_APPIMAGE_GTK_RUNTIME=host ./forktty-*.AppImage
 GSK_RENDERER=gl ./forktty-*.AppImage
 FORKTTY_SOCKET_PATH=/absolute/path forktty ping
 ```
 
 - `forktty doctor` is local-only and includes config, session, socket, and hook config diagnostics. Use `forktty --json doctor` when MCP config and agent skill path diagnostics matter.
-- If packaged terminal panes fail to start, confirm the release artifact includes `ghostty-gtk-embed.so` and bundled runtime dependencies.
+- If packaged terminal panes fail to start, confirm the release artifact includes `ghostty-gtk-embed.so`, then try `FORKTTY_APPIMAGE_GTK_RUNTIME=host` or `bundled` to isolate host-vs-bundled GTK renderer issues.
 - If `.deb` install fails on Debian 12/Bookworm, use Debian 13/Trixie+ or Ubuntu 24.04 LTS+.
 - If socket commands cannot connect, launch ForkTTY first or set an absolute `FORKTTY_SOCKET_PATH`.
 - If config or session files are corrupt, ForkTTY should quarantine the bad file and start from defaults.
@@ -281,6 +283,7 @@ FORKTTY_SOCKET_PATH=/absolute/path forktty ping
 Latest recorded release: `0.2.0-alpha.15` from 2026-06-23.
 
 - Fixed embedded Ghostty renderer memory growth by defaulting GTK compositing to the GL renderer.
+- AppImages prefer host GTK/libadwaita when available and keep bundled GTK as a fallback/override.
 - Embedded Ghostty redraws now follow the 16ms wakeup-check cadence instead of a 100ms floor during continuous output.
 - AppImage packaging verifies the embedded Ghostty GTK library dependencies, not only the main binary.
 - Embedded panes now honor Ghostty `scrollback-limit`, with a bounded default of 10 MB per surface.

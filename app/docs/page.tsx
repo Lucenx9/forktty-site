@@ -110,7 +110,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "If a GTK renderer issue appears on a specific distro or driver stack, ForkTTY defaults to the GL renderer through GSK_RENDERER=ngl and still honors an explicit GSK_RENDERER override for QA and debugging.",
+        text: "The AppImage prefers the host GTK/libadwaita stack when available and keeps its bundled GTK copy as a fallback. Set FORKTTY_APPIMAGE_GTK_RUNTIME=bundled, host, or auto to force that choice while debugging renderer issues; ForkTTY also honors explicit GSK_RENDERER overrides.",
       },
     ],
     sources: [
@@ -502,6 +502,7 @@ const DOC_SECTIONS: DocSection[] = [
           "forktty doctor",
           "forktty --json doctor",
           "forktty ping",
+          "FORKTTY_APPIMAGE_GTK_RUNTIME=host ./forktty-*.AppImage",
           "GSK_RENDERER=gl ./forktty-*.AppImage",
           "FORKTTY_SOCKET_PATH=/absolute/path forktty ping",
         ],
@@ -509,7 +510,7 @@ const DOC_SECTIONS: DocSection[] = [
       {
         kind: "list",
         items: [
-          "If packaged terminal panes fail to start, confirm the release artifact includes ghostty-gtk-embed.so and bundled runtime dependencies.",
+          "If packaged terminal panes fail to start, confirm the release artifact includes ghostty-gtk-embed.so, then try FORKTTY_APPIMAGE_GTK_RUNTIME=host or bundled to isolate host-vs-bundled GTK renderer issues.",
           "If .deb install fails on Debian 12/Bookworm, use a supported Debian 13/Trixie+ or Ubuntu 24.04 LTS+ baseline.",
           "If socket commands cannot connect, launch ForkTTY first or set an absolute FORKTTY_SOCKET_PATH.",
           "If config or session files are corrupt, ForkTTY should quarantine the bad file and start from defaults.",
@@ -534,6 +535,7 @@ const DOC_SECTIONS: DocSection[] = [
         kind: "list",
         items: [
           "0.2.0-alpha.15 adds opt-in dtach-backed PTY process persistence for plain terminals and keeps it configurable from Settings > Worktrees.",
+          "AppImages prefer the host GTK/libadwaita stack when available and keep the bundled GTK copy as a fallback/override for hosts without GTK4.",
           "Embedded Ghostty redraws now follow the 16ms wakeup-check cadence instead of a 100ms floor during continuous output.",
           "AppImage packaging verifies the embedded Ghostty GTK library dependencies, not only the main binary.",
           "Embedded panes now honor Ghostty scrollback-limit and scrollbar, with a bounded default of 10 MB per surface.",
@@ -559,7 +561,7 @@ const DOC_SECTIONS: DocSection[] = [
       {
         kind: "list",
         items: [
-          "Known limitations: Linux-only, libadwaita 1.4+ baseline, AppImage host dependencies, PTYs not persisted, partial OSC notification coverage, compositor-dependent quake behavior, and source-only browser panes.",
+          "Known limitations: Linux-only, libadwaita 1.4+ baseline, AppImage host display/GL dependencies, PTYs not persisted by default unless dtach-backed persistence is enabled, partial OSC notification coverage, compositor-dependent quake behavior, and source-only browser panes.",
           "Near-term roadmap areas include richer Agent HUD/statusline exports, remote daemon depth, sidebar/workspace organization, topology and tmux-like verbs, prompt composer work, agent catalog surfaces, project panels, QA matrix depth, command palette search, branch picker, deeper notification inbox controls, theme customization, and broader Ghostty options.",
           "Use GitHub Issues for bugs, GitHub Discussions for questions, and private vulnerability reporting for security issues.",
         ],
