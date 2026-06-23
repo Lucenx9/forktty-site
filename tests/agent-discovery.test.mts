@@ -90,14 +90,17 @@ test("layout exposes visible-page-aligned structured data", async () => {
   assert.match(layout, /"@type": "SoftwareApplication"/);
   assert.match(layout, /operatingSystem: "Linux"/);
   assert.match(layout, /applicationCategory: "DeveloperApplication"/);
+  assert.match(layout, /softwareVersion: "0\.2\.0-alpha\.15"/);
+  assert.match(layout, /featureList/);
+  assert.match(layout, /screenshot/);
   assert.match(layout, /codeRepository/);
 });
 
 test("home search snippet is concise and product-focused", async () => {
   const layout = await source("app/layout.tsx");
 
-  assert.match(layout, /const SITE_DESCRIPTION =\n\s+"ForkTTY is a Linux-native terminal/);
-  assert.match(layout, /socket automation, MCP tools, and Agent HUD/);
+  assert.match(layout, /const SITE_DESCRIPTION =\n\s+"ForkTTY is a Linux-native workspace for coding agents/);
+  assert.match(layout, /local MCP\/socket automation, team orchestration/);
   assert.doesNotMatch(layout, /opt-out anonymous daily usage ping/);
 });
 
@@ -124,9 +127,48 @@ test("sitemap uses canonical URLs with stable meaningful lastmod values", async 
   assert.match(sitemap, /`\$\{SITE_URL\}\/`/);
   assert.match(sitemap, /`\$\{SITE_URL\}\/docs`/);
   assert.match(sitemap, /`\$\{SITE_URL\}\/privacy`/);
+  assert.match(sitemap, /SEO_PAGES\.map/);
+  assert.match(sitemap, /seoPages:\s*"2026-06-23"/);
   assert.match(sitemap, /docs:\s*"2026-06-23"/);
   assert.match(sitemap, /lastModified:\s*LAST_SIGNIFICANT_UPDATE\.docs/);
   assert.doesNotMatch(sitemap, /lastModified:\s*new Date\(\)/);
   assert.doesNotMatch(sitemap, /changeFrequency/);
   assert.doesNotMatch(sitemap, /priority/);
+});
+
+test("site has intent-specific SEO pages linked from home and crawler context", async () => {
+  const [seoPages, routePage, useCases, home, sitemap, llms, full] = await Promise.all([
+    source("lib/seo-pages.ts"),
+    source("app/[slug]/page.tsx"),
+    source("components/UseCases.tsx"),
+    source("app/page.tsx"),
+    source("app/sitemap.ts"),
+    source("public/llms.txt"),
+    source("public/llms-full.txt"),
+  ]);
+
+  for (const slug of [
+    "codex",
+    "claude-code",
+    "mcp",
+    "git-worktrees",
+    "agent-hud",
+    "ghostty-terminal",
+    "pty-persistence-dtach",
+    "team-orchestration",
+    "alternatives",
+  ]) {
+    assert.match(seoPages, new RegExp(`slug: "${slug}"`));
+    assert.match(llms, new RegExp(`https://forktty\\.dev/${slug}`));
+    assert.match(full, new RegExp(`https://forktty\\.dev/${slug}`));
+  }
+
+  assert.match(routePage, /generateStaticParams/);
+  assert.match(routePage, /generateMetadata/);
+  assert.match(routePage, /"@type": "FAQPage"/);
+  assert.match(routePage, /"@type": "BreadcrumbList"/);
+  assert.match(routePage, /canonical: `\/\$\{page\.slug\}`/);
+  assert.match(useCases, /SEO_PAGES\.map/);
+  assert.match(home, /<UseCases \/>/);
+  assert.match(sitemap, /SEO_PAGES\.map/);
 });

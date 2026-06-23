@@ -304,6 +304,7 @@ Latest recorded release: `0.2.0-alpha.15` from 2026-06-23.
 
 - `https://forktty.dev/sitemap.xml`: canonical indexable site pages for search crawlers.
 - `https://forktty.dev/robots.txt`: allows public crawlers and advertises the sitemap.
+- Intent-specific search pages: `https://forktty.dev/codex`, `https://forktty.dev/claude-code`, `https://forktty.dev/mcp`, `https://forktty.dev/git-worktrees`, `https://forktty.dev/agent-hud`, `https://forktty.dev/ghostty-terminal`, `https://forktty.dev/pty-persistence-dtach`, `https://forktty.dev/team-orchestration`, and `https://forktty.dev/alternatives`.
 - `https://forktty.dev/llms.txt`: compact agent retrieval map.
 - `https://forktty.dev/llms-full.txt`: this single-file agent context.
 - `https://forktty.dev/admin/telemetry`: private telemetry dashboard, Basic Auth, `X-Robots-Tag: noindex, nofollow, noarchive`.

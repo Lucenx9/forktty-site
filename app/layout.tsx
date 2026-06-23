@@ -5,7 +5,7 @@ import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const SITE_DESCRIPTION =
-  "ForkTTY is a Linux-native terminal for coordinating coding agents with GTK/Ghostty panes, git worktrees, socket automation, MCP tools, and Agent HUD.";
+  "ForkTTY is a Linux-native workspace for coding agents with Ghostty terminals, git worktrees, local MCP/socket automation, team orchestration, and prompt-aware notifications.";
 
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
@@ -39,7 +39,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "ForkTTY — Linux-native multi-agent terminal",
+    default: "ForkTTY — Linux-native workspace for coding agents",
     template: "%s — ForkTTY",
   },
   description: SITE_DESCRIPTION,
@@ -59,16 +59,20 @@ export const metadata: Metadata = {
     "git worktree",
     "socket API",
     "MCP",
+    "MCP server",
     "agent hooks",
     "Agent HUD",
+    "agent orchestration",
+    "team orchestration",
+    "terminal multiplexer",
   ],
   alternates: {
     canonical: "/",
   },
   openGraph: {
-    title: "ForkTTY — Linux-native multi-agent terminal",
+    title: "ForkTTY — Linux-native workspace for coding agents",
     description:
-      "A GTK/Ghostty terminal in Rust for coordinating coding agents in tiled workspaces — scriptable over a local socket and MCP, backed by git worktrees, with HUD and resume flows.",
+      "A GTK/Ghostty workspace in Rust for coordinating coding agents in tiled terminals — scriptable over a local socket and MCP, backed by git worktrees, with HUD and team flows.",
     url: SITE_URL,
     siteName: "ForkTTY",
     type: "website",
@@ -85,7 +89,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ForkTTY",
     description:
-      "Linux-native multi-agent terminal. Rust + GTK/Ghostty, local socket and MCP, git worktrees, Agent HUD.",
+      "Linux-native workspace for coding agents. Rust + GTK/Ghostty, local socket and MCP, git worktrees, Agent HUD, and team orchestration.",
     images: ["/og.png"],
   },
   icons: {
@@ -113,13 +117,31 @@ const STRUCTURED_DATA = [
     url: SITE_URL,
     description: SITE_DESCRIPTION,
     applicationCategory: "DeveloperApplication",
+    applicationSubCategory: "Terminal emulator and coding agent workspace",
     operatingSystem: "Linux",
     softwareRequirements: "Linux x86_64",
+    softwareVersion: "0.2.0-alpha.15",
     programmingLanguage: "Rust",
     license: "https://github.com/Lucenx9/forktty/blob/main/LICENSE",
     codeRepository: "https://github.com/Lucenx9/forktty",
     downloadUrl: "https://github.com/Lucenx9/forktty/releases",
+    installUrl: "https://github.com/Lucenx9/forktty/releases",
     releaseNotes: "https://github.com/Lucenx9/forktty/blob/main/CHANGELOG.md",
+    screenshot: `${SITE_URL}/screenshots/forktty-app-focus.png`,
+    sameAs: [
+      "https://github.com/Lucenx9/forktty",
+      "https://github.com/Lucenx9/forktty/releases",
+    ],
+    featureList: [
+      "Embedded Ghostty terminal panes",
+      "Agent HUD for coding agent lifecycle and resume state",
+      "Git worktree workspaces for parallel branches",
+      "Local JSON-RPC Unix socket automation",
+      "Local stdio MCP bridge",
+      "Provider-neutral team orchestration",
+      "Prompt-aware notifications",
+      "Optional dtach-backed terminal process persistence",
+    ],
     offers: {
       "@type": "Offer",
       price: "0",
