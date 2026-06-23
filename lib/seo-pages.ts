@@ -7,6 +7,13 @@ export type SeoPage = {
   h1: string;
   intro: string;
   keywords: string[];
+  quickStart: {
+    intro: string;
+    commands: Array<{
+      label: string;
+      command: string;
+    }>;
+  };
   sections: Array<{
     title: string;
     body: string;
@@ -31,6 +38,16 @@ export const SEO_PAGES: SeoPage[] = [
     intro:
       "ForkTTY gives Codex a visible terminal workspace instead of a scattered set of shells. Keep Codex panes, git worktrees, status hooks, local MCP/socket context, and resume-ready session metadata in one place.",
     keywords: ["Codex terminal", "Codex agents", "AI coding agent", "Linux terminal"],
+    quickStart: {
+      intro:
+        "Start with dry runs so ForkTTY shows exactly what it would install before it writes Codex hook, MCP, or skill files.",
+      commands: [
+        { label: "Check the Codex hook install", command: "forktty hooks setup codex --dry-run" },
+        { label: "Check the Codex MCP registration", command: "forktty mcp setup codex --dry-run" },
+        { label: "Check the shared Agent Skills target", command: "forktty skills setup agents --dry-run" },
+        { label: "Inspect known agent sessions", command: "forktty agent-health --json" },
+      ],
+    },
     sections: [
       {
         title: "Visible agent work",
@@ -80,6 +97,20 @@ export const SEO_PAGES: SeoPage[] = [
     intro:
       "ForkTTY keeps Claude Code sessions inside native Linux terminal panes while adding lifecycle hooks, Agent HUD status, provider-aware team dispatch, and local MCP/socket context for review and orchestration.",
     keywords: ["Claude Code terminal", "Claude Code MCP", "coding agents", "Linux AI terminal"],
+    quickStart: {
+      intro:
+        "Use dry runs for setup, then launch a read-only Claude review worker when you want a visible second pass on a commit.",
+      commands: [
+        { label: "Preview Claude hook changes", command: "forktty hooks setup claude --dry-run" },
+        { label: "Preview Claude MCP setup", command: "forktty mcp setup claude --dry-run" },
+        { label: "Preview the Claude skill install", command: "forktty skills setup claude --dry-run" },
+        {
+          label: "Ask Claude for a visible review",
+          command:
+            'forktty team review review-team claude-review --agent claude --task-id review-head --commit HEAD --submit',
+        },
+      ],
+    },
     sections: [
       {
         title: "Provider-aware terminal handling",
@@ -129,6 +160,15 @@ export const SEO_PAGES: SeoPage[] = [
     intro:
       "ForkTTY's MCP server maps agent tools to the same owner-only socket API used by the CLI. Agents can inspect context, panes, teams, workflows, and bounded terminal tails without leaving the local desktop boundary.",
     keywords: ["MCP server", "Model Context Protocol", "terminal automation", "agent tools"],
+    quickStart: {
+      intro:
+        "Register the local stdio bridge, confirm the running socket capabilities, then take a compact snapshot before using mutating tools.",
+      commands: [
+        { label: "Preview MCP registration", command: "forktty mcp setup --dry-run" },
+        { label: "List socket and provider capabilities", command: "forktty capabilities --json" },
+        { label: "Read compact workspace context", command: "forktty context-snapshot --tail-lines 0 --json" },
+      ],
+    },
     sections: [
       {
         title: "One automation surface",
@@ -178,6 +218,16 @@ export const SEO_PAGES: SeoPage[] = [
     intro:
       "ForkTTY treats git worktrees as visible workspaces so parallel agents can work on separate branches without overwriting each other's checkout. Create, attach, merge, and remove worktrees from the terminal UI or local automation surface.",
     keywords: ["git worktree AI agents", "parallel coding agents", "branch workspace", "agent isolation"],
+    quickStart: {
+      intro:
+        "Point commands at a repo that is already represented by a ForkTTY workspace or surface cwd; hidden repos are rejected by design.",
+      commands: [
+        { label: "List existing worktrees", command: "forktty worktree-list --cwd /path/to/repo" },
+        { label: "Create an isolated branch workspace", command: "forktty worktree-create feature/my-task --cwd /path/to/repo" },
+        { label: "Check current worktree state", command: "forktty worktree-status --cwd /path/to/repo" },
+        { label: "Attach an existing branch workspace", command: "forktty worktree-attach feature/my-task --cwd /path/to/repo" },
+      ],
+    },
     sections: [
       {
         title: "Parallel work without checkout collisions",
@@ -222,6 +272,19 @@ export const SEO_PAGES: SeoPage[] = [
     intro:
       "ForkTTY's Agent HUD turns hook and socket metadata into a scannable overview of active and persisted coding agents. It helps answer which agent is working, which pane owns it, whether it needs input, and whether a session can resume.",
     keywords: ["Agent HUD", "coding agent status", "Claude Code status", "Codex status"],
+    quickStart: {
+      intro:
+        "Install hooks first so sessions publish lifecycle metadata, then inspect HUD-backed rows from the same socket state.",
+      commands: [
+        { label: "Preview managed hook setup", command: "forktty hooks setup --dry-run" },
+        { label: "List tracked agents", command: "forktty agents --workspace-name main --json" },
+        { label: "Explain resume readiness", command: "forktty agent-health --workspace-name main --json" },
+        {
+          label: "Wait for an attention state",
+          command: "forktty wait agent-status --status needs_input --timeout-ms 30000",
+        },
+      ],
+    },
     sections: [
       {
         title: "Lifecycle without scrollback archaeology",
@@ -266,6 +329,15 @@ export const SEO_PAGES: SeoPage[] = [
     intro:
       "ForkTTY uses embedded Ghostty GTK terminal panes for the packaged Linux runtime. The goal is a native terminal workspace that still carries agent-aware metadata, notifications, worktrees, and socket automation.",
     keywords: ["Ghostty terminal", "GTK terminal", "Linux terminal emulator", "terminal multiplexer"],
+    quickStart: {
+      intro:
+        "Use socket reads to inspect the visible Ghostty-backed panes without scraping the UI or relying on hidden terminal state.",
+      commands: [
+        { label: "List live terminal surfaces", command: "forktty surfaces --workspace-name main --json" },
+        { label: "Split the focused pane", command: "forktty split-surface --axis vertical" },
+        { label: "Capture a bounded terminal tail", command: "forktty capture-tail --surface-id <surface-id> --lines 80 --json" },
+      ],
+    },
     sections: [
       {
         title: "Native terminal behavior",
@@ -310,6 +382,19 @@ export const SEO_PAGES: SeoPage[] = [
     intro:
       "ForkTTY restores workspace metadata and scrollback by default. For generic terminal panes, optional dtach-backed persistence can keep the real process tree alive when the GTK UI exits and reattach on relaunch.",
     keywords: ["dtach", "PTY persistence", "terminal process persistence", "Linux terminal sessions"],
+    quickStart: {
+      intro:
+        "Install dtach through your distro or from source, restart ForkTTY so PATH is refreshed, then confirm broker detection before enabling persistence.",
+      commands: [
+        { label: "Debian or Ubuntu package", command: "sudo apt update && sudo apt install dtach" },
+        { label: "Fedora package", command: "sudo dnf install dtach" },
+        {
+          label: "Universal source fallback",
+          command: "git clone https://github.com/crigler/dtach.git && cd dtach && ./configure && make && sudo make install",
+        },
+        { label: "Verify ForkTTY sees the broker", command: "forktty capabilities | grep -i pty" },
+      ],
+    },
     sections: [
       {
         title: "Why dtach is needed",
@@ -359,6 +444,20 @@ export const SEO_PAGES: SeoPage[] = [
     intro:
       "ForkTTY team mode helps a leader assign tasks, launch workers, dispatch prompts, monitor health, and reconcile reports while every worker remains visible in a terminal pane.",
     keywords: ["multi-agent coding", "agent orchestration", "AI coding team", "coding agent review"],
+    quickStart: {
+      intro:
+        "Start with one visible worker, watch its derived health state, then dry-run finish before closing disposable worker panes.",
+      commands: [
+        {
+          label: "Launch a scoped worker prompt",
+          command:
+            'forktty team ask review-team codex-worker --agent codex --task-id inspect-ui --prompt "Inspect the current diff and report risks" --submit',
+        },
+        { label: "Watch worker health and inbox", command: "forktty team watch review-team --stale-after-ms 120000 --limit 10" },
+        { label: "Plan final cleanup", command: "forktty team finish review-team --dry-run" },
+        { label: "Finish and close disposable workers", command: "forktty team finish review-team --close-workers" },
+      ],
+    },
     sections: [
       {
         title: "Roles, tasks, and mailbox dispatch",
@@ -403,6 +502,19 @@ export const SEO_PAGES: SeoPage[] = [
     intro:
       "ForkTTY overlaps with terminal multiplexers, agent dashboards, and AI coding workspaces, but it is built around a specific local-first shape: Linux-native Ghostty panes plus agent metadata, worktrees, MCP/socket automation, and visible team coordination.",
     keywords: ["ForkTTY alternatives", "terminal multiplexer", "agent workspace", "AI coding workspace"],
+    quickStart: {
+      intro:
+        "Compare ForkTTY by testing the concrete surfaces it adds around a normal terminal: capability discovery, compact context, worktrees, and team review.",
+      commands: [
+        { label: "See what this install can do", command: "forktty capabilities" },
+        { label: "Read compact automation context", command: "forktty context-snapshot --tail-lines 0 --json" },
+        { label: "Check worktree support", command: "forktty worktree-list --cwd /path/to/repo" },
+        {
+          label: "Try a read-only review lane",
+          command: "forktty team review review-team reviewer --task-id review-head --commit HEAD --submit",
+        },
+      ],
+    },
     sections: [
       {
         title: "Compared with terminal multiplexers",

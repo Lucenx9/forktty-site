@@ -163,8 +163,17 @@ test("site has intent-specific SEO pages linked from home and crawler context", 
     assert.match(full, new RegExp(`https://forktty\\.dev/${slug}`));
   }
 
+  assert.equal((seoPages.match(/quickStart: \{\n      intro:/g) ?? []).length, 9);
+  assert.match(seoPages, /forktty hooks setup codex --dry-run/);
+  assert.match(seoPages, /forktty mcp setup claude --dry-run/);
+  assert.match(seoPages, /forktty context-snapshot --tail-lines 0 --json/);
+  assert.match(seoPages, /forktty worktree-create feature\/my-task --cwd \/path\/to\/repo/);
+  assert.match(seoPages, /forktty team finish review-team --dry-run/);
   assert.match(routePage, /generateStaticParams/);
   assert.match(routePage, /generateMetadata/);
+  assert.match(routePage, /id="quick-start"/);
+  assert.match(routePage, /page\.quickStart\.commands\.map/);
+  assert.match(routePage, /<pre className=/);
   assert.match(routePage, /"@type": "FAQPage"/);
   assert.match(routePage, /"@type": "BreadcrumbList"/);
   assert.match(routePage, /canonical: `\/\$\{page\.slug\}`/);

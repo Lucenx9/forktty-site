@@ -171,6 +171,14 @@ export default async function SeoIntentPage({ params }: PageProps) {
                   On this page
                 </div>
                 <ol className="space-y-1">
+                  <li>
+                    <a
+                      href="#quick-start"
+                      className="block border-l border-ink-800 px-3 py-1.5 text-sm leading-snug text-ink-300 transition-colors hover:border-forktty hover:text-forktty"
+                    >
+                      Quick start
+                    </a>
+                  </li>
                   {page.sections.map((section) => (
                     <li key={section.title}>
                       <a
@@ -194,6 +202,32 @@ export default async function SeoIntentPage({ params }: PageProps) {
             </aside>
 
             <article className="min-w-0 space-y-10">
+              <section
+                id="quick-start"
+                className="scroll-mt-24 border-t border-ink-800/70 pt-10 first:border-t-0 first:pt-0"
+              >
+                <div className="max-w-3xl">
+                  <h2 className="font-display text-3xl font-semibold leading-tight text-ink-100 sm:text-4xl">
+                    Quick start
+                  </h2>
+                  <p className="mt-4 text-[15px] leading-relaxed text-ink-300">
+                    {page.quickStart.intro}
+                  </p>
+                </div>
+                <div className="mt-6 grid gap-3">
+                  {page.quickStart.commands.map((item) => (
+                    <div key={item.command} className="border border-ink-800 bg-ink-900">
+                      <div className="border-b border-ink-800 px-4 py-2 font-mono text-[11px] uppercase tracking-[0.12em] text-ink-500">
+                        {item.label}
+                      </div>
+                      <pre className="overflow-x-auto px-4 py-3 font-mono text-xs leading-relaxed text-ink-200 sm:text-[13px]">
+                        <code>{item.command}</code>
+                      </pre>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
               {page.sections.map((section) => (
                 <section
                   key={section.title}
