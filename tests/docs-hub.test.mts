@@ -38,5 +38,5 @@ test("site exposes an onsite docs wiki without removing the home quick start", a
   assert.match(docsPage, /forktty mcp setup/);
   assert.match(docsPage, /FORKTTY_SOCKET_PATH/);
   assert.match(docsPage, /~\/\.config\/forktty\/config\.toml/);
-  assert.match(docsPage, /0\.2\.0-alpha\.14/);
+  assert.match(docsPage, /0\.2\.0-alpha\.15/);
 });

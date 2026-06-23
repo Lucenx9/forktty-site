@@ -528,12 +528,12 @@ const DOC_SECTIONS: DocSection[] = [
     eyebrow: "Releases",
     title: "Changelog highlights",
     summary:
-      "The latest recorded release is 0.2.0-alpha.14 from 2026-06-19.",
+      "The latest recorded release is 0.2.0-alpha.15 from 2026-06-23.",
     blocks: [
       {
         kind: "list",
         items: [
-          "0.2.0-alpha.14 fixed embedded Ghostty renderer memory growth by defaulting GTK compositing to the GL renderer.",
+          "0.2.0-alpha.15 adds opt-in dtach-backed PTY process persistence for plain terminals and keeps it configurable from Settings > Worktrees.",
           "Embedded Ghostty redraws now follow the 16ms wakeup-check cadence instead of a 100ms floor during continuous output.",
           "AppImage packaging verifies the embedded Ghostty GTK library dependencies, not only the main binary.",
           "Embedded panes now honor Ghostty scrollback-limit and scrollbar, with a bounded default of 10 MB per surface.",

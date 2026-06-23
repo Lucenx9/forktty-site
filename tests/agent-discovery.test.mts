@@ -40,7 +40,7 @@ test("llms-full file provides single-fetch agent context", async () => {
   const full = await source("public/llms-full.txt");
 
   assert.match(full, /^# ForkTTY full agent context/m);
-  assert.match(full, /0\.2\.0-alpha\.14/);
+  assert.match(full, /0\.2\.0-alpha\.15/);
   assert.match(full, /## Install and first run/);
   assert.match(full, /## MCP setup/);
   assert.match(full, /## Socket CLI and API/);
@@ -124,7 +124,7 @@ test("sitemap uses canonical URLs with stable meaningful lastmod values", async 
   assert.match(sitemap, /`\$\{SITE_URL\}\/`/);
   assert.match(sitemap, /`\$\{SITE_URL\}\/docs`/);
   assert.match(sitemap, /`\$\{SITE_URL\}\/privacy`/);
-  assert.match(sitemap, /docs:\s*"2026-06-20"/);
+  assert.match(sitemap, /docs:\s*"2026-06-23"/);
   assert.match(sitemap, /lastModified:\s*LAST_SIGNIFICANT_UPDATE\.docs/);
   assert.doesNotMatch(sitemap, /lastModified:\s*new Date\(\)/);
   assert.doesNotMatch(sitemap, /changeFrequency/);

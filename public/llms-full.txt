@@ -7,7 +7,7 @@ Use this file when an assistant or crawler wants one high-signal Markdown docume
 ## Current status
 
 - Current public release line: `0.2.0-alpha.x`.
-- Latest recorded release in the public changelog: `0.2.0-alpha.14`, dated 2026-06-19.
+- Latest recorded release in the public changelog: `0.2.0-alpha.15`, dated 2026-06-23.
 - Supported platform for release artifacts: Linux x86_64.
 - Primary packaged runtime: GTK4/libadwaita with embedded Ghostty terminal panes.
 - Release artifacts: AppImage, AppImage zsync metadata, Debian package, and SHA256SUMS.
@@ -278,7 +278,7 @@ FORKTTY_SOCKET_PATH=/absolute/path forktty ping
 
 ## Changelog highlights
 
-Latest recorded release: `0.2.0-alpha.14` from 2026-06-19.
+Latest recorded release: `0.2.0-alpha.15` from 2026-06-23.
 
 - Fixed embedded Ghostty renderer memory growth by defaulting GTK compositing to the GL renderer.
 - Embedded Ghostty redraws now follow the 16ms wakeup-check cadence instead of a 100ms floor during continuous output.
