@@ -130,7 +130,7 @@ const DOC_SECTIONS: DocSection[] = [
         items: [
           "Open the command palette with Ctrl+Shift+P for actions such as new workspace, split, settings, notifications, and shortcuts; Ctrl+? (or F1) opens Keyboard Shortcuts, Ctrl+, opens Settings, and F10 opens the Main Menu when focus is outside terminal content.",
           "Use split panes and tabs to keep multiple agents visible without mixing their scrollback; drag pane headers to swap panes.",
-          "Session restore writes native state to ~/.local/state/forktty/session-v2.json, but live PTYs themselves are not persisted.",
+          "Session restore writes native state to ~/.local/state/forktty/session-v2.json. By default live PTYs are not persisted, but Settings > Worktrees can enable general.persist_terminal_processes for plain terminals when dtach is available. Those processes survive a UI restart and re-attach on relaunch; explicit pane close or restart invalidates the broker socket so reused surface ids start fresh.",
           "Prompt-aware notifications can come from socket calls, hooks, Ghostty OSC events, bell/child-exit events, or bounded prompt fallback detection.",
           "Quake/dropdown behavior uses gtk4-layer-shell where the compositor supports it and falls back to normal GTK behavior elsewhere.",
         ],
@@ -154,7 +154,7 @@ const DOC_SECTIONS: DocSection[] = [
     blocks: [
       {
         kind: "paragraph",
-        text: "ForkTTY targets Codex, Claude Code, Pi, Antigravity, OpenCode, and shell agents. Managed hooks for Codex, Claude Code, Antigravity, and OpenCode persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD; agent rows group lifecycle states with scan-friendly labels such as Working, Needs input, Done, and Idle, mark the current pane, surface risky permission modes, show compact workflow loop chips for bound surfaces, add source/age metadata and diagnostic lifecycle_evidence for freshness checks against the workspace/provider status row, and provider-scoped HUD metadata is cleared when the last matching session ends, closes, hibernates, or is forgotten. The sidebar uses a tracked agent resume_cwd as the visible project path when it differs from the workspace launch directory. Team worker launch can omit --agent or use auto; Settings > Agents controls the default provider, fallback, provider order, disabled providers, PATH detection, and direct command overrides for non-default harness install locations, while forktty capabilities reports the active policy and resolved harnesses. Claude Code team workers launched without explicit permission args use documented permission-mode defaults; Pi review workers default to read-only tools unless explicit Pi tool args are supplied. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.",
+        text: "ForkTTY targets Codex, Claude Code, Pi, Antigravity, OpenCode, and shell agents. Managed hooks for Codex, Claude Code, Antigravity, and OpenCode persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD; agent rows group lifecycle states with scan-friendly labels such as Working, Needs input, Done, and Idle, mark the current pane, surface risky permission modes, show compact workflow loop chips for bound surfaces, add source/age metadata and diagnostic lifecycle_evidence for freshness checks against the workspace/provider status row, and provider-scoped HUD metadata is cleared when the last matching session ends, closes, hibernates, or is forgotten. The sidebar uses a tracked agent resume_cwd as the visible project path when it differs from the workspace launch directory. Team worker launch can omit --agent or use auto; Settings > Agents controls the default provider, fallback, provider order, disabled providers, PATH detection, and direct command overrides for non-default harness install locations, while forktty capabilities reports the active policy, resolved harnesses, and PTY persistence broker availability. Claude Code team workers launched without explicit permission args use documented permission-mode defaults; Pi review workers default to read-only tools unless explicit Pi tool args are supplied. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.",
       },
       {
         kind: "list",
@@ -415,6 +415,7 @@ const DOC_SECTIONS: DocSection[] = [
           'worktree_layout = "nested"',
           "enable_pr_lookup = false",
           'notification_command = ""',
+          "persist_terminal_processes = false",
           "",
           "[appearance]",
           "persistent_scrollback_lines = 0",
