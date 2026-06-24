@@ -247,7 +247,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "Setup is explicit on first install. Once ForkTTY-managed entries exist, newer builds can refresh managed hook, MCP, and skill entries while preserving unrelated user configuration. Gemini setup is removed; remove commands only keep a legacy cleanup path for old ForkTTY-managed ~/.gemini/settings.json entries.",
+        text: "Setup is explicit on first install. Once ForkTTY-managed entries exist, newer builds can refresh managed hook, MCP, and skill entries while preserving unrelated user configuration. Antigravity lifecycle hooks such as PreInvocation use flat handler entries; its tool hooks use the nested matcher/hooks shape. Gemini setup is removed; remove commands only keep a legacy cleanup path for old ForkTTY-managed ~/.gemini/settings.json entries.",
       },
     ],
     sources: [{ label: "Hooks README", href: `${REPO_DOCS}/hooks/README.md` }],
