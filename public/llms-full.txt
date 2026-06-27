@@ -285,6 +285,7 @@ FORKTTY_SOCKET_PATH=/absolute/path forktty ping
 Latest recorded release: `0.2.0-alpha.16` from 2026-06-27.
 
 - Fixed AppImage hook/MCP setup so generated ForkTTY CLI commands set `APPIMAGE_EXTRACT_AND_RUN=1` and avoid leaving FUSE runtime mounts behind.
+- Fixed GTK window close so the embedded Unix-socket server shuts down instead of keeping the GUI/AppImage process alive.
 - Fixed official CLI/MCP socket timeout and response-budget mismatches for valid bounded responses and slower server-side operations.
 - Fixed team/workspace race conditions around duplicate dispatches, duplicate worker launches, close rollback, and concurrent surface creation during close.
 - Restricted opt-in PTY process persistence to plain interactive terminal shell spawns.
