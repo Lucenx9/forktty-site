@@ -120,7 +120,7 @@ const STRUCTURED_DATA = [
     applicationSubCategory: "Terminal emulator and coding agent workspace",
     operatingSystem: "Linux",
     softwareRequirements: "Linux x86_64",
-    softwareVersion: "0.2.0-alpha.15",
+    softwareVersion: "0.2.0-alpha.16",
     programmingLanguage: "Rust",
     license: "https://github.com/Lucenx9/forktty/blob/main/LICENSE",
     codeRepository: "https://github.com/Lucenx9/forktty",

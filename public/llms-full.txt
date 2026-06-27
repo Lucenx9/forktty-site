@@ -7,7 +7,7 @@ Use this file when an assistant or crawler wants one high-signal Markdown docume
 ## Current status
 
 - Current public release line: `0.2.0-alpha.x`.
-- Latest recorded release in the public changelog: `0.2.0-alpha.15`, dated 2026-06-23.
+- Latest recorded release in the public changelog: `0.2.0-alpha.16`, dated 2026-06-27.
 - Supported platform for release artifacts: Linux x86_64.
 - Primary packaged runtime: GTK4/libadwaita with embedded Ghostty terminal panes.
 - Release artifacts: AppImage, AppImage zsync metadata, Debian package, and SHA256SUMS.
@@ -282,9 +282,12 @@ FORKTTY_SOCKET_PATH=/absolute/path forktty ping
 
 ## Changelog highlights
 
-Latest recorded release: `0.2.0-alpha.15` from 2026-06-23.
+Latest recorded release: `0.2.0-alpha.16` from 2026-06-27.
 
-- Fixed embedded Ghostty renderer memory growth by defaulting GTK compositing to the GL renderer.
+- Fixed AppImage hook/MCP setup so generated ForkTTY CLI commands set `APPIMAGE_EXTRACT_AND_RUN=1` and avoid leaving FUSE runtime mounts behind.
+- Fixed official CLI/MCP socket timeout and response-budget mismatches for valid bounded responses and slower server-side operations.
+- Fixed team/workspace race conditions around duplicate dispatches, duplicate worker launches, close rollback, and concurrent surface creation during close.
+- Restricted opt-in PTY process persistence to plain interactive terminal shell spawns.
 - AppImages prefer host GTK/libadwaita when available and keep bundled GTK as a fallback/override.
 - Embedded Ghostty redraws now follow the 16ms wakeup-check cadence instead of a 100ms floor during continuous output.
 - AppImage packaging verifies the embedded Ghostty GTK library dependencies, not only the main binary.

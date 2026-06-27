@@ -5,7 +5,7 @@ import { SITE_URL } from "@/lib/site";
 // Keep these tied to significant visible content changes, not sitemap build time.
 const LAST_SIGNIFICANT_UPDATE = {
   home: "2026-06-19",
-  docs: "2026-06-23",
+  docs: "2026-06-27",
   privacy: "2026-06-19",
   seoPages: "2026-06-23",
 } as const;
