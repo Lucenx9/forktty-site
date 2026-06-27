@@ -130,7 +130,7 @@ const DOC_SECTIONS: DocSection[] = [
         items: [
           "Open the command palette with Ctrl+Shift+P for actions such as new workspace, split, settings, notifications, and shortcuts; Ctrl+? (or F1) opens Keyboard Shortcuts, Ctrl+, opens Settings, and F10 opens the Main Menu when focus is outside terminal content.",
           "Use split panes and tabs to keep multiple agents visible without mixing their scrollback; drag pane headers to swap panes.",
-          "Session restore writes native state to ~/.local/state/forktty/session-v2.json. By default live PTYs are not persisted, but Settings > Worktrees can enable general.persist_terminal_processes for plain terminals when dtach is available. Those processes survive a UI restart and re-attach on relaunch; explicit pane close or restart invalidates the broker socket so reused surface ids start fresh.",
+          "Session restore writes native state to ~/.local/state/forktty/session-v2.json. By default live PTYs are not persisted, but Settings > Worktrees can enable general.persist_terminal_processes for plain terminals when dtach is available. Those processes survive a UI restart and re-attach on relaunch; AppImage-launched brokers close inherited runtime file descriptors before dtach starts so surviving brokers do not keep FUSE mounts alive. Explicit pane close or restart invalidates the broker socket so reused surface ids start fresh.",
           "Prompt-aware notifications can come from socket calls, hooks, Ghostty OSC events, bell/child-exit events, or bounded prompt fallback detection.",
           "Quake/dropdown behavior uses gtk4-layer-shell where the compositor supports it and falls back to normal GTK behavior elsewhere.",
         ],
@@ -574,7 +574,7 @@ const DOC_SECTIONS: DocSection[] = [
       {
         kind: "list",
         items: [
-          "0.2.0-alpha.16 fixes GTK shutdown, AppImage hook/MCP setup, socket timeout/response-budget mismatches, and several team/workspace race conditions.",
+          "0.2.0-alpha.16 fixes GTK shutdown, AppImage hook/MCP setup, AppImage dtach broker FD inheritance, socket timeout/response-budget mismatches, and several team/workspace race conditions.",
           "0.2.0-alpha.16 restricts opt-in PTY process persistence to plain interactive terminal shell spawns.",
           "AppImages prefer the host GTK/libadwaita stack when available and keep the bundled GTK copy as a fallback/override for hosts without GTK4.",
           "Embedded Ghostty redraws now follow the 16ms wakeup-check cadence instead of a 100ms floor during continuous output.",
