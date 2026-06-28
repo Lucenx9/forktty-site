@@ -14,8 +14,8 @@ const FEATURES = [
   {
     n: "03",
     title: "Socket and MCP automation share one surface.",
-    body: "The user-local JSON-RPC socket backs the CLI and MCP server, so tools can inspect panes, read context snapshots and terminal tails, split or focus panes, manage worktrees, resume agents, and publish team status.",
-    cmd: "forktty top",
+    body: "The user-local JSON-RPC socket backs the CLI and MCP server, so tools can plan task strategy with explainable router profiles, workflow-inferred last-known-good stickiness, and harness routing signals, stage or submit approved team runs, inspect panes, read context snapshots and terminal tails, manage worktrees, resume agents, and publish team status.",
+    cmd: "forktty task-plan",
   },
   {
     n: "04",
