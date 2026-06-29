@@ -114,7 +114,7 @@ export const SEO_PAGES: SeoPage[] = [
     sections: [
       {
         title: "Provider-aware terminal handling",
-        body: "Claude Code's TUI can behave differently from simpler line-oriented tools. ForkTTY's team dispatch path stages Claude text, waits briefly, and sends Enter separately so prompts are less likely to stay stuck in the composer.",
+        body: "Claude Code's TUI can behave differently from simpler line-oriented tools. ForkTTY's team dispatch path stages Claude/Pi text, waits briefly, and sends Enter separately so prompts are less likely to stay stuck in the composer.",
       },
       {
         title: "Review-friendly sessions",
