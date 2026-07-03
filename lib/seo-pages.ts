@@ -335,7 +335,7 @@ export const SEO_PAGES: SeoPage[] = [
       commands: [
         { label: "List live terminal surfaces", command: "forktty surfaces --workspace-name main --json" },
         { label: "Split the focused pane", command: "forktty split-surface --axis vertical" },
-        { label: "Capture a bounded terminal tail", command: "forktty capture-tail --surface-id <surface-id> --lines 80 --json" },
+        { label: "Capture the current terminal tail", command: "forktty capture-tail --surface-id <surface-id> --lines 80 --json" },
       ],
     },
     sections: [

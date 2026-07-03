@@ -441,14 +441,14 @@ const DOC_SECTIONS: DocSection[] = [
         columns: ["Path", "Purpose"],
         rows: [
           ["~/.config/forktty/config.toml", "User configuration for ForkTTY-owned behavior."],
-          ["~/.local/state/forktty/session-v2.json", "Workspace, pane, and recent scrollback session state."],
+          ["~/.local/state/forktty/session-v2.json", "Workspace, pane, and recent terminal text-tail session state."],
           ["~/.local/share/forktty/browser_profiles/profiles.json", "Source-only browser profile index."],
           ["~/.local/share/forktty/browser_profiles/<id>/", "Source-only WebKit profile data."],
         ],
       },
       {
         kind: "paragraph",
-        text: "ForkTTY now leaves Ghostty-owned terminal appearance and runtime behavior to Ghostty configuration, except that ForkTTY-managed embedded panes force wait-after-command so clean shell exits remain inspectable as Closed panes. Live embedded panes follow Ghostty's scrollback-limit budget, default to 10 MB per surface, and honor scrollbar = system|never. Legacy TOML keys for ForkTTY theme source, terminal font, theme, bell, renderer, and scrollback still load for compatibility but are not exposed in newly saved settings.",
+        text: "ForkTTY now leaves Ghostty-owned terminal appearance and runtime behavior to Ghostty configuration, except that ForkTTY-managed embedded panes force wait-after-command so clean shell exits remain inspectable as Closed panes. Live embedded panes follow Ghostty's scrollback-limit budget, default to 10 MB per surface, and honor scrollbar = system|never. The opt-in persistent_scrollback_lines tail restore uses the embedded Ghostty visible-text path until a native bounded-tail ABI exists; use read-screen/surface_read_text scope=all for bounded full text reads. Legacy TOML keys for ForkTTY theme source, terminal font, theme, bell, renderer, and scrollback still load for compatibility but are not exposed in newly saved settings.",
       },
       {
         kind: "code",

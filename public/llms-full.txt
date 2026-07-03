@@ -44,6 +44,7 @@ forktty doctor
 - Quake/dropdown behavior uses gtk4-layer-shell where the compositor supports it and falls back to normal GTK behavior elsewhere.
 - ForkTTY leaves Ghostty-owned terminal appearance and runtime behavior to Ghostty configuration, except ForkTTY-managed embedded panes force `wait-after-command` so clean shell exits remain inspectable as Closed panes.
 - Live embedded panes follow Ghostty's `scrollback-limit` budget, default to 10 MB per surface, and honor `scrollbar = system|never`.
+- `capture-tail` and `persistent_scrollback_lines` for embedded Ghostty panes currently use the visible-text tail path; use `read-screen` / `surface_read_text` with `scope=all` when a bounded full text read is needed.
 
 ## Agent integrations
 
@@ -211,7 +212,7 @@ forktty worktree-attach feature/my-task --cwd /path/to/repo
 Common local files:
 
 - `~/.config/forktty/config.toml`: user configuration for ForkTTY-owned behavior.
-- `~/.local/state/forktty/session-v2.json`: workspace, pane, and recent scrollback session state.
+- `~/.local/state/forktty/session-v2.json`: workspace, pane, and recent terminal text-tail session state.
 - `~/.local/share/forktty/browser_profiles/profiles.json`: source-only browser profile index.
 - `~/.local/share/forktty/browser_profiles/<id>/`: source-only WebKit profile data.
 - `~/.local/state/forktty/telemetry-ping.json`: last UTC date when the app attempted the anonymous ping.
