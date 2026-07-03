@@ -65,7 +65,8 @@ test("agent context documents keep team health semantics aligned", async () => {
   for (const text of [docs, llms, full]) {
     assert.match(text, /team_worker_health/);
     assert.match(text, /final_state/);
-    assert.match(text, /ready-runtime liveness/);
+    assert.match(text, /model-plus-runtime liveness/);
+    assert.match(text, /readiness is reported separately/);
   }
 });
 
