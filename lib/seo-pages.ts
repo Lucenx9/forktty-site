@@ -114,7 +114,7 @@ export const SEO_PAGES: SeoPage[] = [
     sections: [
       {
         title: "Provider-aware terminal handling",
-        body: "Claude Code's TUI can behave differently from simpler line-oriented tools. ForkTTY's team dispatch path stages Claude/Pi text, waits briefly, and sends Enter separately so prompts are less likely to stay stuck in the composer.",
+        body: "Claude Code's TUI can behave differently from simpler line-oriented tools. ForkTTY's team dispatch path stages Claude/Pi/Grok text, waits briefly, and sends Enter separately so prompts are less likely to stay stuck in the composer.",
       },
       {
         title: "Review-friendly sessions",
@@ -465,7 +465,7 @@ export const SEO_PAGES: SeoPage[] = [
       },
       {
         title: "Provider-aware worker handling",
-        body: "ForkTTY can choose providers from Settings > Agents when a worker is launched with auto selection, or use explicit providers when a task requires Codex, Claude Code, Pi, OpenCode, Antigravity, or a shell lane.",
+        body: "ForkTTY can choose providers from Settings > Agents when a worker is launched with auto selection, or use explicit providers when a task requires Codex, Claude Code, Pi, OpenCode, Antigravity, Grok, or a shell lane.",
       },
       {
         title: "Finish with evidence",
@@ -538,7 +538,7 @@ export const SEO_PAGES: SeoPage[] = [
       {
         question: "Is ForkTTY an AI agent by itself?",
         answer:
-          "No. ForkTTY hosts and coordinates agent CLIs such as Codex, Claude Code, Pi, OpenCode, and Antigravity.",
+          "No. ForkTTY hosts and coordinates agent CLIs such as Codex, Claude Code, Pi, OpenCode, Antigravity, and Grok.",
       },
       {
         question: "Is ForkTTY production-stable?",
