@@ -40,7 +40,7 @@ test("llms-full file provides single-fetch agent context", async () => {
   const full = await source("public/llms-full.txt");
 
   assert.match(full, /^# ForkTTY full agent context/m);
-  assert.match(full, /0\.2\.0-alpha\.16/);
+  assert.match(full, /0\.2\.0-alpha\.17/);
   assert.match(full, /## Install and first run/);
   assert.match(full, /## MCP setup/);
   assert.match(full, /## Socket CLI and API/);
@@ -90,7 +90,7 @@ test("layout exposes visible-page-aligned structured data", async () => {
   assert.match(layout, /"@type": "SoftwareApplication"/);
   assert.match(layout, /operatingSystem: "Linux"/);
   assert.match(layout, /applicationCategory: "DeveloperApplication"/);
-  assert.match(layout, /softwareVersion: "0\.2\.0-alpha\.16"/);
+  assert.match(layout, /softwareVersion: "0\.2\.0-alpha\.17"/);
   assert.match(layout, /featureList/);
   assert.match(layout, /screenshot/);
   assert.match(layout, /codeRepository/);
@@ -129,7 +129,7 @@ test("sitemap uses canonical URLs with stable meaningful lastmod values", async 
   assert.match(sitemap, /`\$\{SITE_URL\}\/privacy`/);
   assert.match(sitemap, /SEO_PAGES\.map/);
   assert.match(sitemap, /seoPages:\s*"2026-06-23"/);
-  assert.match(sitemap, /docs:\s*"2026-06-27"/);
+  assert.match(sitemap, /docs:\s*"2026-07-03"/);
   assert.match(sitemap, /lastModified:\s*LAST_SIGNIFICANT_UPDATE\.docs/);
   assert.doesNotMatch(sitemap, /lastModified:\s*new Date\(\)/);
   assert.doesNotMatch(sitemap, /changeFrequency/);

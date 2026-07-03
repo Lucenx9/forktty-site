@@ -571,13 +571,13 @@ const DOC_SECTIONS: DocSection[] = [
     eyebrow: "Releases",
     title: "Changelog highlights",
     summary:
-      "The latest recorded release is 0.2.0-alpha.16 from 2026-06-27.",
+      "The latest recorded release is 0.2.0-alpha.17 from 2026-07-03.",
     blocks: [
       {
         kind: "list",
         items: [
-          "0.2.0-alpha.16 fixes GTK shutdown, AppImage hook/MCP setup, AppImage dtach broker FD inheritance and cleanup, socket timeout/response-budget mismatches, and several team/workspace race conditions.",
-          "0.2.0-alpha.16 restricts opt-in PTY process persistence to plain interactive terminal shell spawns.",
+          "0.2.0-alpha.17 adds Grok Build as a visible team/router harness and ships the first task-strategy router stabilization pass for multi-harness apply/submit flows.",
+          "0.2.0-alpha.17 hardens Feed, team, workflow, and task-strategy persistence/retry paths found during router and store audits.",
           "AppImages prefer the host GTK/libadwaita stack when available and keep the bundled GTK copy as a fallback/override for hosts without GTK4.",
           "Embedded Ghostty redraws now follow the 16ms wakeup-check cadence instead of a 100ms floor during continuous output.",
           "AppImage packaging verifies the embedded Ghostty GTK library dependencies, not only the main binary.",
