@@ -103,13 +103,13 @@ export function Hero() {
             >
               <span className="truncate text-ink-300">forktty / main</span>
               <span className="hidden text-ink-500 sm:inline">
-                agent HUD / 4 panes / focused
+                router rail / workflow feed / focused
               </span>
             </div>
             <Image
               src="/screenshots/forktty-app-focus.png"
-              alt="ForkTTY on Linux showing a workspace sidebar, pane tabs, and four tiled terminal panes with the focused pane outlined in orange."
-              width={1920}
+              alt="ForkTTY on Linux showing a workspace sidebar, embedded Ghostty terminal, Router rail, and bottom workflow feed."
+              width={1360}
               height={820}
               quality={95}
               priority

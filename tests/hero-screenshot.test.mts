@@ -6,7 +6,7 @@ async function source(path: string): Promise<string> {
   return readFile(new URL(`../${path}`, import.meta.url), "utf8");
 }
 
-test("home hero uses the focused app screenshot at a larger display size", async () => {
+test("home hero uses the focused app screenshot at its real display size", async () => {
   const hero = await source("components/Hero.tsx");
 
   assert.match(hero, /<h1[\s\S]*?>[\s\S]*forktty[\s\S]*<\/h1>/);
@@ -15,7 +15,7 @@ test("home hero uses the focused app screenshot at a larger display size", async
   assert.match(hero, /aria-hidden/);
   assert.match(hero, /className="hero-shot /);
   assert.match(hero, /src="\/screenshots\/forktty-app-focus\.png"/);
-  assert.match(hero, /width=\{1920\}/);
+  assert.match(hero, /width=\{1360\}/);
   assert.match(hero, /height=\{820\}/);
   assert.match(hero, /max-w-\[88rem\]/);
   assert.match(hero, /sizes="\(min-width: 1408px\) 1408px, 100vw"/);
