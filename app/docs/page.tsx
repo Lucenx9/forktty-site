@@ -572,11 +572,13 @@ const DOC_SECTIONS: DocSection[] = [
     eyebrow: "Releases",
     title: "Changelog highlights",
     summary:
-      "The latest recorded release is 0.2.0-alpha.17 from 2026-07-03.",
+      "The latest recorded release is 0.2.0-alpha.18 from 2026-07-06.",
     blocks: [
       {
         kind: "list",
         items: [
+          "0.2.0-alpha.18 ships the attention-first Router rail and workflow feed pass with collapsible surfaces, notification controls, approval actions, feed filters, and tighter status styling.",
+          "0.2.0-alpha.18 hardens hook-driven agent status, MCP/task-strategy routing, workflow-loop evidence, orchestration cleanup, worker reports, and release QA docs.",
           "0.2.0-alpha.17 adds Grok Build as a visible team/router harness and ships the first task-strategy router stabilization pass for multi-harness apply/submit flows.",
           "0.2.0-alpha.17 hardens Feed, team, workflow, and task-strategy persistence/retry paths found during router and store audits.",
           "AppImages prefer the host GTK/libadwaita stack when available and keep the bundled GTK copy as a fallback/override for hosts without GTK4.",

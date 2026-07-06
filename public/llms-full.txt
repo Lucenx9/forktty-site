@@ -7,7 +7,7 @@ Use this file when an assistant or crawler wants one high-signal Markdown docume
 ## Current status
 
 - Current public release line: `0.2.0-alpha.x`.
-- Latest recorded release in the public changelog: `0.2.0-alpha.17`, dated 2026-07-03.
+- Latest recorded release in the public changelog: `0.2.0-alpha.18`, dated 2026-07-06.
 - Supported platform for release artifacts: Linux x86_64.
 - Primary packaged runtime: GTK4/libadwaita with embedded Ghostty terminal panes.
 - Release artifacts: AppImage, AppImage zsync metadata, Debian package, and SHA256SUMS.
@@ -290,8 +290,10 @@ FORKTTY_SOCKET_PATH=/absolute/path forktty ping
 
 ## Changelog highlights
 
-Latest recorded release: `0.2.0-alpha.17` from 2026-07-03.
+Latest recorded release: `0.2.0-alpha.18` from 2026-07-06.
 
+- Shipped the attention-first Router rail and workflow feed pass with collapsible surfaces, notification controls, approval actions, feed filters, and tighter status styling.
+- Hardened hook-driven agent status, MCP/task-strategy routing, workflow-loop evidence, orchestration cleanup, worker reports, and release QA docs.
 - Added Grok Build as a visible team/router harness with provider capability reporting and task-strategy routing support.
 - Stabilized task-strategy router apply/submit flows, including MCP target defaults, plan-mode capability scoring, parallel harness capacity reuse, and pre-mutation launchability checks.
 - Hardened Feed, team, workflow, and task-strategy persistence/retry paths found during router and store audits.
