@@ -3,7 +3,7 @@ import { GitHubIcon, DownloadIcon } from "./Icons";
 import { HeroHotkeys } from "./HeroHotkeys";
 import { REPO_HTML_URL } from "@/lib/github";
 
-const CAPABILITIES = ["Agent HUD", "Git worktrees", "Local socket", "MCP"];
+const CAPABILITIES = ["Router rail", "Agent HUD", "Git worktrees", "Local socket"];
 
 export function Hero() {
   return (
@@ -37,10 +37,11 @@ export function Hero() {
           </h1>
 
           <p className="max-w-3xl text-balance text-base leading-relaxed text-ink-300 sm:text-xl">
-            Coordinate Codex, Claude Code, Pi, Antigravity, OpenCode, and shell
-            agents from one Linux-native terminal. ForkTTY keeps tiled
-            GTK/Ghostty panes, git worktrees, local socket automation, MCP, and
-            resume-aware notifications in one place.
+            Coordinate Codex, Claude Code, Pi, Antigravity, OpenCode, Grok
+            Build, and shell agents from one Linux-native terminal. ForkTTY keeps tiled
+            GTK/Ghostty panes, a visible router rail, git worktrees, local
+            socket automation, MCP, and resume-aware notifications in one
+            place.
           </p>
 
           <div className="flex flex-wrap justify-center gap-2">

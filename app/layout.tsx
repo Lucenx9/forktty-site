@@ -55,6 +55,7 @@ export const metadata: Metadata = {
     "Pi",
     "Antigravity",
     "OpenCode",
+    "Grok Build",
     "Rust",
     "git worktree",
     "socket API",
