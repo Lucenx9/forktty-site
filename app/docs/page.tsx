@@ -249,6 +249,10 @@ const DOC_SECTIONS: DocSection[] = [
         kind: "paragraph",
         text: "Setup is explicit on first install. Once ForkTTY-managed entries exist, newer builds can refresh managed hook, MCP, and skill entries while preserving unrelated user configuration. When setup records an AppImage launcher for hook CLI calls, ForkTTY sets APPIMAGE_EXTRACT_AND_RUN=1 for those generated commands so short hooks do not keep FUSE AppImage mounts alive. Antigravity lifecycle hooks such as PreInvocation use flat handler entries; its tool hooks use the nested matcher/hooks shape. Gemini setup is removed; remove commands only keep a legacy cleanup path for old ForkTTY-managed ~/.gemini/settings.json entries.",
       },
+      {
+        kind: "paragraph",
+        text: "AppImage provenance comes from the runtime path, not the filename suffix, so renamed AppImages still generate hook commands with APPIMAGE_EXTRACT_AND_RUN=1.",
+      },
     ],
     sources: [{ label: "Hooks README", href: `${REPO_DOCS}/hooks/README.md` }],
   },
@@ -273,6 +277,10 @@ const DOC_SECTIONS: DocSection[] = [
       {
         kind: "paragraph",
         text: "The MCP server is local-only: it bridges stdio to the owner-only ForkTTY Unix socket and does not open a network listener. It exposes identify, workspace, surface, context snapshot, task strategy planning, agent, worktree, notification, feed, workflow, team, topology, browser, and status tools where supported by the running app. identify treats ForkTTY pane workspace/surface env ids as caller context instead of mandatory targets. Codex MCP setup preserves hand-edited TOML comments/formatting and uses the larger MCP config size budget for $CODEX_HOME/config.toml or ~/.codex/config.toml. If setup registers an AppImage launcher, the managed MCP server env includes APPIMAGE_EXTRACT_AND_RUN=1 so persistent MCP clients do not keep a FUSE AppImage mount alive.",
+      },
+      {
+        kind: "paragraph",
+        text: "Renamed AppImages retain that managed MCP extraction env because ForkTTY tracks runtime provenance instead of requiring an .AppImage suffix.",
       },
       {
         kind: "table",
@@ -377,8 +385,10 @@ const DOC_SECTIONS: DocSection[] = [
         kind: "list",
         items: [
           "System methods cover ping, identify, capabilities, provider capability discovery, and event subscriptions.",
+          "PATH-based provider discovery proves launchability only; task planning leaves authentication and runtime health unverified until concrete worker, hook, workflow, or user evidence exists, scoring an unprobed routable harness at 25 versus 50 for a verified authenticated/ready harness.",
           "Workspace and surface methods cover list, focus, split, close, text input, visible text, and tail capture.",
           "Task strategy methods cover read-only routing plus approved apply that recomputes dirty edit isolation and approval gates before visible team/workflow mutation.",
+          "Team finalization restores launch-owned terminal backends and leaves the team active when the team store cannot be saved.",
           "Agent methods cover agent listing, health, source/age/lifecycle_evidence metadata, resume, and reclaim planning; the CLI wait agent-status wrapper polls those read-only surfaces for lifecycle waits.",
           "Notification/feed methods align desktop, in-app, OSC 99, and persisted approval state; only pending approvals raise the context snapshot pending_approval risk flag.",
           "Metadata methods publish status, progress, logs, and statusline output.",

@@ -70,6 +70,23 @@ test("agent context documents keep team health semantics aligned", async () => {
   }
 });
 
+test("agent context documents keep provider launchability semantics aligned", async () => {
+  const docs = await source("app/docs/page.tsx");
+  const llms = await source("public/llms.txt");
+  const full = await source("public/llms-full.txt");
+
+  for (const text of [docs, llms, full]) {
+    assert.match(
+      text,
+      /proves (?:launchability only|only (?:local |harness )?launchability)/,
+    );
+    assert.match(
+      text,
+      /authentication and runtime health unverified|auth and runtime health remain unverified|does not probe provider authentication/,
+    );
+  }
+});
+
 test("agent context documents describe workflow loop state as metadata only", async () => {
   const docs = await source("app/docs/page.tsx");
   const llms = await source("public/llms.txt");
