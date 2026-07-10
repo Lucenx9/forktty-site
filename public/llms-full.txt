@@ -50,6 +50,8 @@ forktty doctor
 
 ForkTTY targets Codex, Claude Code, Pi, Antigravity, OpenCode, Grok Build, and shell agents. Managed hooks for Codex, Claude Code, Antigravity, and OpenCode persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD; agent rows group lifecycle states with scan-friendly labels such as Working, Needs input, Done, and Idle, mark the current pane, surface risky permission modes, show compact workflow loop chips for bound surfaces, and add diagnostic `lifecycle_evidence` and `effective_project_cwd` so clients can correlate persisted lifecycle/freshness and the actual project cwd with the current workspace/provider status row without treating it as proof of fresh live hook output, terminal child exit marks attached sessions ended so stopped agents do not remain running, and provider-scoped HUD metadata is cleared when the last matching session ends, closes, hibernates, or is forgotten. The GTK sidebar uses a tracked agent `resume_cwd` as the visible project path when it differs from the workspace launch directory. Team worker launch can omit `agent`/`--agent` or use `auto`; Settings > Agents controls the default provider, fallback, provider order, disabled providers, PATH detection, managed hook/MCP setup capability flags, and direct command overrides for non-default harness install locations, while `forktty capabilities`/`system.capabilities` reports the active policy, resolved harnesses, and PTY persistence broker availability. Claude Code team workers launched without explicit permission args use documented permission-mode defaults; Pi review workers default to read-only tools unless explicit Pi tool args are supplied; Grok review workers default to plan mode unless explicit Grok permission args are supplied. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.
 
+Workspace rows prefer live hook status, then fall back to actionable persisted lifecycle when the primary provider status row is missing. Running and needs-input labels therefore stay consistent for Codex, Claude Code, Pi, OpenCode, Antigravity, and Grok; idle, suspended, ended, and unknown sessions do not create a working badge.
+
 Current-runtime team workers keep the provider selected by `team.worker.launch` as their Agent HUD and agent API identity. Compatibility hooks can update lifecycle/session metadata under another provider key without relabeling a Grok worker as Claude; manually created surfaces still derive their provider identity from hook metadata.
 
 ```sh
@@ -71,6 +73,8 @@ forktty notifications
 ## Hooks
 
 Hooks install provider-specific config entries that report lifecycle and status to ForkTTY.
+
+Codex approves non-managed hooks by their current definition hash. After ForkTTY changes Codex hook entries, open `/hooks` inside Codex to review them; `hooks doctor codex` can detect trust records but cannot prove their hashes match the current definitions.
 
 ```sh
 forktty hooks setup

@@ -201,6 +201,10 @@ const DOC_SECTIONS: DocSection[] = [
         text: "Current-runtime team workers keep the provider selected at launch as their Agent HUD and agent API identity. A compatible hook may report another provider key for lifecycle metadata, but it cannot relabel a Grok worker as Claude.",
       },
       {
+        kind: "paragraph",
+        text: "Workspace rows prefer live hook status, then fall back to actionable persisted lifecycle when that primary status row is missing. Running and needs-input labels therefore stay consistent for Codex, Claude Code, Pi, OpenCode, Antigravity, and Grok without treating idle, ended, suspended, or unknown sessions as active work.",
+      },
+      {
         kind: "list",
         items: [
           "Use forktty agents to list known agent sessions.",
@@ -251,7 +255,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "Setup is explicit on first install. Once ForkTTY-managed entries exist, newer builds can refresh managed hook, MCP, and skill entries while preserving unrelated user configuration. When setup records an AppImage launcher for hook CLI calls, ForkTTY sets APPIMAGE_EXTRACT_AND_RUN=1 for those generated commands so short hooks do not keep FUSE AppImage mounts alive. Antigravity lifecycle hooks such as PreInvocation use flat handler entries; its tool hooks use the nested matcher/hooks shape. Gemini setup is removed; remove commands only keep a legacy cleanup path for old ForkTTY-managed ~/.gemini/settings.json entries.",
+        text: "Setup is explicit on first install. Once ForkTTY-managed entries exist, newer builds can refresh managed hook, MCP, and skill entries while preserving unrelated user configuration. Codex approves non-managed hooks by their current definition hash, so after ForkTTY changes Codex hook entries, open /hooks inside Codex to review them; doctor can detect trust records but cannot prove their hashes match the current definitions. When setup records an AppImage launcher for hook CLI calls, ForkTTY sets APPIMAGE_EXTRACT_AND_RUN=1 for those generated commands so short hooks do not keep FUSE AppImage mounts alive. Antigravity lifecycle hooks such as PreInvocation use flat handler entries; its tool hooks use the nested matcher/hooks shape. Gemini setup is removed; remove commands only keep a legacy cleanup path for old ForkTTY-managed ~/.gemini/settings.json entries.",
       },
       {
         kind: "paragraph",

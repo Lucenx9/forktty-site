@@ -13,6 +13,8 @@ PATH/configured-command provider discovery proves launchability only. Task plann
 
 Current-runtime team workers keep the provider selected by `team.worker.launch` as their Agent HUD and agent API identity, even when a compatible hook reports another provider key; manually created surfaces still derive provider identity from hook metadata.
 
+Workspace rows prefer live hook status and fall back to actionable persisted lifecycle when the primary provider row is missing, keeping Working/Input labels consistent across Codex, Claude Code, Pi, OpenCode, Antigravity, and Grok. After ForkTTY changes Codex hook definitions, review them with `/hooks` inside Codex because trust is bound to the current hook hash; ForkTTY doctor can detect approval records but cannot verify their current hashes.
+
 Notification cleanup is synchronized: targeted desktop notifications have a best-effort Open action, notification dismiss/clear closes matching desktop and OSC 99 tracked notifications, prompt feed approvals distinguish pending/approved/denied/dismissed/stale, latest-target jumps prioritize unread prompts before lower-urgency history, only pending approvals raise `pending_approval` snapshot risk, and approve/deny decisions are accepted only while the approval is pending.
 
 `team_worker_shutdown` with `close_surface` is immediate disposable-pane cleanup after shutdown text is accepted by the terminal; it is not proof the worker processed a graceful shutdown request, stale persisted launch records without a current terminal runtime do not block relaunch or count as live after restart, and a close failure leaves the worker store state unchanged.
