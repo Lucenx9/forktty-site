@@ -12,11 +12,11 @@ const LINKS = [
 
 export function Footer() {
   return (
-    <footer className="border-t border-ink-800/60">
-      <div className="section flex flex-col gap-6 pt-10 pb-12">
+    <footer className="border-t border-ink-800/70">
+      <div className="section flex flex-col gap-8 pb-12 pt-10">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-center">
-          <div className="font-mono text-sm font-semibold text-ink-100">
-            forktty<span className="animate-blink text-forktty">_</span>
+          <div className="font-sans text-sm font-semibold tracking-[-0.02em] text-ink-100">
+            forktty<span className="ml-0.5 text-forktty">_</span>
           </div>
           <nav className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
             {LINKS.map((l) => (
@@ -25,7 +25,7 @@ export function Footer() {
                 href={l.href}
                 target={l.external ? "_blank" : undefined}
                 rel={l.external ? "noreferrer noopener" : undefined}
-                className="text-ink-300 hover:text-forktty"
+                className="text-ink-400 transition-colors hover:text-ink-100"
               >
                 {l.label}
               </a>
@@ -33,7 +33,7 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="flex flex-col items-start justify-between gap-3 border-t border-ink-800/70 pt-5 text-xs text-ink-400 sm:flex-row sm:items-center">
+        <div className="flex flex-col items-start justify-between gap-3 border-t border-ink-800/70 pt-6 text-xs leading-relaxed text-ink-500 sm:flex-row sm:items-center">
           <span>
             © 2026 ForkTTY contributors · AGPL-3.0 · The app sends an anonymous
             daily ping you can disable; this site uses anonymous page-view

@@ -23,9 +23,12 @@ export async function Download() {
   const release = await fetchLatestRelease();
 
   return (
-    <section id="download" className="scroll-mt-16 border-t border-ink-800/60">
-      <div className="section py-20 sm:py-24">
-        <h2 className="h-title">Get ForkTTY</h2>
+    <section id="download" className="scroll-mt-16 border-t border-ink-800/70">
+      <div className="section py-20 sm:py-28">
+        <p className="font-mono text-xs uppercase tracking-[0.16em] text-forktty">
+          Latest release
+        </p>
+        <h2 className="h-title mt-3">Get ForkTTY</h2>
 
         {release.ok ? (
           <Release release={release} />
@@ -91,7 +94,7 @@ function Release({
         />
       </div>
 
-      <div className="tui-frame p-6">
+      <div className="tui-frame p-6 sm:p-7">
         <h3 className="font-mono text-base font-medium text-ink-100">
           Quick start
         </h3>
@@ -116,7 +119,7 @@ function Release({
 
 function CodeBlock({ lines }: { lines: string[] }) {
   return (
-    <pre className="mt-4 overflow-x-auto rounded-none border border-ink-800 bg-ink-950 p-4 font-mono text-[12.5px] leading-relaxed text-ink-100">
+    <pre className="mt-4 overflow-x-auto rounded-md border border-ink-800 bg-ink-950 p-4 font-mono text-[12.5px] leading-relaxed text-ink-100">
       <code>
         {lines.map((line, i) => (
           <span key={`${i}-${line}`} className="block">
@@ -140,9 +143,9 @@ function AssetCard({
   featured?: boolean;
 }) {
   return (
-    <div className="tui-frame flex flex-col justify-between gap-6 p-6 transition-colors hover:border-ink-700">
+    <div className="tui-frame flex min-h-60 flex-col justify-between gap-6 p-6 transition-colors hover:border-ink-700 sm:p-7">
       <div>
-        <h3 className="font-mono text-xl font-medium text-ink-100">{title}</h3>
+        <h3 className="font-display text-xl font-medium tracking-[-0.025em] text-ink-100">{title}</h3>
         <p className="mt-1 text-sm text-ink-300">{subtitle}</p>
       </div>
 

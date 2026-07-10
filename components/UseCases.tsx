@@ -1,20 +1,21 @@
 import Link from "next/link";
+import { ArrowRight } from "./Icons";
 import { SEO_PAGES } from "@/lib/seo-pages";
 
 export function UseCases() {
   return (
     <section
       id="use-cases"
-      className="scroll-mt-16 border-t border-ink-800/60"
+      className="scroll-mt-16 border-t border-ink-800/70"
       aria-labelledby="use-cases-title"
     >
-      <div className="section py-20 sm:py-24">
-        <div className="mb-10 grid gap-4 md:grid-cols-[1fr_1.6fr] md:gap-12">
+      <div className="section py-20 sm:py-28">
+        <div className="mb-12 grid gap-5 md:grid-cols-[1fr_1.15fr] md:items-end md:gap-16">
           <div>
             <p className="font-mono text-xs uppercase tracking-[0.16em] text-forktty">
               Use cases
             </p>
-            <h2 id="use-cases-title" className="h-title mt-2">
+            <h2 id="use-cases-title" className="h-title mt-3">
               Agent workflows with dedicated context
             </h2>
           </div>
@@ -30,10 +31,11 @@ export function UseCases() {
             <Link
               key={page.slug}
               href={`/${page.slug}`}
-              className="group border border-ink-800 bg-ink-900/70 p-5 transition-colors hover:border-forktty/70 hover:bg-ink-850"
+              className="group rounded-lg border border-ink-800 bg-ink-900/55 p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-ink-700 hover:bg-ink-850/80"
             >
-              <div className="font-mono text-sm font-medium text-ink-100 group-hover:text-forktty">
-                {page.navLabel}
+              <div className="flex items-center justify-between gap-4 font-sans text-sm font-medium text-ink-100">
+                <span>{page.navLabel}</span>
+                <ArrowRight className="h-3.5 w-3.5 text-ink-600 transition-all group-hover:translate-x-0.5 group-hover:text-forktty" />
               </div>
               <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-ink-300">
                 {page.description}

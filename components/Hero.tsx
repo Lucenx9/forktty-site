@@ -8,40 +8,44 @@ const CAPABILITIES = ["Router rail", "Agent HUD", "Git worktrees", "Local socket
 export function Hero() {
   return (
     <section id="top" className="scroll-mt-16" aria-labelledby="hero-title">
-      <div className="section flex flex-col items-center gap-7 pt-14 pb-14 text-center sm:gap-8 sm:pt-20 sm:pb-16">
+      <div className="section flex flex-col items-center gap-8 pb-16 pt-20 text-center sm:gap-10 sm:pb-24 sm:pt-28">
         <div className="reveal flex flex-col items-center gap-6" style={{ animationDelay: "40ms" }}>
-          <div className="inline-flex max-w-full flex-wrap items-center justify-center gap-x-3 gap-y-1 font-mono text-xs uppercase tracking-[0.14em] text-ink-400 sm:tracking-[0.16em]">
+          <div className="inline-flex max-w-full flex-wrap items-center justify-center gap-x-2.5 gap-y-1 rounded-full border border-ink-800 bg-ink-900/70 px-3 py-1.5 font-mono text-[10px] uppercase tracking-[0.13em] text-ink-400">
             <Image
               src="/forktty.svg"
               alt=""
-              width={34}
-              height={34}
-              className="h-8 w-8"
+              width={18}
+              height={18}
+              className="h-[18px] w-[18px]"
               priority
             />
-            <span>Linux-native terminal</span>
+            <span>Linux-native</span>
             <span className="text-ink-600" aria-hidden>
-              /
+              ·
+            </span>
+            <span>Open source</span>
+            <span className="text-ink-600" aria-hidden>
+              ·
             </span>
             <span className="text-forktty">v0.2 alpha</span>
           </div>
 
           <h1
             id="hero-title"
-            className="max-w-4xl font-display text-[3.1rem] font-semibold leading-[0.95] text-ink-100 sm:text-[5.6rem]"
+            className="max-w-5xl font-display text-[3.2rem] font-medium leading-[0.98] tracking-[-0.055em] text-ink-100 sm:text-[5.4rem]"
           >
             <span className="hero-wordmark">
               forktty
               <span className="hero-cursor" aria-hidden="true" />
             </span>
+            <span className="block">The Linux workspace</span>
+            <span className="block text-ink-300">for coding agents.</span>
           </h1>
 
-          <p className="max-w-3xl text-balance text-base leading-relaxed text-ink-300 sm:text-xl">
-            Coordinate Codex, Claude Code, Pi, Antigravity, OpenCode, Grok
-            Build, and shell agents from one Linux-native terminal. ForkTTY keeps tiled
-            GTK/Ghostty panes, a visible router rail, git worktrees, local
-            socket automation, MCP, and resume-aware notifications in one
-            place.
+          <p className="max-w-3xl text-balance text-base leading-relaxed text-ink-300 sm:text-lg sm:leading-8">
+            Coordinate Codex, Claude Code, Pi, Antigravity, OpenCode, Grok Build,
+            and shell agents from one native GTK/Ghostty workbench. Keep routing,
+            worktrees, local automation, and resume-aware status visible.
           </p>
 
           <div className="flex flex-wrap justify-center gap-2">
@@ -86,7 +90,7 @@ export function Hero() {
         </div>
 
         <p
-          className="reveal -mt-2 max-w-xl font-mono text-xs leading-relaxed text-ink-400"
+          className="reveal -mt-3 max-w-xl font-mono text-[11px] leading-relaxed text-ink-500"
           style={{ animationDelay: "220ms" }}
         >
           AppImage and .deb builds for Linux x86_64 alpha. Verify SHA256SUMS
@@ -94,13 +98,13 @@ export function Hero() {
         </p>
 
         <figure
-          className="reveal mt-2 w-[min(calc(100vw-2rem),88rem)] max-w-[88rem]"
+          className="reveal mt-3 w-[min(calc(100vw-2rem),88rem)] max-w-[88rem]"
           style={{ animationDelay: "300ms" }}
         >
-          <div className="hero-shot overflow-hidden rounded-none border border-ink-700 bg-ink-900/70 shadow-panel">
+          <div className="hero-shot overflow-hidden rounded-xl border border-ink-700 bg-ink-900/70 shadow-panel">
             <div
               aria-hidden="true"
-              className="flex items-center justify-between gap-4 border-b border-ink-800 bg-ink-925 px-3 py-2 font-mono text-[11px] uppercase tracking-[0.14em]"
+              className="flex items-center justify-between gap-4 border-b border-ink-800 bg-ink-925 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.13em]"
             >
               <span className="truncate text-ink-300">forktty / main</span>
               <span className="hidden text-ink-500 sm:inline">
@@ -114,7 +118,7 @@ export function Hero() {
               height={820}
               quality={95}
               priority
-              className="block h-[13.5rem] w-full object-cover object-[58%_top] sm:h-auto sm:object-contain"
+              className="block h-[14.5rem] w-full object-cover object-[58%_top] sm:h-auto sm:object-contain"
               sizes="(min-width: 1408px) 1408px, 100vw"
             />
           </div>

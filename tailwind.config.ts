@@ -8,26 +8,26 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // warm, gruvbox-material-flavoured neutrals — never blue-slate
+        // Near-black neutrals: Linear precision, warmed only by the product accent.
         ink: {
-          950: "#15140f",
-          925: "#181712",
-          900: "#1b1a15",
-          850: "#211f19",
-          800: "#28251e",
-          700: "#363127",
-          600: "#4a4336",
-          500: "#8c8068",
-          400: "#9c8f76",
-          300: "#a89984",
-          200: "#cabfa6",
-          100: "#ece3d4",
+          950: "#09090b",
+          925: "#0c0c0f",
+          900: "#111113",
+          850: "#161618",
+          800: "#202024",
+          700: "#2c2c31",
+          600: "#3f3f46",
+          500: "#71717a",
+          400: "#8b8b95",
+          300: "#a1a1aa",
+          200: "#d4d4d8",
+          100: "#f4f4f5",
         },
-        // primary accent: terminal orange, not the old violet
+        // Cursor warmth, reserved for primary actions and meaningful signals.
         forktty: {
-          DEFAULT: "#e78a4e",
-          soft: "#f0a868",
-          deep: "#c2703a",
+          DEFAULT: "#f28c52",
+          soft: "#ffa56f",
+          deep: "#d97038",
         },
         // ANSI semantic set — used for real status meaning, not decoration
         signal: {
@@ -41,17 +41,16 @@ const config: Config = {
         },
       },
       fontFamily: {
-        // Engineered display voice — Martian Mono — for the big moments.
-        display: ['var(--font-martian)', '"IBM Plex Mono"', "ui-monospace", "monospace"],
+        // Product hierarchy follows a precise modern grotesque.
+        display: ['var(--font-inter)', "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
         // The literal terminal voice: code, chrome, statusline, chips.
         mono: ['var(--font-plex-mono)', '"IBM Plex Mono"', "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
-        // Plex Sans carries long-form prose — readable body.
-        sans: ['var(--font-plex-sans)', '"IBM Plex Sans"', "ui-sans-serif", "system-ui", "sans-serif"],
+        sans: ['var(--font-inter)', "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
       },
       boxShadow: {
-        glow: "0 0 0 1px rgba(231,138,78,0.25), 0 10px 40px -16px rgba(231,138,78,0.35)",
-        panel: "0 1px 0 rgba(255,255,255,0.03) inset, 0 24px 48px -32px rgba(0,0,0,0.8)",
-        focus: "0 0 0 1px rgba(231,138,78,0.45), 0 0 38px -10px rgba(231,138,78,0.32), inset 0 0 0 1px rgba(231,138,78,0.10)",
+        glow: "0 0 0 1px rgba(242,140,82,0.20), 0 12px 44px -20px rgba(242,140,82,0.42)",
+        panel: "0 0 0 1px rgba(255,255,255,0.025) inset, 0 24px 80px -40px rgba(0,0,0,0.95)",
+        focus: "0 0 0 1px rgba(242,140,82,0.48), 0 0 36px -14px rgba(242,140,82,0.38)",
       },
       keyframes: {
         blink: {
@@ -59,18 +58,13 @@ const config: Config = {
           "50%, 100%": { opacity: "0" },
         },
         reveal: {
-          from: { opacity: "0", transform: "translateY(14px)" },
+          from: { opacity: "0", transform: "translateY(10px)" },
           to: { opacity: "1", transform: "translateY(0)" },
-        },
-        drift: {
-          "0%, 100%": { transform: "translate3d(-50%,0,0) scale(1)" },
-          "50%": { transform: "translate3d(-46%, -3%, 0) scale(1.08)" },
         },
       },
       animation: {
         blink: "blink 1.1s step-end infinite",
         reveal: "reveal 0.72s cubic-bezier(0.22, 1, 0.36, 1) both",
-        drift: "drift 24s ease-in-out infinite",
       },
     },
   },
