@@ -12,11 +12,7 @@ type DocBlock =
   | { kind: "paragraph"; text: string }
   | { kind: "list"; items: string[] }
   | { kind: "code"; lines: string[]; prompt?: boolean }
-  | {
-      kind: "table";
-      columns: [string, string];
-      rows: Array<[string, string]>;
-    };
+  | { kind: "table"; columns: [string, string]; rows: Array<[string, string]> };
 
 type DocSection = {
   id: string;
@@ -42,29 +38,25 @@ const DOC_SECTIONS: DocSection[] = [
     eyebrow: "Start here",
     title: "Overview",
     summary:
-      "ForkTTY is a Linux-native GTK/Ghostty terminal for coordinating coding agents in tiled workspaces.",
+      "ForkTTY is a Linux-native GTK/Ghostty terminal workspace for coding agents and ordinary shell tools.",
     blocks: [
       {
         kind: "paragraph",
-        text: "ForkTTY is built for running Codex, Claude Code, Pi, Antigravity, OpenCode, Grok Build, and plain shell tools side by side without losing track of sessions, panes, or repo state. The app is written in Rust and uses GTK4/libadwaita with an embedded Ghostty terminal renderer.",
+        text: "ForkTTY keeps projects, tabs, split panes, notifications, and git worktrees in one native desktop app. Coding agents run as normal terminal processes: ForkTTY does not route their tasks, own their prompts, manage teams, execute workflow loops, or provide model access.",
       },
       {
         kind: "list",
         items: [
-          "Use tiled workspaces and split panes for parallel agent work.",
-          "Back tasks with git worktrees so each branch has an isolated workspace.",
-          "Drive the app through the same local socket surface used by the CLI and MCP bridge.",
-          "Keep project contents, terminal text, and agent metadata local by default.",
+          "Embedded Ghostty-backed terminals with native selection, clipboard, links, and scrollback.",
+          "Vertical project sidebar, tabs, split panes, keyboard navigation, drag and drop, and layout restore.",
+          "OSC and desktop notifications, unread state, attention rings, and a command palette.",
+          "Git worktree workspaces and an owner-only local socket for focused automation.",
         ],
-      },
-      {
-        kind: "paragraph",
-        text: "The current alpha is Linux-only. The packaged runtime is focused on GTK/Ghostty terminal panes; source-only browser panes remain behind the optional browser feature for intentional testing.",
       },
     ],
     sources: [
       { label: "README overview", href: `${REPO_DOCS}/README.md#why-forktty` },
-      { label: "Native runtime", href: `${REPO_DOCS}/docs/native-gtk-ghostty.md` },
+      { label: "Architecture review", href: `${REPO_DOCS}/docs/cmux-architecture-review.md` },
     ],
   },
   {
@@ -72,566 +64,327 @@ const DOC_SECTIONS: DocSection[] = [
     eyebrow: "Quick start",
     title: "Install and first run",
     summary:
-      "Use the AppImage for the portable alpha path, or the .deb package on modern Debian and Ubuntu baselines.",
+      "Use the AppImage for a portable Linux x86_64 build or the .deb on supported Debian-family systems.",
     blocks: [
       {
         kind: "table",
         columns: ["Path", "Use it when"],
         rows: [
-          [
-            "AppImage",
-            "Recommended portable Linux x86_64 build. Verify SHA256SUMS, mark executable, and launch directly.",
-          ],
-          [
-            ".deb",
-            "Debian 13/Trixie+ and Ubuntu 24.04 LTS+ package path. Debian 12 is below the documented baseline.",
-          ],
-          [
-            "Source build",
-            "Use when developing ForkTTY or testing source-only browser panes. Requires Rust 1.96+, GTK4/libadwaita dev files, git, Zig, and the Ghostty submodule.",
-          ],
+          ["AppImage", "Portable install on a modern x86_64 Linux desktop"],
+          [".deb", "Debian 13/Trixie+, Ubuntu 24.04 LTS+, or a compatible derivative"],
+          ["Source", "You have the Rust, GTK4, libadwaita, Zig, and Ghostty build dependencies"],
         ],
+      },
+      {
+        kind: "code",
+        prompt: true,
+        lines: [
+          "chmod +x ForkTTY-*.AppImage",
+          "./ForkTTY-*.AppImage",
+          "forktty doctor",
+        ],
+      },
+      {
+        kind: "paragraph",
+        text: "ForkTTY is a DBus single-instance app. A second launch delegates to the running process instead of opening a separate application instance.",
+      },
+      {
+        kind: "paragraph",
+        text: "When upgrading from a build that included ForkTTY MCP and managed skills, use that older binary's removal dry runs before replacing it. The new binary intentionally does not edit external agent configuration at startup.",
       },
       {
         kind: "code",
         lines: [
-          "sha256sum -c SHA256SUMS --ignore-missing",
-          "chmod +x forktty-*.AppImage",
-          "./forktty-*.AppImage",
+          "# Run with the older ForkTTY binary before upgrading",
+          "forktty mcp remove --dry-run",
+          "forktty mcp remove gemini --dry-run",
+          "forktty skills remove --dry-run",
+          "forktty mcp remove",
+          "forktty mcp remove gemini",
+          "forktty skills remove",
         ],
       },
       {
-        kind: "code",
-        lines: ["forktty --version", "forktty doctor"],
-      },
-      {
         kind: "paragraph",
-        text: "forktty doctor is local-only and reports config, session, socket, and hook config diagnostics. Use forktty --json doctor for socket, environment, executable, hook config, MCP config, and agent skill paths with managed skill status/checksums/repair commands; managed skill files are inspected through bounded regular-file reads, and symlinked skill directory entries are reported invalid without a repair command unless a regular SKILL.md marker was already verified.",
-      },
-      {
-        kind: "paragraph",
-        text: "The AppImage prefers the host GTK/libadwaita stack when available and keeps its bundled GTK copy as a fallback. Set FORKTTY_APPIMAGE_GTK_RUNTIME=bundled, host, or auto to force that choice while debugging renderer issues; ForkTTY also honors explicit GSK_RENDERER overrides.",
+        text: "The older skill remover preserves removed installs as sibling forktty-agent-orchestration.bak-* directories. Delete a backup only when it is a real directory, not a symlink, and its SKILL.md contains <!-- forktty-managed-agent-skill -->.",
       },
     ],
     sources: [
-      { label: "Install docs", href: `${REPO_DOCS}/README.md#install` },
-      { label: "Release assets", href: RELEASES_HTML_URL },
+      { label: "Download releases", href: RELEASES_HTML_URL },
+      { label: "Install guide", href: `${REPO_DOCS}/GETTING_STARTED.md` },
     ],
   },
   {
     id: "daily-use",
-    eyebrow: "Operate",
+    eyebrow: "Workspace",
     title: "Daily use",
-    summary:
-      "ForkTTY keeps terminal work dense: workspaces, tabs, split panes, search, settings, notifications, and quake mode are all native GTK surfaces.",
+    summary: "Use workspaces, tabs, and splits to keep each project and process easy to locate.",
     blocks: [
       {
         kind: "list",
         items: [
-          "Open the command palette with Ctrl+Shift+P for actions such as new workspace, split, settings, notifications, and shortcuts; Ctrl+? (or F1) opens Keyboard Shortcuts, Ctrl+, opens Settings, and F10 opens the Main Menu when focus is outside terminal content.",
-          "Use split panes and tabs to keep multiple agents visible without mixing their scrollback; drag pane headers to swap panes.",
-          "Session restore writes native state to ~/.local/state/forktty/session-v2.json. By default live PTYs are not persisted, but Settings > Worktrees can enable general.persist_terminal_processes for plain terminals when dtach is available. Those processes survive a UI restart and re-attach on relaunch; AppImage-launched brokers close inherited runtime file descriptors before dtach starts so surviving brokers do not keep FUSE mounts alive. Explicit pane close or restart terminates the matching managed broker process tree and removes the broker socket so reused surface ids start fresh. Disabling persistence preserves currently visible panes until they close; closing the GTK window with persistence disabled cleans visible managed brokers too, and startup with persistence disabled cleans old managed sessions before restore.",
-          "Prompt-aware notifications can come from socket calls, hooks, Ghostty OSC events, bell/child-exit events, or bounded prompt fallback detection.",
-          "Quake/dropdown behavior uses gtk4-layer-shell where the compositor supports it and falls back to normal GTK behavior elsewhere.",
+          "Open the command palette with Ctrl+Shift+P.",
+          "Create tabs and split panes for shells, editors, servers, and coding agents.",
+          "Drag pane headers to rearrange panes and use the sidebar to switch projects.",
+          "Use notifications and unread markers instead of polling every pane.",
+          "Enable optional dtach-backed process persistence if terminal processes must survive a UI restart.",
         ],
       },
       {
         kind: "paragraph",
-        text: "The app follows a compact native design: quiet chrome, dense status rows, native dialogs, and terminal-owned theme behavior instead of marketing-style panels inside the product UI.",
+        text: "Pane chrome is hidden when a workspace contains one pane. That keeps the single-terminal view quiet while preserving headers and dividers where they are useful.",
       },
-      {
-        kind: "paragraph",
-        text: "Plain terminal process persistence is optional because it needs a detach broker on PATH. ForkTTY currently uses dtach: install it with the native package manager where available, then enable Settings > Worktrees > Persist terminal processes and check forktty capabilities for PTY broker availability.",
-      },
-      {
-        kind: "table",
-        columns: ["Distro family", "dtach install command"],
-        rows: [
-          ["Debian / Ubuntu / Mint / Pop!_OS", "sudo apt update && sudo apt install dtach; on minimal Ubuntu bases, enable universe first if apt cannot find it."],
-          ["Fedora", "sudo dnf install dtach"],
-          ["RHEL / CentOS Stream / Rocky / Alma", "Enable the matching EPEL repository first, then sudo dnf install dtach."],
-          ["Arch / CachyOS / EndeavourOS / Manjaro", "dtach is not in the official Arch repos; install dtach from AUR or build upstream dtach from source."],
-          ["openSUSE Tumbleweed", "sudo zypper install dtach"],
-          ["openSUSE Leap", "Use the openSUSE package page/backports if your Leap release does not expose an official dtach package."],
-          ["Alpine", "sudo apk add dtach"],
-          ["Gentoo", "sudo emerge app-misc/dtach"],
-          ["NixOS / Nix", "Add pkgs.dtach to your system or shell environment, then restart ForkTTY so it is on PATH."],
-          ["Void Linux", "sudo xbps-install -S dtach if available for your repository; otherwise build upstream dtach from source."],
-        ],
-      },
-      {
-        kind: "code",
-        prompt: false,
-        lines: [
-          "# universal source fallback",
-          "git clone https://github.com/crigler/dtach.git",
-          "cd dtach",
-          "./configure",
-          "make",
-          "sudo make install",
-          "forktty capabilities | grep -i pty",
-        ],
-      },
-    ],
-    sources: [
-      { label: "Runtime notes", href: `${REPO_DOCS}/docs/native-gtk-ghostty.md#runtime-notes` },
-      { label: "Visual rules", href: `${REPO_DOCS}/docs/DESIGN.md` },
-      { label: "dtach upstream", href: "https://github.com/crigler/dtach" },
-      { label: "Debian dtach package", href: "https://packages.debian.org/dtach" },
-      { label: "Fedora dtach package", href: "https://packages.fedoraproject.org/pkgs/dtach/dtach" },
-      { label: "Arch dtach notes", href: "https://wiki.archlinux.org/title/Dtach" },
-      { label: "openSUSE dtach package", href: "https://software.opensuse.org/package/dtach" },
-      { label: "Alpine dtach package", href: "https://pkgs.alpinelinux.org/package/edge/main/x86_64/dtach" },
-      { label: "Gentoo dtach package", href: "https://packages.gentoo.org/packages/app-misc/dtach" },
     ],
   },
   {
     id: "agent-integrations",
-    eyebrow: "Agents",
+    eyebrow: "Optional metadata",
     title: "Agent integrations",
     summary:
-      "The Agent HUD is powered by hooks and socket metadata so running agents can be scanned, focused, resumed, and inspected.",
+      "Agents work without setup; optional hooks add lifecycle, attention, focus, and resume metadata.",
     blocks: [
       {
         kind: "paragraph",
-        text: "ForkTTY targets Codex, Claude Code, Pi, Antigravity, OpenCode, Grok Build, and shell agents. Managed hooks for Codex, Claude Code, Antigravity, and OpenCode persist session ids, cwd, lifecycle state, last activity, permission prompts, token details where available, and status entries consumed by the Agent HUD; agent rows group lifecycle states with scan-friendly labels such as Working, Needs input, Done, and Idle, mark the current pane, surface risky permission modes, show compact workflow loop chips for bound surfaces, add source/age metadata and diagnostic lifecycle_evidence for freshness checks against the workspace/provider status row, and provider-scoped HUD metadata is cleared when the last matching session ends, closes, hibernates, or is forgotten. The sidebar uses a tracked agent resume_cwd as the visible project path when it differs from the workspace launch directory. Team worker launch can omit --agent or use auto; Settings > Agents controls the default provider, fallback, provider order, disabled providers, PATH detection, managed hook/MCP setup capability flags, and direct command overrides for non-default harness install locations, while forktty capabilities reports the active policy, resolved harnesses, and PTY persistence broker availability. Claude Code team workers launched without explicit permission args use documented permission-mode defaults; Pi review workers default to read-only tools unless explicit Pi tool args are supplied; Grok review workers default to plan mode unless explicit Grok permission args are supplied. Managed skills add the policy layer that tells agents when to inspect ForkTTY context, teams, workflows, and terminal state.",
+        text: "ForkTTY has no provider selector or built-in task router. Launch the agent CLI you want in a pane. The optional Agent HUD is a thin view over lifecycle metadata, not a team or workflow engine.",
       },
       {
-        kind: "paragraph",
-        text: "Current-runtime team workers keep the provider selected at launch as their Agent HUD and agent API identity. A compatible hook may report another provider key for lifecycle metadata, but it cannot relabel a Grok worker as Claude.",
-      },
-      {
-        kind: "paragraph",
-        text: "Workspace rows prefer live hook status, then fall back to actionable persisted lifecycle when that primary status row is missing. Running and needs-input labels therefore stay consistent for Codex, Claude Code, Pi, OpenCode, Antigravity, and Grok without treating idle, ended, suspended, or unknown sessions as active work.",
+        kind: "code",
+        prompt: true,
+        lines: [
+          "forktty agents",
+          "forktty agent-health",
+          "forktty agent-reclaim-plan",
+          "forktty hibernate-agent",
+          "forktty reclaim-agent",
+          "forktty resume-agent",
+        ],
       },
       {
         kind: "list",
         items: [
-          "Use forktty agents to list known agent sessions.",
-          "Use forktty agent-health to inspect stale or resumable sessions.",
-          "Use forktty resume-agent when a provider supports reopening a saved session.",
-          "Use forktty set-status, set-progress, log, notify, and notifications for custom tools that publish agent state without a managed hook.",
-          "Prompt notifications keep approval state as pending, approved, denied, dismissed, or stale; dismiss/clear syncs in-app state with desktop notifications and OSC 99 close reports, the latest-target action prioritizes unread prompts before lower-urgency history, and approve/deny decisions are accepted only while the approval is pending.",
+          "Lifecycle state can be delayed; source, age, and evidence fields distinguish persisted metadata from fresh events.",
+          "Provider credentials and model traffic remain inside each agent CLI.",
+          "External MCP clients and servers remain ordinary terminal processes; ForkTTY does not ship or configure an MCP bridge.",
         ],
       },
-      {
-        kind: "paragraph",
-        text: "Provider keys and remote agent traffic stay outside ForkTTY. Bring your own agent CLI and credentials; ForkTTY coordinates local panes, metadata, hooks, socket calls, and notifications.",
-      },
     ],
-    sources: [
-      { label: "Agent hooks", href: `${REPO_DOCS}/hooks/README.md` },
-      { label: "Socket spec", href: `${REPO_DOCS}/SPEC.md#socket-api` },
-    ],
+    sources: [{ label: "Agent lifecycle contract", href: `${REPO_DOCS}/docs/agents.md` }],
   },
   {
     id: "hooks",
-    eyebrow: "Automation",
+    eyebrow: "Explicit setup",
     title: "Hooks",
     summary:
-      "Hooks install provider-specific config entries that report session lifecycle and status back to ForkTTY.",
+      "Hook installation is optional, manual, dry-run capable, and never refreshed automatically at startup.",
     blocks: [
       {
         kind: "code",
+        prompt: true,
         lines: [
-          "forktty hooks setup",
           "forktty hooks setup --dry-run",
           "forktty hooks setup codex",
-          "forktty hooks doctor codex",
-          "forktty hooks test codex",
-          "forktty hooks remove codex",
-          "forktty hooks remove gemini   # legacy cleanup only",
-        ],
-      },
-      {
-        kind: "table",
-        columns: ["Provider", "Managed destination"],
-        rows: [
-          ["Codex", "$CODEX_HOME/hooks.json or ~/.codex/hooks.json"],
-          ["Claude Code", "$CLAUDE_CONFIG_DIR/settings.json or ~/.claude/settings.json"],
-          ["Antigravity", "~/.gemini/config/hooks.json plus generated wrappers"],
-          ["OpenCode", "$OPENCODE_CONFIG_DIR/plugins/forktty.generated.js or ~/.config/opencode/plugins/forktty.generated.js"],
+          "forktty hooks setup claude",
+          "forktty hooks setup antigravity",
+          "forktty hooks setup opencode",
         ],
       },
       {
         kind: "paragraph",
-        text: "Setup is explicit on first install. Once ForkTTY-managed entries exist, newer builds can refresh managed hook, MCP, and skill entries while preserving unrelated user configuration. Codex approves non-managed hooks by their current definition hash, so after ForkTTY changes Codex hook entries, open /hooks inside Codex to review them; doctor can detect trust records but cannot prove their hashes match the current definitions. When setup records an AppImage launcher for hook CLI calls, ForkTTY sets APPIMAGE_EXTRACT_AND_RUN=1 for those generated commands so short hooks do not keep FUSE AppImage mounts alive. Codex and Claude Code SubagentStop keep the parent session running because only the nested subagent ended; Claude Code TeammateIdle publishes the teammate as ready/idle. Antigravity lifecycle hooks such as PreInvocation use flat handler entries; its tool hooks use the nested matcher/hooks shape. Gemini setup is removed; remove commands only keep a legacy cleanup path for old ForkTTY-managed ~/.gemini/settings.json entries.",
-      },
-      {
-        kind: "paragraph",
-        text: "AppImage provenance comes from the runtime path, not the filename suffix, so renamed AppImages still generate hook commands with APPIMAGE_EXTRACT_AND_RUN=1.",
+        text: "Setup changes only ForkTTY-managed hook entries and preserves unrelated user configuration. Re-run setup explicitly after an update when doctor reports stale managed hooks.",
       },
     ],
-    sources: [{ label: "Hooks README", href: `${REPO_DOCS}/hooks/README.md` }],
-  },
-  {
-    id: "mcp-setup",
-    eyebrow: "MCP",
-    title: "MCP setup",
-    summary:
-      "The MCP bridge exposes ForkTTY socket capabilities to local agent clients over stdio.",
-    blocks: [
-      {
-        kind: "code",
-        lines: [
-          "forktty mcp",
-          "forktty mcp setup",
-          "forktty mcp setup codex",
-          "forktty mcp setup claude",
-          "forktty mcp setup antigravity",
-          "forktty mcp remove gemini   # legacy cleanup only",
-        ],
-      },
-      {
-        kind: "paragraph",
-        text: "The MCP server is local-only: it bridges stdio to the owner-only ForkTTY Unix socket and does not open a network listener. It exposes identify, workspace, surface, context snapshot, task strategy planning, agent, worktree, notification, feed, workflow, team, topology, browser, and status tools where supported by the running app. identify treats ForkTTY pane workspace/surface env ids as caller context instead of mandatory targets. Codex MCP setup preserves hand-edited TOML comments/formatting and uses the larger MCP config size budget for $CODEX_HOME/config.toml or ~/.codex/config.toml. If setup registers an AppImage launcher, the managed MCP server env includes APPIMAGE_EXTRACT_AND_RUN=1 so persistent MCP clients do not keep a FUSE AppImage mount alive.",
-      },
-      {
-        kind: "paragraph",
-        text: "Renamed AppImages retain that managed MCP extraction env because ForkTTY tracks runtime provenance instead of requiring an .AppImage suffix.",
-      },
-      {
-        kind: "table",
-        columns: ["Client", "Config location"],
-        rows: [
-          ["Codex", "$CODEX_HOME/config.toml or ~/.codex/config.toml under [mcp_servers.forktty]"],
-          ["Claude", "~/.claude.json under mcpServers.forktty"],
-          ["Antigravity", "~/.gemini/config/mcp_config.json"],
-        ],
-      },
-    ],
-    sources: [
-      { label: "MCP details", href: `${REPO_DOCS}/hooks/README.md#mcp` },
-      { label: "MCP spec", href: `${REPO_DOCS}/SPEC.md#mcp-stdio-bridge` },
-    ],
-  },
-  {
-    id: "agent-skills",
-    eyebrow: "Skills",
-    title: "Agent skills",
-    summary:
-      "The ForkTTY orchestration skill tells agents when to use context snapshots, provider capabilities, team workers, status checks, worktree boundaries, and local setup diagnostics.",
-    blocks: [
-      {
-        kind: "code",
-        lines: [
-          "forktty skills setup",
-          "forktty skills setup agents --dry-run",
-          "forktty skills setup pi",
-          "forktty skills setup claude",
-          "forktty skills remove agents",
-        ],
-      },
-      {
-        kind: "paragraph",
-        text: "The managed skill is named forktty-agent-orchestration. It is instruction-only: agents learn to call task_strategy_plan before choosing team, workflow loop, worktree, or multi-harness execution for non-trivial tasks; task planning returns planner_version plus a selected router profile, ranked candidate strategy scores plus role-specific harness assignment scores with factor breakdowns, uses capabilities, provider policy as the harness assignment tie-break, explicit cwd from an open ForkTTY workspace/surface repo or selected surface/workspace cwd dirty inference, mutating task_kind hints plus high-confidence goal-based likely edit-intent inference, profile inference for clear fast/conservative/parallel/review-heavy goals (goal keyword inference is English-only), caller-normalized task_kind hints for multilingual intent, primary read-only review goals and explicit read-only parallel reviews do not force dirty-repo worktree isolation, inferred/advisory last-known-good strategy/harness stickiness from completed workflow history or explicit caller evidence, optional per-harness verified-readiness (readiness=verified_ready plus mandatory readiness_reason), cooldown, and lockout signals from concrete runtime evidence plus inferred advisory soft cooldowns from recent failed task-strategy workflow history, and harness parallel-session capacity including multiple lanes on one capable harness; use task_strategy_apply only after explicit approvals to stage visible workflow/team/task/message state by default, bootstrap an initial planned workflow loop record for loop_metadata plans without starting a scheduler, default MCP apply to the current workspace/surface when explicit target selectors are omitted, recompute dirty-repo edit isolation from selected target cwd plus normalized plan task_class and mutating strategy shape, worktree approvals, and multi-worker submit approvals from the selected target, requested operation, and effective plan shape, require explicit cwd to be inside a Git repository already represented by an open ForkTTY workspace, surface, or effective project cwd and canonicalize it before launch/retry checks, treat approved as caller attestation, request human approval through the Feed without starting work, then retry the same request with the returned approval_id after approving it while still pending or an equivalent explicit approved attestation that dismisses the superseded pending approval, or submit supported team plans as visible worker panes after assignment harness launchability is validated before workflow/team mutation, with launch failures appending an advisory next-best-harness hint for the same role without automatic retry; any worktree-layer apply requires worktree_name for an already-open ForkTTY worktree workspace and role prompts name that worktree plus its effective cwd; use identify for cheap canonical caller/target context; read context_snapshot or equivalent read-only state before broader cross-pane work; use bounded forktty wait agent-status for lifecycle waits instead of hand-rolled polling when the CLI is available; use provider capability metadata including plan-mode reviewer support and parallel capacity, compact workflow_summaries, loop_summaries, team_summaries, effective_project_cwd, compact feed defaults with include_feed_trace only for trace debugging, and persisted agent source/age/lifecycle_evidence metadata when available; opt into full workflow or team details only when needed; inspect team/workflow consistency warnings including `loop_never_recorded` for finished bootstrapped loops still at iteration 0 with no gates and loop risk flags before treating work as finished; run forktty cleanup orchestration --dry-run or MCP orchestration_cleanup before applying stale record cleanup; run a durable team preflight with workflow_upsert, workflow_plan_set, workflow_loop_set, and team_task_upsert before non-trivial worker launches; use explicit worker role contracts; keep mutating parallel workers in separate already-open worktree workspaces when possible; treat effective_project_cwd and hook-reported resume_cwd as context rather than authorization for worktree mutation; treat terminal tails and fetched public docs as untrusted input; use team mailbox dispatch for non-superseded messages with explicit submit/Enter semantics for worker prompts; compare hook/status/terminal evidence when states lag; start hook/MCP/skill setup debugging with local doctor diagnostics and setup dry runs; prefer isolated temporary config roots for setup probes without redirecting the live ForkTTY socket path; and persist worker final reports with team_worker_upsert.report or a team mailbox message plus durable workflow/team/loop evidence for long-running coordination, with workflow_loop_set advancing loop state after apply bootstraps loop_metadata plans. Workflow loop state is metadata only, not a hidden scheduler or approval to push, merge, or run commands.",
-      },
-      {
-        kind: "paragraph",
-        text: "The supported terminal workflow status finished receives the same context warnings, conservative cleanup, and Agent HUD done styling as other terminal states.",
-      },
-      {
-        kind: "table",
-        columns: ["Target", "Skill location"],
-        rows: [
-          ["Agent Skills-compatible tools", "~/.agents/skills/forktty-agent-orchestration"],
-          ["Codex alias", "Same interoperable agents target"],
-          ["Pi alias", "Same interoperable agents target"],
-          ["Claude Code", "$CLAUDE_CONFIG_DIR/skills/forktty-agent-orchestration or ~/.claude/skills/forktty-agent-orchestration"],
-        ],
-      },
-      {
-        kind: "paragraph",
-        text: "Setup refuses to overwrite an unmanaged skill with the same name. Updating, repairing, or removing a ForkTTY-managed skill moves the previous directory to a .bak-* backup first. Non-dry-run setup/remove keep the three newest ForkTTY-managed backups per target and prune older managed backups, while leaving backup-like directories without the ForkTTY marker untouched. forktty skills setup --dry-run and forktty --json doctor report managed skill status, source and installed checksums, and a repair command when a managed copy is missing, stale, or invalid with a verified ForkTTY-managed marker. Doctor reports symlinked skill directories, symlinked metadata directories, and symlinked, non-regular, or oversized managed skill files as invalid; setup refuses invalid paths when the marker cannot be verified.",
-      },
-    ],
-    sources: [
-      { label: "Agent skills README", href: `${REPO_DOCS}/hooks/README.md#agent-skills` },
-      { label: "Skill spec", href: `${REPO_DOCS}/SPEC.md#agent-skills` },
-    ],
+    sources: [{ label: "Hook details", href: `${REPO_DOCS}/hooks/README.md` }],
   },
   {
     id: "socket-cli-api",
-    eyebrow: "Reference",
+    eyebrow: "Local automation",
     title: "Socket CLI and API",
     summary:
-      "The CLI and MCP bridge share one newline-delimited JSON-RPC-like socket API.",
+      "The owner-only Unix socket exposes a deliberately small JSON-RPC-like API for terminal workspace primitives.",
     blocks: [
       {
-        kind: "paragraph",
-        text: "ForkTTY binds an owner-only Unix socket at $XDG_RUNTIME_DIR/forktty.sock, with fallback /tmp/forktty-<uid>/forktty.sock. Set FORKTTY_SOCKET_PATH=/absolute/path to override it for both the app and CLI.",
-      },
-      {
         kind: "code",
+        prompt: true,
         lines: [
-          "forktty ping",
-          "forktty list",
-          "forktty surfaces",
+          "forktty capabilities",
           "forktty identify --json",
-          "forktty wait agent-status --status needs_input --timeout-ms 30000",
-          "forktty status explain --tail-lines 20",
-          "forktty status watch --count 3 --interval-ms 2000",
-          "forktty context-snapshot --workspace-name main --tail-lines 0 --json",
-          "forktty task-plan \"fix this bug and verify it\" --cwd \"$PWD\" --json",
-          "forktty workflow-loop-set loop-runtime --stage verify --iteration 2 --max-iterations 4",
-          "forktty team ask review-team review-worker --task-id review-head --prompt \"Review HEAD read-only\" --submit",
-          "forktty team review review-team review-worker --task-id review-head --commit HEAD --submit",
-          "forktty team watch review-team --stale-after-ms 120000 --limit 10",
-          "forktty team finish review-team",
-          "forktty cleanup orchestration --dry-run",
+          "forktty context-snapshot --tail-lines 0 --json",
+          "forktty workspaces",
+          "forktty surfaces",
+          "forktty tree",
           "forktty read-screen",
           "forktty capture-tail",
-          "forktty split-surface --axis vertical",
-          "forktty send-text \"echo hello\"",
-          "forktty capabilities",
-          "forktty events",
-          "forktty examples",
-          "forktty completions bash",
+          "forktty notifications",
         ],
-      },
-      {
-        kind: "paragraph",
-        text: "High-level CLI wrappers compose existing socket methods for common agent coordination flows. task-plan accepts goals up to 4096 UTF-8 bytes without terminal control characters other than newline or tab and asks the read-only task router whether work should stay solo, use a workflow loop, add review, use team workers, or isolate in a worktree before anything is launched or mutated; the response includes planner_version plus a selected router profile, ranked candidate strategy scores plus role-specific harness assignment scores with factor breakdowns, configured team provider order is the harness assignment tie-break, explicit --cwd inside an open ForkTTY workspace/surface repo or selected surface/workspace cwd is used to infer simple git dirty state when repo_dirty is omitted, mutating task_kind hints plus high-confidence goal wording are used to infer likely user-visible edit intent, clear high-confidence wording can infer fast/conservative/parallel/review-heavy profiles when omitted, and callers can pass task_kind when they have normalized clear user intent across languages, primary review goals and explicit read-only parallel reviews remain read-only review work even in dirty repos, completed task-strategy workflows can infer advisory last-known-good strategy/harness stickiness when optional last_known_good is omitted, optional harness_signals let callers promote a launchable harness with readiness=verified_ready plus a required readiness_reason after concrete worker, hook, or user evidence, or pass cooldown/lockout evidence with reason text bounded to 512 UTF-8 bytes without control characters and an optional cooldown_kind (quota, auth, crash, or timeout) that scales the soft penalty with the cause, harnesses without caller signals get an inferred advisory soft cooldown from recent failed task-strategy workflows, and reviewer strategies include an explicit reviewer assignment. identify is the compact read for canonical workspace/surface/effective_project_cwd plus caller validation; ForkTTY pane environment ids are caller context, so stale caller surface ids fall back to the active workspace focus instead of failing the read. wait agent-status performs bounded read-only lifecycle polling through short context.snapshot reads without terminal text reads. workflow-loop-set records closed-loop state on an existing workflow: recipe, stage, iteration budget, stop reason, and compact gate statuses. It is metadata only; it does not run commands, launch agents, schedule background work, push, merge, or approve actions; moving to a new iteration clears prior gate rows and stop reason unless replacements are supplied. team ask and team review create or update the team, create the task before launching a fresh worker surface, assign it after launch, queue the prompt, and dispatch it with provider-aware terminal submit behavior when submit mode is requested; Codex/Claude/Pi/Grok get staged text, a short settle, and a separate Enter, while providers that accept it reliably keep text plus carriage-return Enter in one write. Human CLI output reports the worker, selected provider when known, task, target surface, and whether the prompt was dispatched or submitted. The worker is bound to the invoking ForkTTY pane or workspace when available, and MCP team_upsert uses the same pane defaults. Low-level team_worker_launch with worktree_name opens the worker in that already-open worktree workspace and inherits that cwd; task-strategy explicit cwd is canonicalized before launch/retry checks, worktree prompts name both the worktree and effective cwd, and without worktree_name it falls back from a stale leader surface to the team workspace focus before inheriting the selected surface's recorded terminal cwd, not hook-reported resume_cwd. Re-run the wrappers to launch a new worker, or use team-message-send plus team-message-dispatch for follow-up prompts to an existing worker. Superseded deterministic role prompts remain in full team history but cannot be dispatched or acknowledged and are excluded from normal team inbox and pending counts. team finish / team_finish verifies open tasks, pending messages, and live-looking worker final states, supports dry-run planning, supports compact responses without full team/message bodies, can close only current-runtime launch-owned disposable worker panes, normalizes missing worker surfaces as closed, marks the team done only after all requested worker surface closes succeed, restores any already-closed runtime surfaces when a later worker close fails, and keeps normal surface.close replacement behavior for root worker panes in inactive workspaces without closing the worker when replacement spawn fails. cleanup orchestration / orchestration.cleanup / MCP orchestration_cleanup is dry-run-first stale record maintenance: it closes only records whose recorded worker surfaces no longer exist in the workspace model or terminal runtime, supersedes their pending prompts, and reports live or unrecorded worker surfaces for manual review; --apply/apply=true is required for writes. team_worker_shutdown uses the same provider-aware submit behavior by default, and its close_surface option immediately closes only disposable surfaces created by team_worker_launch in the current ForkTTY runtime; it is cleanup, not proof that the worker processed a graceful shutdown request, stale persisted launch records without a current terminal runtime do not block relaunch or count as live after restart, and a close failure leaves the worker store state unchanged. Dispatch selects the worker workspace/tab, waits briefly for the embedded terminal surface to become socket-ready before typing, and gives fresh provider TUI launch-owned workers an initial prompt settle before the first message. Context snapshots include compact workflow_summaries with surface_present/stale_binding signals, loop_summaries, and team_summaries for leader monitoring; loop_summaries omit full workflow goals, memory, evidence, and gate notes, full workflow records, team records, and mailbox message bodies are opt-in with include_workflow_details/include_team_details, feed status/progress trace rows are opt-in with include_feed_trace, effective_project_cwd clarifies the actual project directory but worktree authorization trusts only visible workspace/surface cwd, workflow/team consistency warnings and loop risk flags surface in risk_flags, and team_worker_health includes final_state for cleanup decisions while using model-plus-runtime liveness to treat workers as live only when their surface still exists in both the workspace model and terminal backend; readiness is reported separately.",
       },
       {
         kind: "list",
         items: [
-          "System methods cover ping, identify, capabilities, provider capability discovery, and event subscriptions.",
-          "PATH-based provider discovery proves launchability only; task planning leaves authentication and runtime health unverified, scoring an unprobed routable harness at 25 versus 50 after concrete worker, hook, or user evidence is passed as readiness=verified_ready plus readiness_reason.",
-          "Workspace and surface methods cover list, focus, split, close, text input, visible text, and tail capture.",
-          "Task strategy methods cover read-only routing plus approved apply that recomputes dirty edit isolation and approval gates before visible team/workflow mutation.",
-          "Team finalization restores launch-owned terminal backends and leaves the team active when the team store cannot be saved.",
-          "Agent methods cover agent listing, health, source/age/lifecycle_evidence metadata, resume, and reclaim planning; the CLI wait agent-status wrapper polls those read-only surfaces for lifecycle waits.",
-          "Notification/feed methods align desktop, in-app, OSC 99, and persisted approval state; only pending approvals raise the context snapshot pending_approval risk flag.",
-          "Metadata methods publish status, progress, logs, and statusline output.",
-          "Status helpers explain context snapshots, watch delayed state, and expose the context-snapshot alias used by CLI and MCP automation with per-surface plus aggregate-bounded terminal tails.",
-          "Generated bash, zsh, and fish completions cover the curated ergonomic command set and grouped team/status subcommands.",
-          "Worktree methods validate target paths against repos already opened by the user.",
-          "Error codes include method_not_found, missing_param, not_found, payload_too_large, conflict, precondition_failed, already_exists, not_ready, invalid_param, and error.",
+          "Workspace and surface methods cover list, create, focus, split, close, text input, bounded visible text, and tail capture.",
+          "Notification and metadata methods publish generic attention, progress, status, logs, and statusline output.",
+          "Context snapshots include the newest 100 selected-workspace and global notifications, omit binary terminal icon data, and evaluate unread prompt risk across the full matching set.",
+          "Worktree and project-action methods validate repositories and argv-based commands against visible local state.",
+          "Six agent lifecycle methods cover listing, health, reclaim planning, hibernate, reclaim, and resume.",
+          "Router, task strategy, team, workflow, feed, approval orchestration, MCP, and managed-skill methods are not part of the API.",
+          "Existing MCP registrations and managed skills are not removed automatically; the README migration guide documents ownership-marker checks and safe cleanup.",
         ],
+      },
+      {
+        kind: "paragraph",
+        text: "Set FORKTTY_SOCKET_PATH to an absolute path when the default runtime socket is unsuitable. Requests are newline-delimited, size-bounded, and accepted only through an owner-controlled Unix socket.",
       },
     ],
     sources: [
-      { label: "Socket API", href: `${REPO_DOCS}/SPEC.md#socket-api` },
-      { label: "CLI examples", href: `${REPO_DOCS}/README.md#socket-cli` },
+      { label: "Socket reference", href: `${REPO_DOCS}/docs/socket-api.md` },
+      { label: "Runtime spec", href: `${REPO_DOCS}/SPEC.md#socket-api` },
     ],
   },
   {
     id: "git-worktrees",
-    eyebrow: "Repos",
+    eyebrow: "Isolation",
     title: "Git worktrees",
     summary:
-      "Worktrees are first-class ForkTTY workspaces for isolated parallel tasks.",
+      "Represent each editing branch as a visible workspace when parallel processes need separate checkouts.",
     blocks: [
       {
         kind: "code",
+        prompt: true,
         lines: [
-          "forktty worktree-status",
-          "forktty worktree-list",
+          "forktty worktree-list --cwd /path/to/repo",
           "forktty worktree-create feature/my-task --cwd /path/to/repo",
+          "forktty worktree-status --cwd /path/to/repo",
           "forktty worktree-attach feature/my-task --cwd /path/to/repo",
         ],
       },
       {
         kind: "paragraph",
-        text: "ForkTTY uses native git operations to create, attach, remove, and merge worktrees. Socket worktree calls require an explicit cwd and are constrained to repositories the user has opened, so automation cannot operate on arbitrary repos behind the user's back.",
+        text: "Worktree mutations are limited to repositories already represented by a ForkTTY workspace or surface cwd. Dirty-state checks protect uncommitted work during merge and removal flows.",
       },
-      {
-        kind: "list",
-        items: [
-          "Default layout can place worktrees under a repo-local .worktrees directory or sibling layout depending on configuration.",
-          "Dirty-state protection blocks destructive worktree actions that would drop uncommitted work.",
-          "Optional .forktty/setup and teardown hooks let projects prepare or clean a worktree.",
-          "Repo-local forktty.json can describe project actions and workflow hints for automation.",
-        ],
-      },
-    ],
-    sources: [
-      { label: "Worktree behavior", href: `${REPO_DOCS}/SPEC.md#worktree-behavior` },
-      { label: "Roadmap", href: `${REPO_DOCS}/ROADMAP.md` },
     ],
   },
   {
     id: "configuration-local-files",
     eyebrow: "Local state",
     title: "Configuration and local files",
-    summary:
-      "ForkTTY stores bounded config, session, browser profile, and state files under normal XDG locations.",
+    summary: "Configuration, sessions, sockets, logs, and optional hook metadata remain local.",
     blocks: [
       {
         kind: "table",
-        columns: ["Path", "Purpose"],
+        columns: ["Purpose", "Default path"],
         rows: [
-          ["~/.config/forktty/config.toml", "User configuration for ForkTTY-owned behavior."],
-          ["~/.local/state/forktty/session-v2.json", "Workspace, pane, and recent terminal text-tail session state."],
-          ["~/.local/share/forktty/browser_profiles/profiles.json", "Source-only browser profile index."],
-          ["~/.local/share/forktty/browser_profiles/<id>/", "Source-only WebKit profile data."],
+          ["Configuration", "~/.config/forktty/config.toml"],
+          ["Session layout", "~/.local/state/forktty/session-v2.json"],
+          ["Runtime socket", "$XDG_RUNTIME_DIR/forktty.sock"],
+          ["Logs", "$XDG_STATE_HOME/forktty/logs or ~/.local/state/forktty/logs"],
         ],
-      },
-      {
-        kind: "paragraph",
-        text: "ForkTTY now leaves Ghostty-owned terminal appearance and runtime behavior to Ghostty configuration, except that ForkTTY-managed embedded panes force wait-after-command so clean shell exits remain inspectable as Closed panes. Live embedded panes follow Ghostty's scrollback-limit budget, default to 10 MB per surface, and honor scrollbar = system|never. The opt-in persistent_scrollback_lines restore and capture-tail use the limited embedded Ghostty text ABI to read the bounded end of full scrollback; older embedding libraries fall back to recent visible text. Legacy TOML keys for ForkTTY theme source, terminal font, theme, bell, renderer, and scrollback still load for compatibility but are not exposed in newly saved settings.",
       },
       {
         kind: "code",
-        prompt: false,
         lines: [
           "[general]",
-          'worktree_layout = "nested"',
-          "enable_pr_lookup = false",
-          'notification_command = ""',
+          "restore_session = true",
           "persist_terminal_processes = false",
           "",
-          "[appearance]",
+          "[terminal]",
           "persistent_scrollback_lines = 0",
-          'sidebar_position = "left"',
-          "sidebar_visible = true",
-          'window_mode = "normal"',
-          "",
-          "[notifications]",
-          "desktop = true",
-          "sound = true",
-          "",
-          "[telemetry]",
-          "anonymous_ping = true",
         ],
       },
-    ],
-    sources: [
-      { label: "Configuration", href: `${REPO_DOCS}/README.md#configuration` },
-      { label: "Runtime spec", href: `${REPO_DOCS}/SPEC.md#config` },
     ],
   },
   {
     id: "privacy-telemetry",
-    eyebrow: "Privacy",
+    eyebrow: "Local-first",
     title: "Privacy and telemetry",
     summary:
-      "ForkTTY is local-first and limits network activity to update checks and an anonymous daily ping that can be disabled.",
+      "Terminal contents, project paths, socket payloads, and agent metadata are not sent to ForkTTY infrastructure.",
     blocks: [
       {
         kind: "paragraph",
-        text: "The app does not send crash reports, terminal contents, project paths, socket payloads, agent metadata, usernames, hostnames, or install identifiers to ForkTTY infrastructure.",
+        text: "The default anonymous daily usage ping contains only coarse app and platform information and can be disabled. A separate optional update check queries GitHub releases. Neither includes terminal text, repository content, usernames, hostnames, or install identifiers.",
       },
       {
-        kind: "list",
-        items: [
-          "Anonymous app telemetry is a daily ping to https://forktty.dev/api/telemetry/ping when enabled.",
-          "The ping payload contains only schema, kind, app, version, and date.",
-          "GitHub update checks are once-a-day release metadata checks when enabled.",
-          "Desktop notifications are local OS notifications, except for whatever your desktop environment needs to display them.",
-          "Disable app telemetry from the first-launch privacy prompt or config.",
+        kind: "code",
+        lines: [
+          "[telemetry]",
+          "anonymous_ping = true",
+          "endpoint = \"https://forktty.dev/api/telemetry/ping\"",
         ],
       },
     ],
-    sources: [
-      { label: "App privacy", href: `${REPO_DOCS}/PRIVACY.md` },
-      { label: "Site privacy", href: "/privacy" },
-    ],
+    sources: [{ label: "Privacy policy", href: `${REPO_DOCS}/PRIVACY.md` }],
   },
   {
     id: "security-model",
-    eyebrow: "Security",
+    eyebrow: "Boundaries",
     title: "Security model",
     summary:
-      "ForkTTY assumes a local same-user trust boundary and defends the socket, config, session, and package runtime accordingly.",
+      "ForkTTY assumes same-user local control while defending the socket, filesystem paths, and command boundaries.",
     blocks: [
       {
         kind: "list",
         items: [
-          "The Unix socket is owner-only and local to the user's desktop session.",
-          "Socket payloads and list limits are bounded to avoid unbounded memory requests.",
-          "Notification commands are executed as argv, not through shell pipelines.",
-          "Config and session recovery quarantine malformed, oversized, or invalid state instead of repeatedly loading it.",
-          "Embedded Ghostty library loading canonicalizes candidate paths and rejects relative, non-regular, untrusted, or writable-by-others paths.",
-          "Security reports should use GitHub private vulnerability reporting.",
+          "The Unix socket and its parent must be owned by the current user and use restrictive permissions.",
+          "Request lines and terminal reads are bounded; terminal output is untrusted input.",
+          "Project actions use validated argv arrays, never sh -c.",
+          "Worktree operations are restricted to repositories represented by visible ForkTTY state.",
+          "Hook setup preserves unrelated configuration and supports dry-run inspection.",
         ],
-      },
-      {
-        kind: "paragraph",
-        text: "Supported security updates track the current 0.2.0-alpha.x line. Older 0.1.x releases are not covered by the current supported-version policy.",
       },
     ],
     sources: [{ label: "Security policy", href: `${REPO_DOCS}/SECURITY.md` }],
   },
   {
     id: "troubleshooting",
-    eyebrow: "Fixes",
+    eyebrow: "Diagnostics",
     title: "Troubleshooting",
-    summary:
-      "Start with doctor output, package baseline checks, renderer overrides, and the socket path.",
+    summary: "Start with doctor, then narrow the problem to packaging, rendering, socket state, or hooks.",
     blocks: [
       {
         kind: "code",
-        lines: [
-          "forktty doctor",
-          "forktty --json doctor",
-          "forktty ping",
-          "FORKTTY_APPIMAGE_GTK_RUNTIME=host ./forktty-*.AppImage",
-          "GSK_RENDERER=gl ./forktty-*.AppImage",
-          "FORKTTY_SOCKET_PATH=/absolute/path forktty ping",
-        ],
+        prompt: true,
+        lines: ["forktty doctor", "forktty --json doctor", "forktty capabilities"],
       },
       {
         kind: "list",
         items: [
-          "If packaged terminal panes fail to start, confirm the release artifact includes ghostty-gtk-embed.so, then try FORKTTY_APPIMAGE_GTK_RUNTIME=host or bundled to isolate host-vs-bundled GTK renderer issues.",
-          "If .deb install fails on Debian 12/Bookworm, use a supported Debian 13/Trixie+ or Ubuntu 24.04 LTS+ baseline.",
           "If socket commands cannot connect, launch ForkTTY first or set an absolute FORKTTY_SOCKET_PATH.",
-          "If config or session files are corrupt, ForkTTY should quarantine the bad file and start from defaults.",
-          "For bug reports, include forktty doctor output, distro and desktop environment, install method, reproduction steps, and relevant logs. Include forktty --json doctor when MCP or skill path diagnostics matter.",
+          "If configuration or session files are corrupt, ForkTTY quarantines the bad file and starts from safe defaults.",
+          "For hook problems, inspect a dry run and the exact provider config file before applying setup again.",
+          "For bug reports, include distro, desktop environment, install method, reproduction steps, and relevant doctor output.",
         ],
       },
-    ],
-    sources: [
-      { label: "Troubleshooting", href: `${REPO_DOCS}/README.md#troubleshooting` },
-      { label: "Support", href: `${REPO_DOCS}/SUPPORT.md` },
-      { label: "QA matrix", href: `${REPO_DOCS}/docs/QA.md` },
     ],
   },
   {
     id: "changelog-highlights",
-    eyebrow: "Releases",
+    eyebrow: "Product direction",
     title: "Changelog highlights",
     summary:
-      "The latest recorded release is 0.2.0-alpha.18 from 2026-07-06.",
+      "The next alpha simplifies ForkTTY around its strongest terminal workspace capabilities.",
     blocks: [
       {
         kind: "list",
         items: [
-          "0.2.0-alpha.18 ships the attention-first Router rail and workflow feed pass with collapsible surfaces, notification controls, approval actions, feed filters, and tighter status styling.",
-          "0.2.0-alpha.18 hardens hook-driven agent status, MCP/task-strategy routing, workflow-loop evidence, orchestration cleanup, worker reports, and release QA docs.",
-          "0.2.0-alpha.17 adds Grok Build as a visible team/router harness and ships the first task-strategy router stabilization pass for multi-harness apply/submit flows.",
-          "0.2.0-alpha.17 hardens Feed, team, workflow, and task-strategy persistence/retry paths found during router and store audits.",
-          "AppImages prefer the host GTK/libadwaita stack when available and keep the bundled GTK copy as a fallback/override for hosts without GTK4.",
-          "Embedded Ghostty redraws now follow the 16ms wakeup-check cadence instead of a 100ms floor during continuous output.",
-          "AppImage packaging verifies the embedded Ghostty GTK library dependencies, not only the main binary.",
-          "Embedded panes now honor Ghostty scrollback-limit and scrollbar, with a bounded default of 10 MB per surface.",
-          "Clean shell exits in embedded panes now remain inspectable as Closed panes instead of immediately removing the split.",
-          "Agent health, explicit resume, and restore-time auto-resume preserve Codex and Claude Code bypass-permissions sessions instead of restarting them in prompted mode.",
-          "Security fixes hardened restored session identifiers, command-spawn values, library loading, OSC99 icon sizing, and Kitty image snapshots.",
-          "Docs, package metadata, the first-run privacy link, and the telemetry endpoint now use the canonical https://forktty.dev domain.",
+          "Removed the task router, provider selection, team and workflow state, approval orchestration, right rail, bottom feed, and Team sidebar section.",
+          "Removed the built-in MCP bridge, managed MCP registration, managed skill installer, and automatic hook refresh.",
+          "Kept Ghostty rendering, workspaces, tabs, splits, worktrees, notifications, command palette, layout restore, generic socket methods, and optional manual hooks.",
         ],
       },
     ],
-    sources: [
-      { label: "Changelog", href: `${REPO_DOCS}/CHANGELOG.md` },
-      { label: "GitHub releases", href: RELEASES_HTML_URL },
-    ],
+    sources: [{ label: "Full changelog", href: `${REPO_DOCS}/CHANGELOG.md` }],
   },
   {
     id: "roadmap-limitations-support",
-    eyebrow: "Project status",
+    eyebrow: "What next",
     title: "Roadmap, limitations, and support",
-    summary:
-      "ForkTTY is an early alpha with a Linux-first roadmap and explicit non-goals.",
+    summary: "ForkTTY remains alpha, Linux-only, and intentionally focused on terminal workspace depth.",
     blocks: [
       {
         kind: "list",
         items: [
-          "Known limitations: Linux-only, libadwaita 1.4+ baseline, AppImage host display/GL dependencies, PTYs not persisted by default unless dtach-backed persistence is enabled, partial OSC notification coverage, compositor-dependent quake behavior, and source-only browser panes.",
-          "Near-term roadmap areas include richer Agent HUD/statusline exports, remote daemon depth, sidebar/workspace organization, topology and tmux-like verbs, prompt composer work, agent catalog surfaces, project panels, QA matrix depth, command palette search, branch picker, deeper notification inbox controls, theme customization, and broader Ghostty options.",
-          "Use GitHub Issues for bugs, GitHub Discussions for questions, and private vulnerability reporting for security issues.",
+          "Known limits include Linux-only support, compositor-dependent quake behavior, optional dtach for process persistence, and source-only browser panes.",
+          "Built-in routing, teams, workflows, feed, approval orchestration, MCP, and managed agent skills are explicit non-goals for the terminal core.",
+          "Use GitHub Issues for bugs, Discussions for questions, and private reporting for security issues.",
         ],
       },
     ],
@@ -645,31 +398,21 @@ const DOC_SECTIONS: DocSection[] = [
 export const metadata: Metadata = {
   title: "Docs",
   description:
-    "ForkTTY wiki for installation, daily use, agent hooks, MCP, socket automation, worktrees, privacy, security, troubleshooting, and releases.",
-  alternates: {
-    canonical: "/docs",
-  },
+    "ForkTTY docs for installation, terminal workspaces, optional agent hooks, local socket automation, worktrees, privacy, security, and troubleshooting.",
+  alternates: { canonical: "/docs" },
   openGraph: {
     title: "Docs - ForkTTY",
     description:
-      "Complete ForkTTY wiki for install paths, agent integrations, hooks, MCP, socket CLI and API, worktrees, privacy, security, and troubleshooting.",
+      "Install and use ForkTTY as a focused Linux GTK/Ghostty terminal workspace for coding agents.",
     url: `${SITE_URL}/docs`,
     siteName: "ForkTTY",
     type: "article",
-    images: [
-      {
-        url: "/og.png",
-        width: 1200,
-        height: 630,
-        alt: "ForkTTY docs wiki",
-      },
-    ],
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "ForkTTY docs" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Docs - ForkTTY",
-    description:
-      "Install, operate, automate, troubleshoot, and audit ForkTTY from one onsite wiki.",
+    description: "Install, operate, automate, troubleshoot, and audit ForkTTY.",
     images: ["/og.png"],
   },
 };
@@ -693,9 +436,9 @@ export default function DocsPage() {
               ForkTTY wiki.
             </h1>
             <p className="mt-6 max-w-3xl text-base leading-relaxed text-ink-300 sm:text-lg">
-              Install ForkTTY, wire up agents, use the local socket and MCP
-              bridge, manage git worktrees, and check the privacy and security
-              model from one stable onsite reference.
+              Install ForkTTY, organize terminal workspaces, configure optional
+              hooks, use the local socket, manage git worktrees, and understand
+              the privacy and security boundaries.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link href="/#download" className="btn-primary">
@@ -718,10 +461,7 @@ export default function DocsPage() {
         <section className="border-t border-ink-800/60">
           <div className="section grid gap-10 py-12 sm:py-16 lg:grid-cols-[16rem_minmax(0,1fr)] lg:items-start">
             <aside className="lg:sticky lg:top-20">
-              <nav
-                aria-label="Documentation sections"
-                className="tui-frame p-4"
-              >
+              <nav aria-label="Documentation sections" className="tui-frame p-4">
                 <div className="mb-3 font-mono text-xs uppercase tracking-[0.16em] text-ink-500">
                   On this page
                 </div>
@@ -759,54 +499,95 @@ export default function DocsPage() {
                     </p>
                   </div>
 
-                  <div className="mt-6 max-w-4xl space-y-5">
-                    {section.blocks.map((block) => (
-                      <DocBlockView block={block} key={blockKey(section.id, block)} />
-                    ))}
+                  <div className="mt-7 max-w-4xl space-y-5">
+                    {section.blocks.map((block, index) => {
+                      if (block.kind === "paragraph") {
+                        return (
+                          <p key={index} className="text-[15px] leading-7 text-ink-300">
+                            {block.text}
+                          </p>
+                        );
+                      }
+
+                      if (block.kind === "list") {
+                        return (
+                          <ul key={index} className="space-y-2 text-[15px] leading-7 text-ink-300">
+                            {block.items.map((item) => (
+                              <li key={item} className="flex gap-3">
+                                <span className="mt-[0.7rem] h-1 w-1 shrink-0 rounded-full bg-forktty" aria-hidden />
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        );
+                      }
+
+                      if (block.kind === "code") {
+                        return (
+                          <pre key={index} className="overflow-x-auto rounded-lg border border-ink-800 bg-ink-950/80 p-4 text-sm leading-7 text-ink-200">
+                            <code>
+                              {block.lines.map((line) => `${block.prompt && line ? "$ " : ""}${line}\n`).join("")}
+                            </code>
+                          </pre>
+                        );
+                      }
+
+                      return (
+                        <div key={index} className="overflow-x-auto rounded-lg border border-ink-800">
+                          <table className="min-w-full divide-y divide-ink-800 text-left text-sm">
+                            <thead className="bg-ink-900/80 text-ink-200">
+                              <tr>
+                                {block.columns.map((column) => (
+                                  <th key={column} className="px-4 py-3 font-medium">{column}</th>
+                                ))}
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-ink-800 bg-ink-950/40 text-ink-300">
+                              {block.rows.map((row) => (
+                                <tr key={row.join(":")}>
+                                  {row.map((cell) => (
+                                    <td key={cell} className="px-4 py-3 align-top">{cell}</td>
+                                  ))}
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      );
+                    })}
                   </div>
 
-                  {section.sources ? (
-                    <div className="mt-6 flex flex-wrap gap-2">
+                  {section.sources && (
+                    <div className="mt-6 flex flex-wrap gap-3">
                       {section.sources.map((source) => (
                         <a
-                          key={source.label}
+                          key={source.href}
                           href={source.href}
-                          target={source.href.startsWith("/") ? undefined : "_blank"}
-                          rel={
-                            source.href.startsWith("/")
-                              ? undefined
-                              : "noreferrer noopener"
-                          }
-                          className="chip hover:border-forktty/70 hover:text-forktty"
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          className="font-mono text-xs text-ink-400 underline decoration-ink-700 underline-offset-4 transition-colors hover:text-forktty"
                         >
                           {source.label}
                         </a>
                       ))}
                     </div>
-                  ) : null}
+                  )}
                 </section>
               ))}
 
-              <section className="tui-frame p-6">
-                <h2 className="font-display text-2xl font-semibold leading-tight text-ink-100">
-                  Source references
-                </h2>
-                <p className="mt-3 max-w-3xl text-sm leading-relaxed text-ink-400">
-                  This page is maintained from the public ForkTTY repository.
-                  Use these files when you need the raw source document behind
-                  the onsite wiki.
-                </p>
+              <section className="border-t border-ink-800/70 pt-10">
+                <h2 className="font-display text-3xl font-semibold text-ink-100">Source documents</h2>
                 <div className="mt-5 grid gap-3 sm:grid-cols-2">
                   {SOURCE_LINKS.map((source) => (
                     <a
-                      key={source.label}
+                      key={source.href}
                       href={source.href}
                       target="_blank"
                       rel="noreferrer noopener"
-                      className="group flex items-center justify-between gap-4 border border-ink-800 bg-ink-900/70 px-4 py-3 text-sm text-ink-200 hover:border-forktty/70 hover:text-forktty"
+                      className="group flex items-center justify-between gap-4 rounded-lg border border-ink-800 bg-ink-900/45 px-4 py-3 text-sm text-ink-200 transition-colors hover:border-ink-700 hover:text-forktty"
                     >
-                      <span>{source.label}</span>
-                      <ArrowRight className="h-4 w-4 shrink-0 text-ink-500 transition-transform group-hover:translate-x-0.5 group-hover:text-forktty" />
+                      {source.label}
+                      <ArrowRight className="h-3.5 w-3.5 text-ink-600 transition-transform group-hover:translate-x-0.5" />
                     </a>
                   ))}
                 </div>
@@ -818,85 +599,4 @@ export default function DocsPage() {
       <Footer />
     </>
   );
-}
-
-function DocBlockView({ block }: { block: DocBlock }) {
-  if (block.kind === "paragraph") {
-    return <p className="text-[15px] leading-relaxed text-ink-300">{block.text}</p>;
-  }
-
-  if (block.kind === "list") {
-    return (
-      <ul className="space-y-2 text-[15px] leading-relaxed text-ink-300">
-        {block.items.map((item) => (
-          <li key={item} className="flex gap-3">
-            <span className="mt-2 h-1.5 w-1.5 shrink-0 bg-forktty" aria-hidden />
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    );
-  }
-
-  if (block.kind === "code") {
-    return (
-      <pre className="overflow-x-auto border border-ink-800 bg-ink-950 p-4 font-mono text-[12.5px] leading-relaxed text-ink-100">
-        {block.lines.map((line, index) => (
-          <div key={`${line}-${index}`}>
-            {line && block.prompt !== false ? (
-              <>
-                <span className="select-none text-ink-500">$</span> {line}
-              </>
-            ) : line ? (
-              line
-            ) : (
-              <span aria-hidden>&nbsp;</span>
-            )}
-          </div>
-        ))}
-      </pre>
-    );
-  }
-
-  return (
-    <div className="overflow-x-auto border border-ink-800">
-      <table className="w-full min-w-[34rem] border-collapse text-left text-sm">
-        <thead className="bg-ink-900 text-ink-200">
-          <tr>
-            {block.columns.map((column) => (
-              <th
-                key={column}
-                className="border-b border-ink-800 px-4 py-3 font-mono text-xs uppercase tracking-[0.12em]"
-              >
-                {column}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-ink-800 text-ink-300">
-          {block.rows.map(([left, right]) => (
-            <tr key={`${left}-${right}`}>
-              <td className="w-[34%] align-top px-4 py-3 font-mono text-xs text-ink-100">
-                {left}
-              </td>
-              <td className="px-4 py-3 leading-relaxed">{right}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  );
-}
-
-function blockKey(sectionId: string, block: DocBlock) {
-  if (block.kind === "paragraph") {
-    return `${sectionId}-paragraph-${block.text.slice(0, 48)}`;
-  }
-  if (block.kind === "list") {
-    return `${sectionId}-list-${block.items[0]}`;
-  }
-  if (block.kind === "code") {
-    return `${sectionId}-code-${block.lines.join("|").slice(0, 48)}`;
-  }
-  return `${sectionId}-table-${block.columns.join("-")}-${block.rows[0][0]}`;
 }

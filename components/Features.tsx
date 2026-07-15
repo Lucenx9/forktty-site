@@ -1,14 +1,14 @@
 const FEATURES = [
   {
     n: "01",
-    title: "Router context stays beside the terminal.",
-    body: "The GTK workbench keeps the task router, workflow loop state, approvals, workers, reports, agents, and notifications visible next to the panes while planning remains read-only until apply is explicit.",
-    cmd: "forktty task-plan",
+    title: "Workspaces stay focused on terminals.",
+    body: "The GTK workbench keeps projects, tabs, split panes, unread state, and notifications visible without adding a second orchestration product beside the terminal.",
+    cmd: "forktty tree",
   },
   {
     n: "02",
     title: "Agent HUD, not scrollback archaeology.",
-    body: "Hooks for Codex, Claude Code, Antigravity, and OpenCode persist session ids, cwd, lifecycle, and last activity so the GTK HUD can focus, resume, and show compact loop state for an agent.",
+    body: "Optional hooks for Codex, Claude Code, Antigravity, and OpenCode publish session ids, cwd, lifecycle, and last activity so the GTK HUD can focus or resume an agent.",
     cmd: "forktty agents",
   },
   {
@@ -19,9 +19,9 @@ const FEATURES = [
   },
   {
     n: "04",
-    title: "Socket and MCP automation share one surface.",
-    body: "The user-local JSON-RPC socket backs the CLI and MCP server, so tools can plan task strategy with explainable router profiles, workflow-inferred last-known-good stickiness, and harness routing signals, stage or submit approved team runs, inspect panes, read context snapshots and terminal tails, manage worktrees, resume agents, and publish team status.",
-    cmd: "forktty task-plan",
+    title: "A small local automation surface.",
+    body: "The owner-only JSON-RPC socket backs the CLI for workspace, pane, focus, terminal reads, notifications, worktrees, project actions, and thin agent lifecycle controls.",
+    cmd: "forktty capabilities",
   },
   {
     n: "05",

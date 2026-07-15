@@ -20,7 +20,6 @@ test("site exposes an onsite docs wiki without removing the home quick start", a
   assert.match(docsPage, /Daily use/);
   assert.match(docsPage, /Agent integrations/);
   assert.match(docsPage, /Hooks/);
-  assert.match(docsPage, /MCP setup/);
   assert.match(docsPage, /Socket CLI and API/);
   assert.match(docsPage, /Git worktrees/);
   assert.match(docsPage, /Configuration and local files/);
@@ -35,8 +34,11 @@ test("site exposes an onsite docs wiki without removing the home quick start", a
   assert.match(docsPage, /Debian 13\/Trixie\+/);
   assert.match(docsPage, /Ubuntu 24\.04 LTS\+/);
   assert.match(docsPage, /forktty hooks setup/);
-  assert.match(docsPage, /forktty mcp setup/);
+  assert.match(docsPage, /does not ship or configure an MCP bridge/);
   assert.match(docsPage, /FORKTTY_SOCKET_PATH/);
   assert.match(docsPage, /~\/\.config\/forktty\/config\.toml/);
-  assert.match(docsPage, /0\.2\.0-alpha\.17/);
+  assert.match(docsPage, /built-in MCP bridge/);
+  assert.match(docsPage, /older ForkTTY binary before upgrading/);
+  assert.doesNotMatch(docsPage, /forktty mcp setup/);
+  assert.doesNotMatch(docsPage, /forktty skills setup/);
 });

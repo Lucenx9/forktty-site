@@ -40,9 +40,10 @@ test("llms-full file provides single-fetch agent context", async () => {
   const full = await source("public/llms-full.txt");
 
   assert.match(full, /^# ForkTTY full agent context/m);
-  assert.match(full, /0\.2\.0-alpha\.18/);
   assert.match(full, /## Install and first run/);
-  assert.match(full, /## MCP setup/);
+  assert.match(full, /## Product boundary/);
+  assert.match(full, /### Upgrade cleanup/);
+  assert.match(full, /External MCP clients and servers remain compatible/);
   assert.match(full, /## Socket CLI and API/);
   assert.match(full, /## Privacy and telemetry/);
   assert.match(full, /## Security model/);
@@ -57,46 +58,56 @@ test("llms-full file provides single-fetch agent context", async () => {
   assert.doesNotMatch(full, /enabled = true/);
 });
 
-test("agent context documents keep team health semantics aligned", async () => {
+test("agent context documents keep the removed product boundary aligned", async () => {
   const docs = await source("app/docs/page.tsx");
   const llms = await source("public/llms.txt");
   const full = await source("public/llms-full.txt");
 
   for (const text of [docs, llms, full]) {
-    assert.match(text, /team_worker_health/);
-    assert.match(text, /final_state/);
-    assert.match(text, /model-plus-runtime liveness/);
-    assert.match(text, /readiness is reported separately/);
+    assert.match(text, /task rout/i);
+    assert.match(text, /team/i);
+    assert.match(text, /workflow/i);
+    assert.match(text, /built-in MCP|MCP bridge/i);
+    assert.match(text, /managed agent skill|managed skill/i);
+    assert.doesNotMatch(text, /forktty mcp setup/);
+    assert.doesNotMatch(text, /forktty skills setup/);
   }
 });
 
-test("agent context documents keep provider launchability semantics aligned", async () => {
+test("upgrade cleanup covers marker-owned managed-skill backups", async () => {
   const docs = await source("app/docs/page.tsx");
   const llms = await source("public/llms.txt");
   const full = await source("public/llms-full.txt");
 
   for (const text of [docs, llms, full]) {
-    assert.match(
-      text,
-      /proves (?:launchability only|only (?:local |harness )?launchability)/,
-    );
-    assert.match(
-      text,
-      /authentication and runtime health unverified|auth and runtime health remain unverified|does not probe provider authentication/,
-    );
+    assert.match(text, /forktty-agent-orchestration\.bak-\*/);
+  }
+  assert.match(docs, /forktty-managed-agent-skill/);
+  assert.match(full, /forktty-managed-agent-skill/);
+});
+
+test("agent context documents keep manual hook semantics aligned", async () => {
+  const docs = await source("app/docs/page.tsx");
+  const llms = await source("public/llms.txt");
+  const full = await source("public/llms-full.txt");
+
+  for (const text of [docs, llms, full]) {
+    assert.match(text, /optional/i);
+    assert.match(text, /hooks setup/);
+    assert.match(text, /explicit|manual/i);
+    assert.match(text, /does not install|never refreshed|never changes|never install/i);
   }
 });
 
-test("agent context documents describe workflow loop state as metadata only", async () => {
+test("agent context documents describe external MCP as a normal process", async () => {
   const docs = await source("app/docs/page.tsx");
   const llms = await source("public/llms.txt");
   const full = await source("public/llms-full.txt");
 
   for (const text of [docs, llms, full]) {
-    assert.match(text, /workflow[_-]loop[_-]set|workflow-loop-set/);
-    assert.match(text, /loop_summaries/);
-    assert.match(text, /metadata only|does not run commands/);
-    assert.match(text, /push, merge, or approve actions/);
+    assert.match(text, /External MCP/i);
+    assert.match(text, /normal (?:terminal )?process|ordinary terminal process/i);
+    assert.match(text, /does not (?:ship|include|provide|register).*MCP|no built-in MCP|built-in MCP bridge/i);
   }
 });
 
@@ -110,15 +121,17 @@ test("layout exposes visible-page-aligned structured data", async () => {
   assert.match(layout, /applicationCategory: "DeveloperApplication"/);
   assert.match(layout, /softwareVersion: "0\.2\.0-alpha\.18"/);
   assert.match(layout, /featureList/);
-  assert.match(layout, /screenshot/);
   assert.match(layout, /codeRepository/);
+  assert.doesNotMatch(layout, /Local stdio MCP bridge/);
+  assert.doesNotMatch(layout, /Provider-neutral team orchestration/);
 });
 
 test("home search snippet is concise and product-focused", async () => {
   const layout = await source("app/layout.tsx");
 
   assert.match(layout, /const SITE_DESCRIPTION =\n\s+"ForkTTY is a Linux-native workspace for coding agents/);
-  assert.match(layout, /local MCP\/socket automation, team orchestration/);
+  assert.match(layout, /local socket automation/);
+  assert.doesNotMatch(layout, /team orchestration/);
   assert.doesNotMatch(layout, /opt-out anonymous daily usage ping/);
 });
 
@@ -146,8 +159,8 @@ test("sitemap uses canonical URLs with stable meaningful lastmod values", async 
   assert.match(sitemap, /`\$\{SITE_URL\}\/docs`/);
   assert.match(sitemap, /`\$\{SITE_URL\}\/privacy`/);
   assert.match(sitemap, /SEO_PAGES\.map/);
-  assert.match(sitemap, /seoPages:\s*"2026-06-23"/);
-  assert.match(sitemap, /docs:\s*"2026-07-03"/);
+  assert.match(sitemap, /seoPages:\s*"2026-07-15"/);
+  assert.match(sitemap, /docs:\s*"2026-07-15"/);
   assert.match(sitemap, /lastModified:\s*LAST_SIGNIFICANT_UPDATE\.docs/);
   assert.doesNotMatch(sitemap, /lastModified:\s*new Date\(\)/);
   assert.doesNotMatch(sitemap, /changeFrequency/);
@@ -183,10 +196,12 @@ test("site has intent-specific SEO pages linked from home and crawler context", 
 
   assert.equal((seoPages.match(/quickStart: \{\n      intro:/g) ?? []).length, 9);
   assert.match(seoPages, /forktty hooks setup codex --dry-run/);
-  assert.match(seoPages, /forktty mcp setup claude --dry-run/);
+  assert.match(seoPages, /forktty hooks setup claude --dry-run/);
   assert.match(seoPages, /forktty context-snapshot --tail-lines 0 --json/);
   assert.match(seoPages, /forktty worktree-create feature\/my-task --cwd \/path\/to\/repo/);
-  assert.match(seoPages, /forktty team finish review-team --dry-run/);
+  assert.match(seoPages, /forktty tree/);
+  assert.doesNotMatch(seoPages, /forktty mcp setup/);
+  assert.doesNotMatch(seoPages, /forktty team finish/);
   assert.match(routePage, /generateStaticParams/);
   assert.match(routePage, /generateMetadata/);
   assert.match(routePage, /id="quick-start"/);

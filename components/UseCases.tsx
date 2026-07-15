@@ -20,9 +20,8 @@ export function UseCases() {
             </h2>
           </div>
           <p className="max-w-2xl text-[15px] leading-relaxed text-ink-300">
-            Start from the workflow you need: Codex, Claude Code, local MCP,
-            git worktrees, Agent HUD, Ghostty panes, PTY persistence, or team
-            orchestration.
+            Start from the workspace you need: Codex, Claude Code, external MCP
+            tools, git worktrees, Agent HUD, Ghostty panes, or PTY persistence.
           </p>
         </div>
 

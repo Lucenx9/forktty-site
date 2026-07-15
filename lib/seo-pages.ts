@@ -9,20 +9,10 @@ export type SeoPage = {
   keywords: string[];
   quickStart: {
     intro: string;
-    commands: Array<{
-      label: string;
-      command: string;
-    }>;
+    commands: Array<{ label: string; command: string }>;
   };
-  sections: Array<{
-    title: string;
-    body: string;
-    bullets?: string[];
-  }>;
-  faqs: Array<{
-    question: string;
-    answer: string;
-  }>;
+  sections: Array<{ title: string; body: string; bullets?: string[] }>;
+  faqs: Array<{ question: string; answer: string }>;
   related: string[];
 };
 
@@ -32,521 +22,306 @@ export const SEO_PAGES: SeoPage[] = [
     navLabel: "Codex",
     title: "Codex Terminal Workspace for Linux",
     description:
-      "Run Codex in a Linux-native ForkTTY workspace with Ghostty panes, git worktrees, local socket automation, Agent HUD state, and safe resume flows.",
+      "Run Codex in a Linux-native ForkTTY workspace with Ghostty panes, git worktrees, notifications, optional hooks, and safe resume flows.",
     eyebrow: "Codex",
-    h1: "A Linux-native workspace for Codex agents.",
+    h1: "A Linux-native workspace for Codex.",
     intro:
-      "ForkTTY gives Codex a visible terminal workspace instead of a scattered set of shells. Keep Codex panes, git worktrees, status hooks, local MCP/socket context, and resume-ready session metadata in one place.",
-    keywords: ["Codex terminal", "Codex agents", "AI coding agent", "Linux terminal"],
+      "ForkTTY keeps Codex in visible terminal panes. It adds workspace focus, splits, notifications, optional lifecycle metadata, and git worktrees without proxying model traffic or deciding how the agent should work.",
+    keywords: ["Codex terminal", "Codex agents", "Linux terminal", "Ghostty"],
     quickStart: {
-      intro:
-        "Start with dry runs so ForkTTY shows exactly what it would install before it writes Codex hook, MCP, or skill files.",
+      intro: "Launch ForkTTY, open a terminal pane, and optionally install lifecycle hooks.",
       commands: [
-        { label: "Check the Codex hook install", command: "forktty hooks setup codex --dry-run" },
-        { label: "Check the Codex MCP registration", command: "forktty mcp setup codex --dry-run" },
-        { label: "Check the shared Agent Skills target", command: "forktty skills setup agents --dry-run" },
-        { label: "Inspect known agent sessions", command: "forktty agent-health --json" },
+        { label: "Start the app", command: "forktty" },
+        { label: "Preview Codex hooks", command: "forktty hooks setup codex --dry-run" },
+        { label: "Inspect tracked sessions", command: "forktty agent-health --json" },
       ],
     },
     sections: [
       {
         title: "Visible agent work",
-        body: "Codex runs in normal terminal panes, so every prompt, approval, test, and repository command remains visible. ForkTTY adds workspace focus, pane state, status metadata, and notification handling around the CLI without proxying model traffic.",
-        bullets: [
-          "Agent HUD rows show known Codex sessions, lifecycle state, current pane, and resume readiness.",
-          "Prompt-aware notifications surface approvals and blocked states without hiding terminal context.",
-          "Socket and MCP reads expose compact context for orchestrators before they act.",
-        ],
+        body: "Codex runs as a normal process in a Ghostty-backed pane, so prompts, approvals, tests, and repository commands remain visible and inspectable.",
       },
       {
-        title: "Worktree-based isolation",
-        body: "When multiple Codex workers touch code, ForkTTY can keep each branch in a separate git worktree workspace. That makes parallel implementation, review, and QA easier to inspect and less likely to collide.",
+        title: "Worktree isolation",
+        body: "Use a separate git worktree workspace when two agents need to edit in parallel. ForkTTY manages the terminal and repository boundary, not the agents' task graph.",
       },
       {
-        title: "Local-first by default",
-        body: "ForkTTY does not provide model access or copy your project to a hosted agent service. Codex keeps using your configured CLI and account; ForkTTY coordinates local panes, metadata, hooks, and notifications.",
+        title: "Local-first",
+        body: "Bring your own Codex CLI and account. ForkTTY does not provide model access and does not send agent traffic through a ForkTTY service.",
       },
     ],
     faqs: [
-      {
-        question: "Does ForkTTY include Codex access?",
-        answer:
-          "No. ForkTTY is bring-your-own Codex CLI and subscription. It hosts and coordinates the terminal sessions you already run locally.",
-      },
-      {
-        question: "Can ForkTTY resume Codex sessions?",
-        answer:
-          "ForkTTY stores provider-neutral agent metadata and can preserve Codex resume context when the provider exposes enough session information. Agent health reports whether a saved session is ready.",
-      },
-      {
-        question: "Can Codex use ForkTTY through MCP?",
-        answer:
-          "Yes. ForkTTY exposes a local stdio MCP bridge backed by the same owner-only socket API used by the CLI.",
-      },
+      { question: "Does ForkTTY include Codex access?", answer: "No. Use your own Codex CLI and subscription." },
+      { question: "Can ForkTTY resume Codex sessions?", answer: "Optional hooks can record enough lifecycle metadata for supported resume flows." },
+      { question: "Does ForkTTY orchestrate Codex workers?", answer: "No. Agents are ordinary terminal processes; use panes and worktrees to organize them." },
     ],
-    related: ["agent-hud", "git-worktrees", "mcp"],
+    related: ["agent-hud", "git-worktrees", "ghostty-terminal"],
   },
   {
     slug: "claude-code",
     navLabel: "Claude Code",
     title: "Claude Code Terminal Workspace for Linux",
     description:
-      "Coordinate Claude Code in ForkTTY with visible Ghostty panes, provider-aware prompt submit, Agent HUD metadata, MCP context, and git worktree isolation.",
+      "Run Claude Code in visible Ghostty panes with workspace navigation, git worktrees, notifications, optional hooks, and resume metadata.",
     eyebrow: "Claude Code",
-    h1: "Run Claude Code in a visible agent workspace.",
+    h1: "Run Claude Code in a visible workspace.",
     intro:
-      "ForkTTY keeps Claude Code sessions inside native Linux terminal panes while adding lifecycle hooks, Agent HUD status, provider-aware team dispatch, and local MCP/socket context for review and orchestration.",
-    keywords: ["Claude Code terminal", "Claude Code MCP", "coding agents", "Linux AI terminal"],
+      "ForkTTY hosts Claude Code in native Linux terminal panes and keeps pane focus, repo state, attention, and optional lifecycle metadata nearby.",
+    keywords: ["Claude Code terminal", "coding agents", "Linux AI terminal", "Ghostty"],
     quickStart: {
-      intro:
-        "Use dry runs for setup, then launch a read-only Claude review worker when you want a visible second pass on a commit.",
+      intro: "Start Claude Code in any pane; preview hook changes before writing them.",
       commands: [
-        { label: "Preview Claude hook changes", command: "forktty hooks setup claude --dry-run" },
-        { label: "Preview Claude MCP setup", command: "forktty mcp setup claude --dry-run" },
-        { label: "Preview the Claude skill install", command: "forktty skills setup claude --dry-run" },
-        {
-          label: "Ask Claude for a visible review",
-          command:
-            'forktty team review review-team claude-review --agent claude --task-id review-head --commit HEAD --submit',
-        },
+        { label: "Start the app", command: "forktty" },
+        { label: "Preview Claude hooks", command: "forktty hooks setup claude --dry-run" },
+        { label: "List known agents", command: "forktty agents --json" },
       ],
     },
     sections: [
       {
-        title: "Provider-aware terminal handling",
-        body: "Claude Code's TUI can behave differently from simpler line-oriented tools. ForkTTY's team dispatch path stages Claude/Pi/Grok text, waits briefly, and sends Enter separately so prompts are less likely to stay stuck in the composer.",
+        title: "Normal terminal semantics",
+        body: "Claude Code owns its TUI, credentials, permissions, and session behavior. ForkTTY provides the surrounding terminal workspace.",
       },
       {
-        title: "Review-friendly sessions",
-        body: "Claude workers can be launched as review lanes, implementation lanes, or QA lanes. The team state records the worker, provider, surface, task, mailbox, and final state so the leader can reconcile reports.",
-        bullets: [
-          "Read-only review prompts can be sent without giving the worker mutation scope.",
-          "Agent HUD highlights current pane, risky permission modes, and resumable sessions.",
-          "Team finish checks open tasks and live-looking workers before marking work done.",
-        ],
+        title: "Separate editing lanes",
+        body: "Tabs, splits, and git worktree workspaces make parallel implementation and review visible without adding a built-in team state machine.",
       },
       {
-        title: "Local context, not hidden automation",
-        body: "ForkTTY does not add a background scheduler for Claude Code. Workflow loop state is durable metadata only; the actual agent work remains visible through terminal panes and explicit user-reviewed commands.",
+        title: "Optional lifecycle hooks",
+        body: "Manual hook setup can publish needs-input, running, idle, and ended metadata. Hooks are never installed or updated automatically.",
       },
     ],
     faqs: [
-      {
-        question: "Does ForkTTY replace Claude Code?",
-        answer:
-          "No. Claude Code remains the agent CLI. ForkTTY provides the Linux workspace, pane management, hooks, notifications, and local automation surface around it.",
-      },
-      {
-        question: "Can Claude Code workers be reviewed in teams?",
-        answer:
-          "Yes. ForkTTY team state can launch, message, monitor, and clean up Claude Code workers with explicit role contracts.",
-      },
-      {
-        question: "Does ForkTTY send Claude prompts to a ForkTTY server?",
-        answer:
-          "No. Agent traffic goes through your configured Claude Code CLI and provider account. ForkTTY's own coordination state stays local.",
-      },
+      { question: "Does ForkTTY replace Claude Code?", answer: "No. Claude Code remains the agent CLI running inside a ForkTTY terminal pane." },
+      { question: "Does ForkTTY send prompts to a server?", answer: "No. Provider traffic stays with your configured Claude Code CLI and account." },
+      { question: "Are hooks required?", answer: "No. They only enrich lifecycle and resume metadata." },
     ],
-    related: ["team-orchestration", "agent-hud", "mcp"],
+    related: ["agent-hud", "git-worktrees", "ghostty-terminal"],
   },
   {
     slug: "mcp",
-    navLabel: "MCP",
-    title: "Local MCP Server for Terminal and Agent Workspaces",
+    navLabel: "External MCP",
+    title: "Using External MCP Tools in ForkTTY",
     description:
-      "ForkTTY exposes a local stdio MCP bridge for workspace context, terminal panes, agent health, git worktrees, notifications, and team orchestration.",
-    eyebrow: "MCP",
-    h1: "A local MCP bridge for visible terminal automation.",
+      "Run MCP-enabled agent clients and external MCP servers as normal processes in ForkTTY terminal panes; ForkTTY itself exposes a small local socket API.",
+    eyebrow: "External MCP",
+    h1: "MCP stays with your agent tools.",
     intro:
-      "ForkTTY's MCP server maps agent tools to the same owner-only socket API used by the CLI. Agents can inspect context, panes, teams, workflows, and bounded terminal tails without leaving the local desktop boundary.",
-    keywords: ["MCP server", "Model Context Protocol", "terminal automation", "agent tools"],
+      "ForkTTY does not ship a built-in MCP server or edit agent MCP configuration. MCP-enabled clients and servers still run normally inside terminal panes, while direct ForkTTY automation uses its owner-only Unix socket.",
+    keywords: ["MCP terminal", "Model Context Protocol", "terminal workspace", "Unix socket API"],
     quickStart: {
-      intro:
-        "Register the local stdio bridge, confirm the running socket capabilities, then take a compact snapshot before using mutating tools.",
+      intro: "Configure MCP in your agent client, then run that client in a ForkTTY pane.",
       commands: [
-        { label: "Preview MCP registration", command: "forktty mcp setup --dry-run" },
-        { label: "List socket and provider capabilities", command: "forktty capabilities --json" },
+        { label: "Inspect ForkTTY socket capabilities", command: "forktty capabilities --json" },
         { label: "Read compact workspace context", command: "forktty context-snapshot --tail-lines 0 --json" },
       ],
     },
     sections: [
       {
-        title: "One automation surface",
-        body: "The CLI, MCP bridge, and GTK app share the same socket behavior. That keeps workspaces, surfaces, status, notifications, worktrees, workflows, and teams consistent across human and agent interactions.",
+        title: "No built-in bridge",
+        body: "ForkTTY deliberately keeps MCP ownership outside the terminal core. It does not register servers, manage MCP config, or translate MCP tools into internal orchestration calls.",
       },
       {
-        title: "Compact context first",
-        body: "Agents can start with cheap reads such as identify and context snapshots before taking action. Snapshot defaults are compact: team details, workflow details, feed traces, and full message bodies are opt-in.",
-        bullets: [
-          "Terminal text reads are bounded and marked untrusted.",
-          "Worktree mutations require a repository visibly represented in ForkTTY.",
-          "Team worker cleanup only closes current-runtime launch-owned disposable panes.",
-        ],
+        title: "Clean up older registrations",
+        body: "Before upgrading from an orchestration build, use that older binary's MCP and skill removal dry runs. If it is unavailable, back up each client config and remove only entries marked FORKTTY_MCP_MANAGED=forktty and skill directories whose SKILL.md contains the ForkTTY-managed marker.",
       },
       {
-        title: "Designed for local trust",
-        body: "ForkTTY uses a local Unix socket and stdio MCP bridge rather than a network service. The security model assumes same-user local automation and avoids hidden remote control planes.",
+        title: "External tools still work",
+        body: "An MCP client or server is just another process from the terminal's perspective. Run it in a pane, split, tab, worktree, or persistent dtach-backed session.",
+      },
+      {
+        title: "Direct local automation",
+        body: "Scripts that need ForkTTY state can use the CLI or the newline-delimited JSON-RPC socket for bounded workspace, pane, notification, worktree, and agent lifecycle operations.",
       },
     ],
     faqs: [
-      {
-        question: "What can ForkTTY MCP tools inspect?",
-        answer:
-          "They can inspect workspaces, surfaces, bounded terminal text, agent health, team summaries, workflow loop state, notifications, remotes, and git worktree state.",
-      },
-      {
-        question: "Can MCP tools send terminal input?",
-        answer:
-          "Yes, but the pane is visible and the same socket validation applies. Worker prompts should use the team mailbox and provider-aware dispatch path.",
-      },
-      {
-        question: "Is ForkTTY MCP network-exposed?",
-        answer:
-          "No. The MCP server is local stdio, backed by an owner-only local socket.",
-      },
+      { question: "Does ForkTTY include an MCP server?", answer: "No. The built-in stdio MCP bridge and managed MCP setup were removed; the README includes cleanup steps for registrations created by older releases." },
+      { question: "Can I still use MCP agents inside ForkTTY?", answer: "Yes. Configure MCP in the agent client and run it as a normal terminal process." },
+      { question: "How do scripts control ForkTTY?", answer: "Use the socket CLI or connect to the owner-only Unix socket directly." },
     ],
-    related: ["team-orchestration", "agent-hud", "git-worktrees"],
+    related: ["codex", "claude-code", "ghostty-terminal"],
   },
   {
     slug: "git-worktrees",
     navLabel: "Git worktrees",
-    title: "Git Worktree Workspaces for AI Coding Agents",
+    title: "Git Worktree Workspaces for Coding Agents",
     description:
       "Use ForkTTY git worktree workspaces to isolate parallel coding agents, branches, setup hooks, merges, removes, and repository state.",
     eyebrow: "Worktrees",
-    h1: "Git worktrees as first-class agent workspaces.",
+    h1: "Git worktrees as first-class workspaces.",
     intro:
-      "ForkTTY treats git worktrees as visible workspaces so parallel agents can work on separate branches without overwriting each other's checkout. Create, attach, merge, and remove worktrees from the terminal UI or local automation surface.",
-    keywords: ["git worktree AI agents", "parallel coding agents", "branch workspace", "agent isolation"],
+      "ForkTTY treats git worktrees as visible workspaces so parallel terminal processes can work on separate branches without sharing one mutable checkout.",
+    keywords: ["git worktree agents", "parallel coding agents", "branch workspace", "agent isolation"],
     quickStart: {
-      intro:
-        "Point commands at a repo that is already represented by a ForkTTY workspace or surface cwd; hidden repos are rejected by design.",
+      intro: "Point commands at a repository already represented by a ForkTTY workspace or pane.",
       commands: [
-        { label: "List existing worktrees", command: "forktty worktree-list --cwd /path/to/repo" },
-        { label: "Create an isolated branch workspace", command: "forktty worktree-create feature/my-task --cwd /path/to/repo" },
-        { label: "Check current worktree state", command: "forktty worktree-status --cwd /path/to/repo" },
-        { label: "Attach an existing branch workspace", command: "forktty worktree-attach feature/my-task --cwd /path/to/repo" },
+        { label: "List worktrees", command: "forktty worktree-list --cwd /path/to/repo" },
+        { label: "Create a branch workspace", command: "forktty worktree-create feature/my-task --cwd /path/to/repo" },
+        { label: "Inspect repository state", command: "forktty worktree-status --cwd /path/to/repo" },
       ],
     },
     sections: [
-      {
-        title: "Parallel work without checkout collisions",
-        body: "Each agent lane can get its own directory, branch, pane tree, and task state. A leader can keep mutating workers separated while read-only review workers share context when appropriate.",
-      },
-      {
-        title: "Visible repository boundary",
-        body: "Worktree socket, CLI, and MCP operations require an explicit repo path and validate it against repositories already represented by visible ForkTTY workspace or surface cwd. Hook-reported resume cwd is context, not authorization.",
-      },
-      {
-        title: "Safer cleanup",
-        body: "Worktree remove and merge flows check dirty state and linked worktree metadata before changing repository state. ForkTTY reports preconditions instead of silently operating on unopened repositories.",
-      },
+      { title: "Parallel work without collisions", body: "Each editing lane can have its own directory, branch, workspace, tabs, and pane tree." },
+      { title: "Visible repository boundary", body: "Socket operations validate paths against repositories already open in ForkTTY." },
+      { title: "Conservative cleanup", body: "Remove and merge flows check dirty state and linked worktree metadata before changing repository state." },
     ],
     faqs: [
-      {
-        question: "Why use git worktrees with AI agents?",
-        answer:
-          "They let multiple agents edit different branches at the same time without sharing one mutable checkout.",
-      },
-      {
-        question: "Can ForkTTY create worktrees from the UI?",
-        answer:
-          "Yes. ForkTTY exposes worktree create, attach, merge, and remove flows through the GTK app and local automation API.",
-      },
-      {
-        question: "Can a socket client mutate any repo on disk?",
-        answer:
-          "No. Worktree operations are bounded to repositories visibly represented in ForkTTY.",
-      },
+      { question: "Why use worktrees with coding agents?", answer: "They let multiple processes edit different branches without sharing one checkout." },
+      { question: "Can ForkTTY create them from the UI?", answer: "Yes. Create, attach, merge, and remove flows are available from the workspace UI and socket CLI." },
+      { question: "Can a socket client mutate any repo?", answer: "No. Worktree operations are bounded to repositories visibly represented in ForkTTY." },
     ],
-    related: ["codex", "team-orchestration", "mcp"],
+    related: ["codex", "claude-code", "agent-hud"],
   },
   {
     slug: "agent-hud",
     navLabel: "Agent HUD",
-    title: "Agent HUD for Codex, Claude Code, Pi, OpenCode, and More",
+    title: "Agent HUD for Coding Agent Lifecycle",
     description:
-      "ForkTTY's Agent HUD shows coding agent lifecycle, current pane, resume readiness, risky permission modes, workflow loop chips, and prompt state.",
+      "ForkTTY's Agent HUD shows optional lifecycle metadata, current pane, freshness, resume readiness, and risky permission modes.",
     eyebrow: "Agent HUD",
-    h1: "A HUD for agent lifecycle, focus, and resume state.",
+    h1: "A small HUD for lifecycle and focus.",
     intro:
-      "ForkTTY's Agent HUD turns hook and socket metadata into a scannable overview of active and persisted coding agents. It helps answer which agent is working, which pane owns it, whether it needs input, and whether a session can resume.",
+      "Optional hooks turn agent lifecycle events into a scannable list. The HUD helps locate a pane or resume a supported session without becoming a team or workflow engine.",
     keywords: ["Agent HUD", "coding agent status", "Claude Code status", "Codex status"],
     quickStart: {
-      intro:
-        "Install hooks first so sessions publish lifecycle metadata, then inspect HUD-backed rows from the same socket state.",
+      intro: "Install hooks manually if you want lifecycle metadata.",
       commands: [
-        { label: "Preview managed hook setup", command: "forktty hooks setup --dry-run" },
-        { label: "List tracked agents", command: "forktty agents --workspace-name main --json" },
-        { label: "Explain resume readiness", command: "forktty agent-health --workspace-name main --json" },
-        {
-          label: "Wait for an attention state",
-          command: "forktty wait agent-status --status needs_input --timeout-ms 30000",
-        },
+        { label: "Preview hook setup", command: "forktty hooks setup --dry-run" },
+        { label: "List tracked agents", command: "forktty agents --json" },
+        { label: "Inspect resume readiness", command: "forktty agent-health --json" },
       ],
     },
     sections: [
-      {
-        title: "Lifecycle without scrollback archaeology",
-        body: "Managed hooks publish provider-neutral status rows for supported agents. ForkTTY groups rows into scan-friendly states such as Working, Needs input, Done, and Idle while keeping diagnostic source and age metadata visible.",
-      },
-      {
-        title: "Actionable controls",
-        body: "HUD actions can focus a pane, resume a ready persisted session, or forget stale state. The UI highlights current panes and risky permission modes instead of burying them in terminal text.",
-      },
-      {
-        title: "Loop and team context",
-        body: "When a visible agent surface is bound to workflow loop state, compact chips show iteration and gate status. Team summaries and final states help leaders decide whether a worker is still active, stale, closed, or waiting.",
-      },
+      { title: "Lifecycle without tail scraping", body: "Supported hooks publish running, needs-input, idle, and ended metadata with source and freshness information." },
+      { title: "Narrow controls", body: "The HUD can focus a pane, inspect health, forget stale state, or resume a supported session." },
+      { title: "Optional by design", body: "ForkTTY remains a fully functional terminal when hooks are absent. Setup and updates are always explicit." },
     ],
     faqs: [
-      {
-        question: "Which agents appear in the Agent HUD?",
-        answer:
-          "Managed hooks cover Codex, Claude Code, Antigravity, and OpenCode. Pi and shell agents can participate through team/provider metadata and explicit status calls.",
-      },
-      {
-        question: "Is HUD status proof that an agent is live right now?",
-        answer:
-          "No. ForkTTY includes lifecycle evidence and freshness metadata so clients can distinguish persisted state from fresh hook output.",
-      },
-      {
-        question: "Can the HUD resume sessions?",
-        answer:
-          "When provider metadata is sufficient and the provider executable is available, Agent Health and HUD resume actions can reopen supported sessions.",
-      },
+      { question: "Which agents can publish hook state?", answer: "The bundled manual setup targets Codex, Claude Code, Antigravity, and OpenCode." },
+      { question: "Is persisted status proof an agent is live?", answer: "No. Source and age metadata distinguish saved lifecycle state from fresh events." },
+      { question: "Does the HUD coordinate teams?", answer: "No. It is a thin lifecycle, focus, and resume surface." },
     ],
-    related: ["codex", "claude-code", "team-orchestration"],
+    related: ["codex", "claude-code", "ghostty-terminal"],
   },
   {
     slug: "ghostty-terminal",
-    navLabel: "Ghostty",
-    title: "Embedded Ghostty Terminal Panes for Linux",
+    navLabel: "Ghostty terminal",
+    title: "Ghostty-Backed GTK Terminal for Linux",
     description:
-      "ForkTTY embeds Ghostty-backed GTK terminal panes with split panes, tabs, retained scrollback, OSC links, notifications, and Linux-native polish.",
+      "ForkTTY embeds Ghostty terminal widgets in a native GTK4/libadwaita workspace with tabs, splits, scrollback, links, clipboard, and notifications.",
     eyebrow: "Ghostty",
-    h1: "Ghostty-backed terminal panes inside ForkTTY.",
+    h1: "Ghostty terminals in a native GTK workspace.",
     intro:
-      "ForkTTY uses embedded Ghostty GTK terminal panes for the packaged Linux runtime. The goal is a native terminal workspace that still carries agent-aware metadata, notifications, worktrees, and socket automation.",
-    keywords: ["Ghostty terminal", "GTK terminal", "Linux terminal emulator", "terminal multiplexer"],
+      "ForkTTY combines embedded Ghostty terminal widgets with GTK4/libadwaita workspace chrome, sidebar navigation, tabs, and split panes.",
+    keywords: ["Ghostty GTK", "Linux terminal", "terminal multiplexer", "GTK4 terminal"],
     quickStart: {
-      intro:
-        "Use socket reads to inspect the visible Ghostty-backed panes without scraping the UI or relying on hidden terminal state.",
+      intro: "Install a release build, start the app, and use the command palette to discover workspace actions.",
       commands: [
-        { label: "List live terminal surfaces", command: "forktty surfaces --workspace-name main --json" },
-        { label: "Split the focused pane", command: "forktty split-surface --axis vertical" },
-        { label: "Capture the current terminal tail", command: "forktty capture-tail --surface-id <surface-id> --lines 80 --json" },
+        { label: "Start ForkTTY", command: "forktty" },
+        { label: "Inspect the installation", command: "forktty doctor" },
       ],
     },
     sections: [
-      {
-        title: "Native terminal behavior",
-        body: "ForkTTY keeps terminal selection, clipboard, OSC links, visual bell, scrollback budgets, and desktop notification behavior close to the underlying terminal runtime instead of replacing it with a web terminal.",
-      },
-      {
-        title: "Pane and workspace chrome",
-        body: "GTK chrome adds tabs, splits, workspace sidebar, pane bars, focus controls, command palette, settings, and notifications around Ghostty surfaces. Single-pane workspaces keep chrome quiet by design.",
-      },
-      {
-        title: "Packaged for alpha Linux",
-        body: "Release artifacts ship the GTK/Ghostty terminal build for Linux x86_64. AppImages prefer host GTK/libadwaita when available and keep a bundled fallback for systems without the expected runtime.",
-      },
+      { title: "Native terminal behavior", body: "Ghostty provides rendering, selection, clipboard, links, scrollback, and terminal protocol handling." },
+      { title: "Workspace chrome", body: "ForkTTY adds a vertical workspace sidebar, tabs, splits, keyboard navigation, drag and drop, and restore." },
+      { title: "Attention primitives", body: "OSC notifications, unread state, attention rings, and desktop notifications work for any terminal process." },
     ],
     faqs: [
-      {
-        question: "Is ForkTTY a Ghostty fork?",
-        answer:
-          "No. ForkTTY is a separate GTK/Rust application that embeds Ghostty-backed terminal surfaces and adds agent/workspace orchestration around them.",
-      },
-      {
-        question: "Are browser panes included in releases?",
-        answer:
-          "No. Packaged alpha releases are GTK/Ghostty terminal builds. Browser panes remain source-only behind the browser feature.",
-      },
-      {
-        question: "Does ForkTTY depend on host GTK?",
-        answer:
-          "The AppImage prefers host GTK/libadwaita when available and falls back to its bundled userspace stack when needed.",
-      },
+      { question: "Is ForkTTY a Ghostty fork?", answer: "No. It embeds Ghostty-backed terminal widgets inside a separate GTK application." },
+      { question: "Does it support split panes?", answer: "Yes, alongside tabs and multiple workspaces." },
+      { question: "Is it Linux-only?", answer: "Yes." },
     ],
-    related: ["pty-persistence-dtach", "agent-hud", "alternatives"],
+    related: ["pty-persistence-dtach", "git-worktrees", "alternatives"],
   },
   {
     slug: "pty-persistence-dtach",
     navLabel: "PTY persistence",
-    title: "dtach-backed PTY Process Persistence for ForkTTY",
+    title: "Persistent Terminal Processes with dtach",
     description:
-      "ForkTTY can keep plain terminal processes alive across UI restarts with optional dtach-backed PTY persistence, configured from Settings > Worktrees.",
-    eyebrow: "PTY persistence",
-    h1: "Keep plain terminal processes alive with dtach.",
+      "Optionally keep plain terminal processes alive across ForkTTY UI restarts with local dtach-backed sessions.",
+    eyebrow: "Persistence",
+    h1: "Keep terminal processes across UI restarts.",
     intro:
-      "ForkTTY restores workspace metadata and scrollback by default. For generic terminal panes, optional dtach-backed persistence can keep the real process tree alive when the GTK UI exits and reattach on relaunch.",
-    keywords: ["dtach", "PTY persistence", "terminal process persistence", "Linux terminal sessions"],
+      "ForkTTY can optionally place plain terminal sessions behind dtach so the process survives a UI restart and reattaches on relaunch.",
+    keywords: ["dtach terminal", "persistent PTY", "Linux terminal session", "terminal restore"],
     quickStart: {
-      intro:
-        "Install dtach through your distro or from source, restart ForkTTY so PATH is refreshed, then confirm broker detection before enabling persistence.",
+      intro: "Install dtach, enable process persistence in Settings, and verify capability detection.",
       commands: [
-        { label: "Debian or Ubuntu package", command: "sudo apt update && sudo apt install dtach" },
-        { label: "Fedora package", command: "sudo dnf install dtach" },
-        {
-          label: "Universal source fallback",
-          command: "git clone https://github.com/crigler/dtach.git && cd dtach && ./configure && make && sudo make install",
-        },
-        { label: "Verify ForkTTY sees the broker", command: "forktty capabilities | grep -i pty" },
+        { label: "Debian or Ubuntu", command: "sudo apt install dtach" },
+        { label: "Check capability detection", command: "forktty capabilities | grep -i pty" },
       ],
     },
     sections: [
-      {
-        title: "Why dtach is needed",
-        body: "The embedded Ghostty GTK ABI does not expose a PTY handoff primitive. ForkTTY therefore uses dtach as a small detach/reattach broker for plain terminal workloads when persistence is explicitly enabled.",
-      },
-      {
-        title: "What persists",
-        body: "Plain terminal processes such as shells, REPLs, editors, and dev servers can survive a UI restart when dtach is on PATH and persistence is enabled. Agent panes keep using provider resume flows; SSH and browser surfaces are not wrapped.",
-      },
-      {
-        title: "How to enable it",
-        body: "Install dtach for your distro, restart ForkTTY so it is on PATH, enable Settings > Worktrees > Persist terminal processes, and confirm broker availability with forktty capabilities.",
-        bullets: [
-          "Debian/Ubuntu/Fedora/openSUSE/Alpine/Gentoo usually have native packages.",
-          "Arch/CachyOS users can install from AUR or build upstream dtach from source.",
-          "Explicit pane close invalidates the broker socket so stale surface ids do not reattach to reused panes.",
-        ],
-      },
+      { title: "Explicit opt-in", body: "Process persistence is disabled by default and applies to plain terminal sessions when dtach is available." },
+      { title: "Predictable cleanup", body: "Closing or restarting a pane terminates its managed broker tree and removes the matching socket." },
+      { title: "Restore is not orchestration", body: "ForkTTY reconnects the terminal process; the process itself remains responsible for its own state and behavior." },
     ],
     faqs: [
-      {
-        question: "Does PTY persistence apply to agent panes?",
-        answer:
-          "No. Agent panes use provider-specific resume metadata. The dtach broker is only for plain terminal surfaces.",
-      },
-      {
-        question: "Is PTY persistence enabled by default?",
-        answer:
-          "No. It is opt-in from Settings > Worktrees and only activates when dtach is available.",
-      },
-      {
-        question: "Does it preserve full scrollback?",
-        answer:
-          "It preserves the running process through the broker. ForkTTY also has bounded scrollback replay, but the broker is not a full terminal history database.",
-      },
+      { question: "Is dtach bundled?", answer: "No. Install it through your distribution or from upstream." },
+      { question: "Is persistence enabled by default?", answer: "No." },
+      { question: "Does it preserve terminal layout too?", answer: "ForkTTY stores layout separately in its session file." },
     ],
-    related: ["ghostty-terminal", "git-worktrees"],
+    related: ["ghostty-terminal", "agent-hud", "alternatives"],
   },
   {
     slug: "team-orchestration",
-    navLabel: "Team orchestration",
-    title: "Team Orchestration for Coding Agents",
+    navLabel: "Parallel panes",
+    title: "Parallel Coding Agents in Terminal Panes",
     description:
-      "ForkTTY coordinates multi-agent coding teams with visible workers, tasks, mailbox dispatch, provider-aware submit, final-state health, and workflow loop metadata.",
-    eyebrow: "Team orchestration",
-    h1: "Coordinate coding-agent teams without hiding the terminals.",
+      "Run multiple coding agents visibly in ForkTTY tabs, split panes, and git worktree workspaces without a built-in team or workflow engine.",
+    eyebrow: "Parallel work",
+    h1: "Parallel agents, ordinary processes.",
     intro:
-      "ForkTTY team mode helps a leader assign tasks, launch workers, dispatch prompts, monitor health, and reconcile reports while every worker remains visible in a terminal pane.",
-    keywords: ["multi-agent coding", "agent orchestration", "AI coding team", "coding agent review"],
+      "ForkTTY provides the terminal primitives for parallel agent work—workspaces, tabs, splits, worktrees, focus, and notifications—while leaving roles, task assignment, and coordination to you or the agent tools you choose.",
+    keywords: ["parallel coding agents", "terminal split panes", "agent worktrees", "Linux workspace"],
     quickStart: {
-      intro:
-        "Start with one visible worker, watch its derived health state, then dry-run finish before closing disposable worker panes.",
+      intro: "Open separate panes or worktree workspaces, then launch each agent normally.",
       commands: [
-        {
-          label: "Launch a scoped worker prompt",
-          command:
-            'forktty team ask review-team codex-worker --agent codex --task-id inspect-ui --prompt "Inspect the current diff and report risks" --submit',
-        },
-        { label: "Watch worker health and inbox", command: "forktty team watch review-team --stale-after-ms 120000 --limit 10" },
-        { label: "Plan final cleanup", command: "forktty team finish review-team --dry-run" },
-        { label: "Finish and close disposable workers", command: "forktty team finish review-team --close-workers" },
+        { label: "Inspect the pane tree", command: "forktty tree" },
+        { label: "Create an isolated worktree", command: "forktty worktree-create feature/review --cwd /path/to/repo" },
+        { label: "Inspect current context", command: "forktty context-snapshot --tail-lines 0 --json" },
       ],
     },
     sections: [
-      {
-        title: "Roles, tasks, and mailbox dispatch",
-        body: "Team state records the leader, workers, tasks, messages, dispatch events, and health snapshots. Prompts can be queued and delivered only after the worker pane is ready.",
-      },
-      {
-        title: "Provider-aware worker handling",
-        body: "ForkTTY can choose providers from Settings > Agents when a worker is launched with auto selection, or use explicit providers when a task requires Codex, Claude Code, Pi, OpenCode, Antigravity, Grok, or a shell lane.",
-      },
-      {
-        title: "Finish with evidence",
-        body: "Team finish checks open tasks, pending messages, and live-looking worker final states before marking work done. Current-runtime launch-owned disposable panes can be closed deliberately; stale launch records are not enough.",
-      },
+      { title: "No hidden coordinator", body: "ForkTTY does not assign roles, route tasks, run workflow loops, manage team mailboxes, or schedule background agent work." },
+      { title: "Strong terminal primitives", body: "Use tabs and splits for visibility, worktrees for edit isolation, and notifications for attention." },
+      { title: "Bring your own flow", body: "A human, shell script, external MCP client, or agent-native feature can coordinate work without coupling ForkTTY's core to one orchestration model." },
     ],
     faqs: [
-      {
-        question: "Does ForkTTY run hidden autonomous agents?",
-        answer:
-          "No. ForkTTY records workflow loop state as metadata and keeps actual agent work visible through terminal panes and explicit socket/MCP/CLI calls.",
-      },
-      {
-        question: "Can team workers use different providers?",
-        answer:
-          "Yes. Workers can use explicit providers or auto-selection based on Settings > Agents and detected executables.",
-      },
-      {
-        question: "How does ForkTTY avoid closing user panes by mistake?",
-        answer:
-          "Close-worker flows are limited to disposable surfaces launched by the current ForkTTY runtime's team tools.",
-      },
+      { question: "Does ForkTTY have built-in teams?", answer: "No. Team, workflow, router, feed, and approval orchestration were removed from the terminal core." },
+      { question: "Can multiple agents still run at once?", answer: "Yes. Launch them in separate panes or worktree workspaces." },
+      { question: "How do agents request attention?", answer: "Use terminal output, OSC notifications, or the small local socket notification methods." },
     ],
-    related: ["claude-code", "codex", "mcp"],
+    related: ["git-worktrees", "ghostty-terminal", "agent-hud"],
   },
   {
     slug: "alternatives",
     navLabel: "Alternatives",
-    title: "ForkTTY Alternatives: Terminal Multiplexers and Agent Workspaces",
+    title: "ForkTTY and Other Agent Terminal Workspaces",
     description:
-      "Compare ForkTTY with terminal multiplexers, agent dashboards, and AI coding workspaces when you need Linux-native panes, git worktrees, MCP, and visible team orchestration.",
+      "Compare ForkTTY's Linux-native GTK/Ghostty workspace approach with terminal multiplexers, editor terminals, and orchestration-focused agent tools.",
     eyebrow: "Alternatives",
-    h1: "When ForkTTY fits better than a generic terminal multiplexer.",
+    h1: "A terminal workspace, not an agent platform.",
     intro:
-      "ForkTTY overlaps with terminal multiplexers, agent dashboards, and AI coding workspaces, but it is built around a specific local-first shape: Linux-native Ghostty panes plus agent metadata, worktrees, MCP/socket automation, and visible team coordination.",
-    keywords: ["ForkTTY alternatives", "terminal multiplexer", "agent workspace", "AI coding workspace"],
+      "ForkTTY is for Linux users who want native Ghostty-backed panes, a project sidebar, git worktrees, notifications, and a small local socket without adopting a bundled coordination engine.",
+    keywords: ["cmux Linux alternative", "agent terminal", "Ghostty workspace", "terminal multiplexer"],
     quickStart: {
-      intro:
-        "Compare ForkTTY by testing the concrete surfaces it adds around a normal terminal: capability discovery, compact context, worktrees, and team review.",
+      intro: "Try a release build and compare terminal behavior, workspace navigation, and resource use with your current setup.",
       commands: [
-        { label: "See what this install can do", command: "forktty capabilities" },
-        { label: "Read compact automation context", command: "forktty context-snapshot --tail-lines 0 --json" },
-        { label: "Check worktree support", command: "forktty worktree-list --cwd /path/to/repo" },
-        {
-          label: "Try a read-only review lane",
-          command: "forktty team review review-team reviewer --task-id review-head --commit HEAD --submit",
-        },
+        { label: "Inspect local health", command: "forktty doctor" },
+        { label: "List socket capabilities", command: "forktty capabilities" },
       ],
     },
     sections: [
-      {
-        title: "Compared with terminal multiplexers",
-        body: "tmux, screen, and similar tools are excellent for persistent terminal layout and remote shells. ForkTTY focuses on local GTK workspaces, agent lifecycle metadata, prompt-aware notifications, git worktree flows, and MCP/socket automation.",
-      },
-      {
-        title: "Compared with agent dashboards",
-        body: "Agent dashboards often abstract away the terminal. ForkTTY keeps the real terminal visible and treats orchestration state as a layer around it, so approvals, tests, and unexpected output stay inspectable.",
-      },
-      {
-        title: "Compared with hosted coding agents",
-        body: "Hosted agents can be convenient, but they move execution into a service. ForkTTY is local-first: bring your own CLI, account, repository, and Linux desktop; ForkTTY coordinates what runs there.",
-      },
+      { title: "Compared with tmux", body: "ForkTTY provides a native GTK desktop shell, embedded Ghostty rendering, project workspaces, desktop notifications, and mouse-driven panes." },
+      { title: "Compared with editor terminals", body: "ForkTTY keeps the terminal as the primary surface and works with any editor or coding agent CLI." },
+      { title: "Compared with agent platforms", body: "ForkTTY does not own prompts, model access, task routing, teams, workflows, or MCP configuration." },
     ],
     faqs: [
-      {
-        question: "Should I use ForkTTY instead of tmux?",
-        answer:
-          "Use tmux when you primarily need terminal persistence and remote session control. Use ForkTTY when agent status, local MCP/socket automation, git worktrees, and GTK/Ghostty desktop integration matter.",
-      },
-      {
-        question: "Is ForkTTY an AI agent by itself?",
-        answer:
-          "No. ForkTTY hosts and coordinates agent CLIs such as Codex, Claude Code, Pi, OpenCode, Antigravity, and Grok.",
-      },
-      {
-        question: "Is ForkTTY production-stable?",
-        answer:
-          "ForkTTY is currently alpha. It is useful for local agent workflows, but users should expect breaking changes between releases.",
-      },
+      { question: "Is ForkTTY a tmux replacement?", answer: "It overlaps with tabs and splits but uses a native GTK/Ghostty desktop model." },
+      { question: "Is ForkTTY a cmux port?", answer: "No. It shares the terminal-workspace product category but has an independent Rust/GTK implementation." },
+      { question: "Who should use it?", answer: "Linux users who want a focused graphical workspace for terminal-based development and coding agents." },
     ],
-    related: ["ghostty-terminal", "team-orchestration", "mcp"],
+    related: ["ghostty-terminal", "git-worktrees", "pty-persistence-dtach"],
   },
 ];
 

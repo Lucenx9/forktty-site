@@ -3,7 +3,7 @@ import { GitHubIcon, DownloadIcon } from "./Icons";
 import { HeroHotkeys } from "./HeroHotkeys";
 import { REPO_HTML_URL } from "@/lib/github";
 
-const CAPABILITIES = ["Router rail", "Agent HUD", "Git worktrees", "Local socket"];
+const CAPABILITIES = ["Ghostty panes", "Workspaces", "Git worktrees", "Local socket"];
 
 export function Hero() {
   return (
@@ -43,9 +43,9 @@ export function Hero() {
           </h1>
 
           <p className="max-w-3xl text-balance text-base leading-relaxed text-ink-300 sm:text-lg sm:leading-8">
-            Coordinate Codex, Claude Code, Pi, Antigravity, OpenCode, Grok Build,
-            and shell agents from one native GTK/Ghostty workbench. Keep routing,
-            worktrees, local automation, and resume-aware status visible.
+            Run Codex, Claude Code, Pi, Antigravity, OpenCode, Grok Build, and
+            shell tools side by side in one native GTK/Ghostty workbench. Keep
+            panes, worktrees, notifications, and resume-aware status visible.
           </p>
 
           <div className="flex flex-wrap justify-center gap-2">
@@ -97,32 +97,6 @@ export function Hero() {
           before running.
         </p>
 
-        <figure
-          className="reveal mt-3 w-[min(calc(100vw-2rem),88rem)] max-w-[88rem]"
-          style={{ animationDelay: "300ms" }}
-        >
-          <div className="hero-shot overflow-hidden rounded-xl border border-ink-700 bg-ink-900/70 shadow-panel">
-            <div
-              aria-hidden="true"
-              className="flex items-center justify-between gap-4 border-b border-ink-800 bg-ink-925 px-4 py-2.5 font-mono text-[10px] uppercase tracking-[0.13em]"
-            >
-              <span className="truncate text-ink-300">forktty / main</span>
-              <span className="hidden text-ink-500 sm:inline">
-                router rail / workflow feed / focused
-              </span>
-            </div>
-            <Image
-              src="/screenshots/forktty-app-focus.png"
-              alt="ForkTTY on Linux showing a workspace sidebar, embedded Ghostty terminal, Router rail, and bottom workflow feed."
-              width={1360}
-              height={820}
-              quality={95}
-              priority
-              className="block h-[14.5rem] w-full object-cover object-[58%_top] sm:h-auto sm:object-contain"
-              sizes="(min-width: 1408px) 1408px, 100vw"
-            />
-          </div>
-        </figure>
       </div>
     </section>
   );

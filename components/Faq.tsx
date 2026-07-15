@@ -5,11 +5,11 @@ const ITEMS = [
   },
   {
     q: "Which agents have first-class integration?",
-    a: "Codex, Claude Code, Antigravity, and OpenCode have hook-driven status and persisted session metadata for the Agent HUD and resume flow. Pi is supported for team launch, provider capabilities, Agent Skills, and safe resume through its documented CLI; Grok Build is supported for team launch, provider capabilities, safe resume, and plan-mode review workers. Custom tools can still use the socket CLI.",
+    a: "Every agent CLI works as a normal terminal process. Optional manual hooks for Codex, Claude Code, Antigravity, and OpenCode add lifecycle metadata for the Agent HUD and supported resume flows. Pi, Grok Build, shells, editors, and custom tools need no ForkTTY-specific integration.",
   },
   {
     q: "Can I script or automate it?",
-    a: "Yes — that's a core feature. The same forktty binary speaks a JSON-RPC API over a user-local Unix socket and can expose it as a local stdio MCP server: list workspaces, read context snapshots or terminal text, inspect pane trees, split/focus/send text, manage worktrees, notify, resume agents, publish status, and operate team, workflow, feed, project-action, and remote-inventory control planes.",
+    a: "Yes. The forktty binary speaks a bounded JSON-RPC-like API over an owner-only Unix socket for workspaces, panes, focus, terminal text, notifications, worktrees, project actions, remotes, and thin agent lifecycle controls. ForkTTY does not ship an MCP bridge; external MCP tools still run normally inside panes.",
   },
   {
     q: "Does it really do git worktrees?",

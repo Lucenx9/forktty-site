@@ -5,7 +5,7 @@ import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const SITE_DESCRIPTION =
-  "ForkTTY is a Linux-native workspace for coding agents with Ghostty terminals, git worktrees, local MCP/socket automation, team orchestration, and prompt-aware notifications.";
+  "ForkTTY is a Linux-native workspace for coding agents with Ghostty terminals, split panes, git worktrees, local socket automation, and prompt-aware notifications.";
 
 const plexMono = IBM_Plex_Mono({
   subsets: ["latin"],
@@ -49,12 +49,8 @@ export const metadata: Metadata = {
     "Rust",
     "git worktree",
     "socket API",
-    "MCP",
-    "MCP server",
     "agent hooks",
     "Agent HUD",
-    "agent orchestration",
-    "team orchestration",
     "terminal multiplexer",
   ],
   alternates: {
@@ -63,7 +59,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "ForkTTY — Linux-native workspace for coding agents",
     description:
-      "A GTK/Ghostty workspace in Rust for coordinating coding agents in tiled terminals — scriptable over a local socket and MCP, backed by git worktrees, with HUD and team flows.",
+      "A GTK/Ghostty workspace in Rust for running coding agents in tiled terminals — scriptable over a local socket, backed by git worktrees, with notifications and an Agent HUD.",
     url: SITE_URL,
     siteName: "ForkTTY",
     type: "website",
@@ -80,7 +76,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "ForkTTY",
     description:
-      "Linux-native workspace for coding agents. Rust + GTK/Ghostty, local socket and MCP, git worktrees, Agent HUD, and team orchestration.",
+      "Linux-native workspace for coding agents. Rust + GTK/Ghostty, split panes, local socket automation, git worktrees, notifications, and Agent HUD.",
     images: ["/og.png"],
   },
   icons: {
@@ -118,7 +114,6 @@ const STRUCTURED_DATA = [
     downloadUrl: "https://github.com/Lucenx9/forktty/releases",
     installUrl: "https://github.com/Lucenx9/forktty/releases",
     releaseNotes: "https://github.com/Lucenx9/forktty/blob/main/CHANGELOG.md",
-    screenshot: `${SITE_URL}/screenshots/forktty-app-focus.png`,
     sameAs: [
       "https://github.com/Lucenx9/forktty",
       "https://github.com/Lucenx9/forktty/releases",
@@ -128,8 +123,8 @@ const STRUCTURED_DATA = [
       "Agent HUD for coding agent lifecycle and resume state",
       "Git worktree workspaces for parallel branches",
       "Local JSON-RPC Unix socket automation",
-      "Local stdio MCP bridge",
-      "Provider-neutral team orchestration",
+      "Workspace tabs and split panes",
+      "Keyboard navigation and command palette",
       "Prompt-aware notifications",
       "Optional dtach-backed terminal process persistence",
     ],
