@@ -11,7 +11,7 @@ ForkTTY is a terminal workspace, not an agent platform. Codex, Claude Code, Pi, 
 ForkTTY includes:
 
 - Embedded Ghostty terminal panes in a native GTK4/libadwaita shell.
-- A vertical workspace sidebar, tabs, split panes, focus navigation, drag and drop, and layout restore.
+- A vertical workspace sidebar, tabs, split panes with compact headers and a focused-pane accent, focus navigation, drag and drop, and layout restore.
 - OSC notifications, desktop notifications, unread state, attention rings, and generic progress/status metadata.
 - Git branch and directory information plus git worktree workspace flows.
 - A command palette and an owner-only Unix socket for terminal workspace primitives.
