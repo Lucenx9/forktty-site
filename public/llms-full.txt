@@ -80,7 +80,7 @@ forktty hooks setup antigravity
 forktty hooks setup opencode
 ```
 
-Startup can report missing or stale managed hook entries but does not install or refresh them. Setup preserves unrelated provider configuration.
+Startup does not install or refresh hooks and does not nag about missing hooks. Optional setup remains available from the first-run welcome flow, Settings > Agents, and the CLI, and it preserves unrelated provider configuration.
 
 The thin agent surface consists of:
 
