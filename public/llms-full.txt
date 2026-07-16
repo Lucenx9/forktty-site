@@ -62,7 +62,7 @@ ForkTTY uses a DBus single-instance application. A second launch delegates to th
 - Use the workspace sidebar for projects and tabs/splits for concurrent processes.
 - Pane chrome is hidden for a single-pane workspace by design.
 - Drag pane headers to rearrange panes.
-- Session restore saves layout and directories in `~/.local/state/forktty/session-v2.json`.
+- Session restore saves layout and each local terminal pane's last live working directory in `~/.local/state/forktty/session-v2.json`.
 - Plain terminal processes do not survive UI restarts by default. Enable `general.persist_terminal_processes` when `dtach` is installed to opt in.
 - Terminal scrollback is bounded; `persistent_scrollback_lines = 0` leaves persistent disk scrollback disabled.
 

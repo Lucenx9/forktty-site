@@ -8,7 +8,7 @@ Key facts:
 
 - Linux-only, AGPL-3.0-only, Rust, GTK4/libadwaita, embedded Ghostty terminal panes.
 - Bring your own agent CLI, account, and subscription; ForkTTY provides no model access.
-- Core UI: workspace sidebar, tabs, split panes, keyboard navigation, drag and drop, notifications, unread state, attention rings, command palette, and layout/directory restore.
+- Core UI: workspace sidebar, tabs, split panes, keyboard navigation, drag and drop, notifications, unread state, attention rings, command palette, and layout restore with each local terminal pane's last live working directory.
 - Git worktrees can be created, attached, merged, and removed as visible workspaces with dirty-state protection.
 - The owner-only JSON-RPC Unix socket exposes 50 workspace, pane, terminal, notification, metadata, worktree, project-action, remote, and thin agent-lifecycle methods.
 - Optional hooks are installed and updated only through explicit `forktty hooks setup`; startup never changes agent configuration.

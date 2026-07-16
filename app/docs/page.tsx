@@ -48,7 +48,7 @@ const DOC_SECTIONS: DocSection[] = [
         kind: "list",
         items: [
           "Embedded Ghostty-backed terminals with native selection, clipboard, links, and scrollback.",
-          "Vertical project sidebar, tabs, split panes, keyboard navigation, drag and drop, and layout restore.",
+          "Vertical project sidebar, tabs, split panes, keyboard navigation, drag and drop, and layout restore with each local terminal pane's last live working directory.",
           "OSC and desktop notifications, unread state, attention rings, and a command palette.",
           "Git worktree workspaces and an owner-only local socket for focused automation.",
         ],
