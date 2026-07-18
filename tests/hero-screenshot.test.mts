@@ -16,6 +16,13 @@ test("home hero describes the simplified terminal workspace", async () => {
   assert.match(hero, /Ghostty panes/);
   assert.match(hero, /Git worktrees/);
   assert.match(hero, /Local socket/);
+  assert.match(hero, /src="\/screenshots\/forktty-workspace\.png"/);
+  assert.match(
+    hero,
+    /alt="ForkTTY workspace with three tiled agent terminals, workspace sidebar, and lifecycle status labels"/,
+  );
+  assert.match(hero, /width=\{2351\}/);
+  assert.match(hero, /height=\{1353\}/);
   assert.doesNotMatch(hero, /Router rail/);
   assert.doesNotMatch(hero, /workflow feed/);
   assert.doesNotMatch(hero, /forktty-app-focus\.png/);

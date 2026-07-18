@@ -97,6 +97,21 @@ export function Hero() {
           before running.
         </p>
 
+        <figure
+          className="reveal w-full max-w-6xl overflow-hidden rounded-lg border border-ink-800 bg-ink-900/80 p-1 shadow-panel"
+          style={{ animationDelay: "280ms" }}
+        >
+          <Image
+            src="/screenshots/forktty-workspace.png"
+            alt="ForkTTY workspace with three tiled agent terminals, workspace sidebar, and lifecycle status labels"
+            width={2351}
+            height={1353}
+            sizes="(min-width: 1280px) 1152px, (min-width: 640px) calc(100vw - 4rem), calc(100vw - 3rem)"
+            className="h-auto w-full rounded-md"
+            quality={95}
+            priority
+          />
+        </figure>
       </div>
     </section>
   );
