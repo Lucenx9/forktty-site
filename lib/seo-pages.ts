@@ -223,7 +223,7 @@ export const SEO_PAGES: SeoPage[] = [
       ],
     },
     sections: [
-      { title: "Native terminal behavior", body: "Ghostty provides rendering, selection, clipboard, links, scrollback, terminal protocol handling, and configured cursor blinking." },
+      { title: "Native terminal behavior", body: "Ghostty provides rendering, selection, clipboard, links, scrollback, and terminal protocol handling." },
       { title: "Workspace chrome", body: "ForkTTY adds a vertical workspace sidebar, tabs, splits, keyboard navigation, drag and drop, restore, and one consistent zoom level across newly opened panes." },
       { title: "Attention primitives", body: "OSC notifications, unread state, attention rings, and desktop notifications work for any terminal process." },
     ],
