@@ -119,7 +119,7 @@ test("layout exposes visible-page-aligned structured data", async () => {
   assert.match(layout, /"@type": "SoftwareApplication"/);
   assert.match(layout, /operatingSystem: "Linux"/);
   assert.match(layout, /applicationCategory: "DeveloperApplication"/);
-  assert.match(layout, /softwareVersion: "0\.2\.0-alpha\.18"/);
+  assert.match(layout, /softwareVersion: "0\.2\.0-alpha\.19"/);
   assert.match(layout, /featureList/);
   assert.match(layout, /codeRepository/);
   assert.doesNotMatch(layout, /Local stdio MCP bridge/);
