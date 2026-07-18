@@ -161,8 +161,10 @@ export const SEO_PAGES: SeoPage[] = [
     },
     sections: [
       { title: "Parallel work without collisions", body: "Each editing lane can have its own directory, branch, workspace, tabs, and pane tree." },
+      { title: "Retry-stable identity", body: "For the exact worktree-name/canonical-path identity, Create and Attach reuse the same existing modeled workspace ID and allocate no new modeled surface; same-named worktrees at different canonical paths stay distinct." },
       { title: "Visible repository boundary", body: "Socket operations validate paths against repositories already open in ForkTTY." },
       { title: "Conservative cleanup", body: "Remove and merge flows check dirty state and linked worktree metadata before changing repository state." },
+      { title: "Quiescent cleanup", body: "GTK and socket mutations serialize inside the running ForkTTY process, not through a cross-process Git lock. Remove suppresses automatic terminal respawn while closing the exact target and attempts to restore runtime/model state if the operation fails. Terminal respawn during rollback can fail; ForkTTY then records a blocking terminal error status before suppression ends." },
     ],
     faqs: [
       { question: "Why use worktrees with coding agents?", answer: "They let multiple processes edit different branches without sharing one checkout." },
@@ -221,8 +223,8 @@ export const SEO_PAGES: SeoPage[] = [
       ],
     },
     sections: [
-      { title: "Native terminal behavior", body: "Ghostty provides rendering, selection, clipboard, links, scrollback, and terminal protocol handling." },
-      { title: "Workspace chrome", body: "ForkTTY adds a vertical workspace sidebar, tabs, splits, keyboard navigation, drag and drop, and restore." },
+      { title: "Native terminal behavior", body: "Ghostty provides rendering, selection, clipboard, links, scrollback, terminal protocol handling, and configured cursor blinking." },
+      { title: "Workspace chrome", body: "ForkTTY adds a vertical workspace sidebar, tabs, splits, keyboard navigation, drag and drop, restore, and one consistent zoom level across newly opened panes." },
       { title: "Attention primitives", body: "OSC notifications, unread state, attention rings, and desktop notifications work for any terminal process." },
     ],
     faqs: [

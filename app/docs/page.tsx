@@ -48,6 +48,7 @@ const DOC_SECTIONS: DocSection[] = [
         kind: "list",
         items: [
           "Embedded Ghostty-backed terminals with native selection, clipboard, links, and scrollback.",
+          "Quiet GTK chrome with a seven-step type scale, a single warm accent, AA-readable muted text, and consistent 4/6/8px radii.",
           "Vertical project sidebar, tabs, split panes, keyboard navigation, drag and drop, and layout restore with each local terminal pane's last live working directory.",
           "OSC and desktop notifications, unread state, attention rings, and a command palette.",
           "Git worktree workspaces and an owner-only local socket for focused automation.",
@@ -83,6 +84,18 @@ const DOC_SECTIONS: DocSection[] = [
           "./ForkTTY-*.AppImage",
           "forktty doctor",
         ],
+      },
+      {
+        kind: "paragraph",
+        text: "AppImage auto mode runs a real eager loader compatibility probe with the effective loader environment. Host GTK/libadwaita is used only when both the ForkTTY binary and embedded Ghostty library load; otherwise AppRun selects its bundled fallback. Terminal child environments are sanitized only after the GTK-linked helper has loaded, immediately before it executes the real command.",
+      },
+      {
+        kind: "paragraph",
+        text: "Packaging runs ghostty-gtk-lib-probe.sh --ensure --print-path. Every invocation enters the incremental Zig build graph and then verifies every mandatory embedding ABI symbol before the library is accepted.",
+      },
+      {
+        kind: "paragraph",
+        text: "Embedded Bash, Zsh, fish, Elvish, and Nushell sessions preserve Ghostty shell integration and TERM=xterm-ghostty. A close request from the Ghostty widget uses ForkTTY's confirmation dialog; socket/API close remains noninteractive.",
       },
       {
         kind: "paragraph",
@@ -134,6 +147,10 @@ const DOC_SECTIONS: DocSection[] = [
         kind: "paragraph",
         text: "Pane chrome is hidden when a workspace contains one pane. That keeps the single-terminal view quiet while preserving headers and dividers where they are useful.",
       },
+      {
+        kind: "paragraph",
+        text: "Pane and tab actions stay bound to the surface that opened them, even if focus changes before activation. Maximize applies only when the real layout has multiple panes, counts tabs as part of one pane, and clears when the layout collapses. While the notification panel is visible it reconciles rows, count, Clear, and Open Latest every 500 ms; Dismiss and Clear refresh immediately. SSH workspace metadata reads ssh:<host> · connected or ssh:<host> · disconnected from local terminal readiness, not a network heartbeat.",
+      },
     ],
   },
   {
@@ -163,6 +180,8 @@ const DOC_SECTIONS: DocSection[] = [
         kind: "list",
         items: [
           "Lifecycle state can be delayed; source, age, and evidence fields distinguish persisted metadata from fresh events.",
+          "Restored agent panes require valid provider resume metadata; invalid session IDs, resume directories, or unsupported providers show a terminal error instead of opening a plain shell.",
+          "Suspended is a durable tombstone: late hooks cannot revive the session, emit side effects, or advance event order; only explicit resume replaces it.",
           "Provider credentials and model traffic remain inside each agent CLI.",
           "External MCP clients and servers remain ordinary terminal processes; ForkTTY does not ship or configure an MCP bridge.",
         ],
@@ -190,7 +209,15 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "Setup changes only ForkTTY-managed hook entries and preserves unrelated user configuration. Re-run setup explicitly after an update when doctor reports stale managed hooks.",
+        text: "Setup changes only ForkTTY-managed hook entries and preserves unrelated user configuration. Claude installs 26 lifecycle events by default or 29 with --full; Codex installs 10, Antigravity 3, and OpenCode 11. Re-run setup explicitly after an update when doctor reports stale managed hooks.",
+      },
+      {
+        kind: "paragraph",
+        text: "Hook doctor remains local and read-only. Its version-1 installationCheck regenerates the canonical managed plan and makes overall health fail for malformed, partial, modified, missing, or non-executable assets, including incomplete Antigravity wrapper sets.",
+      },
+      {
+        kind: "paragraph",
+        text: "Claude SessionStart enrichment requires workspace, surface, and absolute socket provenance together; partial provenance performs no socket I/O. Permission, elicitation, and recognized attention hooks carry a provider/session prompt identity. Accepted results retain only the matching in-app notification as read history and close its desktop notification; stale retries are inert, while session cleanup or target removal retires only affected prompts.",
       },
     ],
     sources: [{ label: "Hook details", href: `${REPO_DOCS}/hooks/README.md` }],
@@ -222,7 +249,9 @@ const DOC_SECTIONS: DocSection[] = [
         items: [
           "Workspace and surface methods cover list, create, focus, split, close, text input, bounded visible text, and tail capture.",
           "Notification and metadata methods publish generic attention, progress, status, logs, and statusline output.",
-          "Context snapshots include the newest 100 selected-workspace and global notifications, omit binary terminal icon data, and evaluate unread prompt risk across the full matching set.",
+          "notification.list returns one oldest-to-newest page: limit defaults to 200 and accepts 1–200, optional before_id is an exclusive retained-item cursor, and the CLI never aggregates pages automatically.",
+          "Context snapshots include the newest 100 selected-workspace and global notifications, omit terminal_metadata.icon_data, and evaluate unread prompt risk across the full matching set.",
+          "Normal response lines are capped at 64 MiB including the terminating newline; an oversized result becomes response_too_large with the original request id.",
           "Worktree and project-action methods validate repositories and argv-based commands against visible local state.",
           "Six agent lifecycle methods cover listing, health, reclaim planning, hibernate, reclaim, and resume.",
           "Router, task strategy, team, workflow, feed, approval orchestration, MCP, and managed-skill methods are not part of the API.",
@@ -232,6 +261,14 @@ const DOC_SECTIONS: DocSection[] = [
       {
         kind: "paragraph",
         text: "Set FORKTTY_SOCKET_PATH to an absolute path when the default runtime socket is unsuitable. Requests are newline-delimited, size-bounded, and accepted only through an owner-controlled Unix socket.",
+      },
+      {
+        kind: "paragraph",
+        text: "Official clients and startup collision checks share a deadline-bounded nonblocking AF_UNIX connector. A full Linux accept backlog retries with a fresh descriptor until the deadline; timeout means occupied/foreign, so the existing socket inode is never removed or replaced.",
+      },
+      {
+        kind: "paragraph",
+        text: "Cooperative GTK shutdown first stops new socket dispatch while the UI remains alive, then drains admitted requests and waits for the socket runtime to drop. Only afterward finalization snapshots bounded terminal scrollback, synchronizes live working directories, saves the session, cleans up configured PTY persistence, and closes the window.",
       },
     ],
     sources: [
@@ -259,6 +296,10 @@ const DOC_SECTIONS: DocSection[] = [
       {
         kind: "paragraph",
         text: "Worktree mutations are limited to repositories already represented by a ForkTTY workspace or surface cwd. Dirty-state checks protect uncommitted work during merge and removal flows.",
+      },
+      {
+        kind: "paragraph",
+        text: "For the exact worktree-name/canonical-path identity, Create and Attach retries reuse the same existing modeled workspace ID and allocate no new modeled surface; same-named worktrees at different canonical paths stay separate. GTK and socket mutations serialize inside the running ForkTTY process, not through a cross-process Git lock. Remove suppresses automatic terminal respawn while the exact target is quiesced, then either commits the model change or attempts to restore the prior runtime/model state before suppression ends. Terminal respawn during rollback can fail; ForkTTY then records a blocking terminal error status before suppression ends.",
       },
     ],
   },

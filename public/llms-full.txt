@@ -10,8 +10,12 @@ ForkTTY is a terminal workspace, not an agent platform. Codex, Claude Code, Pi, 
 
 ForkTTY includes:
 
-- Embedded Ghostty terminal panes in a native GTK4/libadwaita shell.
+- Embedded Ghostty terminal panes in a native GTK4/libadwaita shell; Ghostty
+  cursor-blink preferences and ForkTTY's current global zoom carry across newly
+  opened panes.
 - A vertical workspace sidebar, tabs, split panes with compact headers and a focused-pane accent, focus navigation, drag and drop, and layout restore.
+- Quiet GTK chrome with a seven-step type scale, a single warm accent,
+  AA-readable muted text, and consistent 4/6/8px radii.
 - OSC notifications, desktop notifications, unread state, attention rings, and generic progress/status metadata.
 - Git branch and directory information plus git worktree workspace flows.
 - A command palette and an owner-only Unix socket for terminal workspace primitives.
@@ -54,14 +58,22 @@ chmod +x ForkTTY-*.AppImage
 forktty doctor
 ```
 
+AppImage auto mode runs a real eager loader compatibility probe with the effective loader environment. Host GTK/libadwaita is used only when both the ForkTTY binary and embedded Ghostty library load; otherwise AppRun selects its bundled fallback. Terminal child environments are sanitized only after the GTK-linked helper has loaded, immediately before it executes the real command.
+
+Packaging runs `ghostty-gtk-lib-probe.sh --ensure --print-path`. Every invocation enters the incremental Zig build graph and then verifies every mandatory embedding ABI symbol before the library is accepted.
+
+Embedded Bash, Zsh, fish, Elvish, and Nushell sessions preserve Ghostty shell integration and `TERM=xterm-ghostty`. A close request from the Ghostty widget uses ForkTTY's confirmation dialog; socket/API close remains noninteractive.
+
 ForkTTY uses a DBus single-instance application. A second launch delegates to the running app. Source-only browser panes are behind the optional `browser` feature and are excluded from release artifacts.
 
 ## Terminal workspace
 
 - Open the command palette with `Ctrl+Shift+P`.
-- Use the workspace sidebar for projects and tabs/splits for concurrent processes.
-- Pane chrome is hidden for a single-pane workspace by design.
+- Use the workspace sidebar for projects and tabs/splits for concurrent processes. Pane and tab actions remain bound to the surface that opened them even if focus changes before activation.
+- Pane chrome is hidden for a single-pane workspace by design. Maximize applies only to real multi-pane trees, counts multiple tabs as one pane, and clears when a split collapses.
 - Drag pane headers to rearrange panes.
+- While visible, the notification panel reconciles rows, count, Clear, and Open Latest every 500 ms from one current snapshot; Dismiss and Clear refresh immediately.
+- SSH workspace metadata displays `ssh:<host> · connected` or `ssh:<host> · disconnected` from local terminal readiness, not a separate network/authentication heartbeat.
 - Session restore saves layout and each local terminal pane's last live working directory in `~/.local/state/forktty/session-v2.json`.
 - Plain terminal processes do not survive UI restarts by default. Enable `general.persist_terminal_processes` when `dtach` is installed to opt in.
 - Terminal scrollback is bounded; `persistent_scrollback_lines = 0` leaves persistent disk scrollback disabled.
@@ -69,6 +81,12 @@ ForkTTY uses a DBus single-instance application. A second launch delegates to th
 ## Agent lifecycle
 
 Agents require no ForkTTY-specific setup. Optional hooks for Codex, Claude Code, Antigravity, and OpenCode publish provider-neutral lifecycle metadata such as session id, cwd, status, last activity, attention, and resume information.
+
+Restored agent panes resume only through a validated provider command. Invalid persisted session IDs, resume directories, or unsupported providers produce a visible terminal error and never fall back to an unrelated plain shell.
+
+Persisted `Suspended` is a durable tombstone. Late hooks cannot revive that session, emit metadata or notifications, resolve prompts, or advance its event-order watermark; only explicit resume can replace the state.
+
+Hook-backed permission, elicitation, and recognized attention notifications carry normalized provider/session prompt identities. Accepted result events retain only the matching in-app notification as read history and close its desktop notification; stale retries do nothing. Session cleanup, target remap, and surface/workspace removal retire affected correlations while preserving unrelated unread prompts and terminal output attention.
 
 Hook changes are always explicit:
 
@@ -79,6 +97,10 @@ forktty hooks setup claude
 forktty hooks setup antigravity
 forktty hooks setup opencode
 ```
+
+The managed event sets contain Codex 10, Claude 26 lifecycle / 29 full, Antigravity 3, and OpenCode 11 events. Claude lifecycle excludes only `PreToolUse`, `PostToolUse`, and `PostToolUseFailure`; `PostToolBatch` remains for prompt-result correlation. Claude `SessionStart` enrichment requires workspace ID, surface ID, and an absolute socket path together. Partial provenance returns the exact continue response without socket I/O.
+
+`forktty hooks doctor <agent>` is local and read-only. Its additive version-1 `installationCheck` regenerates the canonical setup plan and gates top-level health on complete configs/plugins, one usable launcher, and exact regular executable Antigravity wrappers. Missing, malformed, partial, modified, or non-executable assets are unhealthy.
 
 Startup does not install or refresh hooks and does not nag about missing hooks. Optional setup remains available from the first-run welcome flow, Settings > Agents, and the CLI, and it preserves unrelated provider configuration.
 
@@ -120,12 +142,21 @@ Method families cover:
 
 - System capabilities and canonical caller/target identification.
 - Workspace and surface list, create, focus, rename, split, close, restart, and tree operations.
-- Bounded visible-text and scrollback-tail reads plus terminal input.
+- Bounded visible-text and scrollback-tail reads with complete-source line
+  counts, plus terminal input.
 - Generic notification, status, progress, log, and statusline publication.
 - Workspace-scoped plus global notification rows in context snapshots; unread prompts add `notification_needs_input` to risk flags.
 - Git worktree and repository-local project actions.
 - Remote inventory.
 - Six thin agent lifecycle operations: list, health, reclaim plan, hibernate, reclaim, and resume.
+
+`notification.list` returns one oldest-to-newest page: `limit` defaults to 200 and accepts 1–200, optional `before_id` is an exclusive retained-item cursor, and the CLI never aggregates pages automatically. `context.snapshot` includes the newest 100 matching notifications, omits `terminal_metadata.icon_data`, and checks unread-prompt risk across the full matching set.
+
+Normal response lines are capped at 64 MiB including the terminating newline; an oversized result becomes `response_too_large` with the original request id.
+
+Official clients and startup collision checks share a deadline-bounded nonblocking AF_UNIX connector. A full Linux accept backlog retries with a fresh descriptor until the deadline; timeout means occupied/foreign, so the existing socket inode is never removed or replaced.
+
+Cooperative GTK shutdown first stops new socket dispatch while the UI remains alive, then drains admitted requests and waits for the socket runtime to drop. Only afterward finalization snapshots bounded terminal scrollback, synchronizes live working directories, saves the session, cleans up configured PTY persistence, and closes the window.
 
 The socket has no router, task strategy, team, workflow, feed, approval orchestration, MCP, or skill-management methods.
 
@@ -150,6 +181,8 @@ forktty worktree-attach feature/my-task --cwd /path/to/repo
 ```
 
 Create, attach, merge, and remove flows validate the repository boundary. Dirty-state checks prevent destructive operations from silently discarding uncommitted work. Repository-local setup/teardown hooks and project actions remain explicit and argv-based.
+
+For the exact worktree-name/canonical-path identity, Create and Attach retries reuse the same existing modeled workspace ID and allocate no new modeled surface; same-named worktrees at different canonical paths remain separate. GTK and socket worktree mutations serialize inside the running ForkTTY process through commit or rollback. That coordination is process-local, not a cross-process or distributed Git lock. Remove suppresses automatic terminal respawn while the exact target's terminals are quiesced, then either commits the model change or attempts to restore the prior runtime/model state. Terminal respawn during rollback can fail; ForkTTY then records a blocking terminal error status before suppression ends.
 
 ## Configuration and local files
 
