@@ -180,6 +180,7 @@ const DOC_SECTIONS: DocSection[] = [
         kind: "list",
         items: [
           "Lifecycle state can be delayed; source, age, and evidence fields distinguish persisted metadata from fresh events.",
+          "Non-attention hook notifications are logged without changing lifecycle, so informational notifications after Stop do not revive an idle agent.",
           "Restored agent panes require valid provider resume metadata; invalid session IDs, resume directories, or unsupported providers show a terminal error instead of opening a plain shell.",
           "Suspended is a durable tombstone: late hooks cannot revive the session, emit side effects, or advance event order; only explicit resume replaces it.",
           "Provider credentials and model traffic remain inside each agent CLI.",

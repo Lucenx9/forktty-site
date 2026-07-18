@@ -81,6 +81,8 @@ ForkTTY uses a DBus single-instance application. A second launch delegates to th
 
 Agents require no ForkTTY-specific setup. Optional hooks for Codex, Claude Code, Antigravity, and OpenCode publish provider-neutral lifecycle metadata such as session id, cwd, status, last activity, attention, and resume information.
 
+Non-attention hook notifications are logged without changing lifecycle, so informational notifications received after `Stop` do not revive an idle agent.
+
 Restored agent panes resume only through a validated provider command. Invalid persisted session IDs, resume directories, or unsupported providers produce a visible terminal error and never fall back to an unrelated plain shell.
 
 Persisted `Suspended` is a durable tombstone. Late hooks cannot revive that session, emit metadata or notifications, resolve prompts, or advance its event-order watermark; only explicit resume can replace the state.
