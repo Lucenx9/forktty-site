@@ -99,7 +99,7 @@ forktty hooks setup antigravity
 forktty hooks setup opencode
 ```
 
-The managed event sets contain Codex 10, Claude 26 lifecycle / 29 full, Antigravity 3, and OpenCode 11 events. Claude lifecycle excludes only `PreToolUse`, `PostToolUse`, and `PostToolUseFailure`; `PostToolBatch` remains for prompt-result correlation. Claude `SessionStart` enrichment requires workspace ID, surface ID, and an absolute socket path together. Partial provenance returns the exact continue response without socket I/O.
+The managed event sets contain Codex 10, Claude 25 lifecycle / 28 full, Antigravity 3, and OpenCode 11 events. Claude lifecycle excludes only `PreToolUse`, `PostToolUse`, and `PostToolUseFailure`; `PostToolBatch` remains for prompt-result correlation. Claude `SessionStart` enrichment requires workspace ID, surface ID, and an absolute socket path together. Partial provenance returns the exact continue response without socket I/O.
 
 `forktty hooks doctor <agent>` is local and read-only. Its additive version-1 `installationCheck` regenerates the canonical setup plan and gates top-level health on complete configs/plugins, one usable launcher, and exact regular executable Antigravity wrappers. Missing, malformed, partial, modified, or non-executable assets are unhealthy.
 

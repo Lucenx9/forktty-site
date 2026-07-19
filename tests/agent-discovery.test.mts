@@ -97,6 +97,12 @@ test("agent context documents keep manual hook semantics aligned", async () => {
     assert.match(text, /explicit|manual/i);
     assert.match(text, /does not install|never refreshed|never changes|never install/i);
   }
+
+  for (const text of [docs, full]) {
+    assert.match(text, /Claude (?:installs )?25 lifecycle/);
+    assert.match(text, /28 (?:with --full|full)/);
+    assert.doesNotMatch(text, /Claude (?:installs )?26 lifecycle/);
+  }
 });
 
 test("agent context documents describe external MCP as a normal process", async () => {
