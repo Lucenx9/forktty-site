@@ -365,7 +365,7 @@ const DOC_SECTIONS: DocSection[] = [
       {
         kind: "list",
         items: [
-          "The Unix socket and its parent must be owned by the current user and use restrictive permissions.",
+          "The Unix socket and its parent must be owned by the current user and use restrictive permissions; each accepted connection is additionally verified against same-user (or root) SO_PEERCRED credentials.",
           "Request lines and terminal reads are bounded; terminal output is untrusted input.",
           "Project actions use validated argv arrays, never sh -c.",
           "Worktree operations are restricted to repositories represented by visible ForkTTY state.",

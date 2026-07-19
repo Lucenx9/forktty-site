@@ -163,7 +163,7 @@ The socket has no router, task strategy, team, workflow, feed, approval orchestr
 
 Security properties:
 
-- Socket and parent paths must be controlled by the current user and use restrictive permissions.
+- Socket and parent paths must be controlled by the current user (symlinked parents are rejected) and use restrictive permissions; accepted connections must carry same-user (or root) SO_PEERCRED credentials.
 - Request lines and terminal reads are size-bounded.
 - Terminal output is untrusted input.
 - Project actions use validated argv arrays and never `sh -c`.
