@@ -138,14 +138,14 @@ const DOC_SECTIONS: DocSection[] = [
         items: [
           "Open the command palette with Ctrl+Shift+P.",
           "Create tabs and split panes for shells, editors, servers, and coding agents.",
-          "Drag pane headers to rearrange panes and use the sidebar to switch projects.",
+          "Drag pane headers to rearrange panes and use the compact overlay sidebar to switch projects without resizing terminal panes.",
           "Use notifications and unread markers instead of polling every pane.",
           "Enable optional dtach-backed process persistence if terminal processes must survive a UI restart.",
         ],
       },
       {
         kind: "paragraph",
-        text: "Pane chrome is hidden when a workspace contains one pane. That keeps the single-terminal view quiet while preserving headers and dividers where they are useful.",
+        text: "Pane chrome is hidden when a workspace contains one pane. The workspace sidebar overlays the terminal layout instead of reflowing it, and routine activity summaries stay hidden unless a workspace needs attention or reports an error or terminal-exit state.",
       },
       {
         kind: "paragraph",
