@@ -218,6 +218,10 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
+        text: "Codex can execute hooks through a shared app-server without the terminal pane's FORKTTY_* environment. For local codex-tui sessions, ForkTTY restores lifecycle badges only when one unclaimed same-cwd Codex TUI process belongs to one eligible surface. Another same-cwd TUI, including one outside ForkTTY, makes the fallback stay unassigned.",
+      },
+      {
+        kind: "paragraph",
         text: "Claude SessionStart enrichment requires workspace, surface, and absolute socket provenance together; partial provenance performs no socket I/O. Permission, elicitation, and recognized attention hooks carry a provider/session prompt identity. Accepted results retain only the matching in-app notification as read history and close its desktop notification; stale retries are inert, while session cleanup or target removal retires only affected prompts.",
       },
     ],
