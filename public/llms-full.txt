@@ -12,11 +12,21 @@ ForkTTY includes:
 
 - Embedded Ghostty terminal panes in a native GTK4/libadwaita shell; ForkTTY's
   current global zoom carries across newly opened panes.
-- A vertical workspace sidebar, tabs, split panes with compact headers and a focused-pane accent, focus navigation, drag and drop, and layout restore.
-- Quiet GTK chrome with a seven-step type scale, a single warm accent,
-  AA-readable muted text, and consistent 4/6/8px radii.
+- A compact vertical workspace overlay, tabs, split panes with compact headers
+  and a focused-pane accent, focus navigation, drag and drop, and layout
+  restore. Opening the sidebar does not resize terminal panes; routine activity
+  summaries appear only for attention, error, or terminal-exit states.
+- Quiet GTK chrome with one permanent global titlebar, compact split-pane
+  headers whose pane-action hover fills remain inset from the focus hairline,
+  and no redundant bottom status bar. It uses a seven-step type scale,
+  a single warm accent, AA-readable muted text, and consistent 4/6/8px radii.
+  Settings uses General, Integrations, and System navigation with subtle raised
+  preference groups.
 - OSC notifications, desktop notifications, unread state, attention rings, and generic progress/status metadata.
 - Git branch and directory information plus git worktree workspace flows.
+  The Worktree manager keeps the source workspace and path visible, uses one
+  mode-specific target form, and makes clear that removal leaves the branch
+  intact.
 - A command palette and an owner-only Unix socket for terminal workspace primitives.
 - Optional, explicitly installed lifecycle hooks and a thin Agent HUD for focus, health, hibernate, reclaim, and resume.
 - Optional dtach-backed persistence for plain terminal processes.
@@ -68,7 +78,7 @@ ForkTTY uses a DBus single-instance application. A second launch delegates to th
 ## Terminal workspace
 
 - Open the command palette with `Ctrl+Shift+P`.
-- Use the workspace sidebar for projects and tabs/splits for concurrent processes. Pane and tab actions remain bound to the surface that opened them even if focus changes before activation.
+- Use the workspace sidebar for projects and tabs/splits for concurrent processes. Pane and tab actions remain bound to the surface that opened them even if focus changes before activation. If a new tab cannot start, the previous pane layout and focus are restored.
 - Pane chrome is hidden for a single-pane workspace by design. Maximize applies only to real multi-pane trees, counts multiple tabs as one pane, and clears when a split collapses.
 - Drag pane headers to rearrange panes.
 - While visible, the notification panel reconciles rows, count, Clear, and Open Latest every 500 ms from one current snapshot; Dismiss and Clear refresh immediately.
@@ -103,7 +113,7 @@ The managed event sets contain Codex 10, Claude 25 lifecycle / 28 full, Antigrav
 
 `forktty hooks doctor <agent>` is local and read-only. Its additive version-1 `installationCheck` regenerates the canonical setup plan and gates top-level health on complete configs/plugins, one usable launcher, and exact regular executable Antigravity wrappers. Missing, malformed, partial, modified, or non-executable assets are unhealthy.
 
-Startup does not install or refresh hooks and does not nag about missing hooks. Optional setup remains available from the first-run welcome flow, Settings > Agents, and the CLI, and it preserves unrelated provider configuration.
+Startup does not install or refresh hooks and does not nag about missing hooks. Optional setup remains available from the first-run welcome flow, Settings > Agent hooks, and the CLI. Settings names installed providers, confirms setup and updates before writing, and removes only ForkTTY-managed entries while preserving unrelated provider configuration. Hooks report lifecycle and attention state; they never move focus or rearrange panes.
 
 The thin agent surface consists of:
 

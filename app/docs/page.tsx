@@ -48,7 +48,7 @@ const DOC_SECTIONS: DocSection[] = [
         kind: "list",
         items: [
           "Embedded Ghostty-backed terminals with native selection, clipboard, links, and scrollback.",
-          "Quiet GTK chrome with a seven-step type scale, a single warm accent, AA-readable muted text, and consistent 4/6/8px radii.",
+          "Quiet GTK chrome with a seven-step type scale, a single warm accent, AA-readable muted text, and consistent 4/6/8px radii. Settings uses General, Integrations, and System navigation with subtle raised preference groups.",
           "Vertical project sidebar, tabs, split panes, keyboard navigation, drag and drop, and layout restore with each local terminal pane's last live working directory.",
           "OSC and desktop notifications, unread state, attention rings, and a command palette.",
           "Git worktree workspaces and an owner-only local socket for focused automation.",
@@ -138,18 +138,18 @@ const DOC_SECTIONS: DocSection[] = [
         items: [
           "Open the command palette with Ctrl+Shift+P.",
           "Create tabs and split panes for shells, editors, servers, and coding agents.",
-          "Drag pane headers to rearrange panes and use the sidebar to switch projects.",
+          "Drag pane headers to rearrange panes and use the compact overlay sidebar to switch projects without resizing terminal panes.",
           "Use notifications and unread markers instead of polling every pane.",
           "Enable optional dtach-backed process persistence if terminal processes must survive a UI restart.",
         ],
       },
       {
         kind: "paragraph",
-        text: "Pane chrome is hidden when a workspace contains one pane. That keeps the single-terminal view quiet while preserving headers and dividers where they are useful.",
+        text: "Pane chrome is hidden when a workspace contains one pane. Split-pane headers stay compact and reveal actions on interaction, while pane-action hover fills remain inset from the focus hairline; the titlebar is the only permanent global bar. The workspace sidebar overlays the terminal layout instead of reflowing it, and routine activity summaries stay hidden unless a workspace needs attention or reports an error or terminal-exit state.",
       },
       {
         kind: "paragraph",
-        text: "Pane and tab actions stay bound to the surface that opened them, even if focus changes before activation. Maximize applies only when the real layout has multiple panes, counts tabs as part of one pane, and clears when the layout collapses. While the notification panel is visible it reconciles rows, count, Clear, and Open Latest every 500 ms; Dismiss and Clear refresh immediately. SSH workspace metadata reads ssh:<host> · connected or ssh:<host> · disconnected from local terminal readiness, not a network heartbeat.",
+        text: "Pane and tab actions stay bound to the surface that opened them, even if focus changes before activation. If a new tab cannot start, ForkTTY restores the previous pane layout and focus. Maximize applies only when the real layout has multiple panes, counts tabs as part of one pane, and clears when the layout collapses. While the notification panel is visible it reconciles rows, count, Clear, and Open Latest every 500 ms; Dismiss and Clear refresh immediately. SSH workspace metadata reads ssh:<host> · connected or ssh:<host> · disconnected from local terminal readiness, not a network heartbeat.",
       },
     ],
   },
@@ -158,7 +158,7 @@ const DOC_SECTIONS: DocSection[] = [
     eyebrow: "Optional metadata",
     title: "Agent integrations",
     summary:
-      "Agents work without setup; optional hooks add lifecycle, attention, focus, and resume metadata.",
+      "Agents work without setup; optional hooks add lifecycle, attention, and resume metadata.",
     blocks: [
       {
         kind: "paragraph",
@@ -210,7 +210,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "Setup changes only ForkTTY-managed hook entries and preserves unrelated user configuration. Claude installs 25 lifecycle events by default or 28 with --full; Codex installs 10, Antigravity 3, and OpenCode 11. Re-run setup explicitly after an update when doctor reports stale managed hooks.",
+        text: "Settings > Agent hooks names installed providers, confirms setup and updates before writing, and removes only ForkTTY-managed entries. Hooks report lifecycle and attention state; they never move focus or rearrange panes. Setup preserves unrelated user configuration and backs up changed files. Claude installs 25 lifecycle events by default or 28 with --full; Codex installs 10, Antigravity 3, and OpenCode 11.",
       },
       {
         kind: "paragraph",
@@ -297,6 +297,10 @@ const DOC_SECTIONS: DocSection[] = [
       {
         kind: "paragraph",
         text: "Worktree mutations are limited to repositories already represented by a ForkTTY workspace or surface cwd. Dirty-state checks protect uncommitted work during merge and removal flows.",
+      },
+      {
+        kind: "paragraph",
+        text: "The Worktree manager keeps the source workspace and path visible while Create, Attach, Merge, and Remove share one mode-specific target form. Its label stays visible, and the removal flow states that the git branch remains intact.",
       },
       {
         kind: "paragraph",

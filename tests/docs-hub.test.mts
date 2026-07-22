@@ -54,6 +54,23 @@ test("public docs describe the quiet GTK design system", async () => {
     assert.match(text, /seven-step type scale/);
     assert.match(text, /single warm accent/);
     assert.match(text, /AA-readable muted text/);
+    assert.match(text, /General, Integrations, and System navigation/);
+    assert.match(text, /subtle raised\s+preference groups/);
+    assert.match(text, /pane-action hover fills remain inset/);
+  }
+});
+
+test("public docs describe the reversible Agent hooks settings flow", async () => {
+  const [docsPage, llms, llmsFull] = await Promise.all([
+    source("app/docs/page.tsx"),
+    source("public/llms.txt"),
+    source("public/llms-full.txt"),
+  ]);
+  for (const text of [docsPage, llms, llmsFull]) {
+    assert.match(text, /Settings > Agent hooks/);
+    assert.match(text, /ForkTTY-managed entries/);
+    assert.match(text, /preserv(?:es|ing) unrelated/);
+    assert.match(text, /never move focus or rearrange panes/);
   }
 });
 
@@ -109,6 +126,21 @@ test("worktree docs and agent context pin retry and removal coordination", async
     llms,
     /exact worktree-name\/canonical-path identity.*same existing modeled workspace ID and allocate no new modeled surface/,
   );
+});
+
+test("worktree docs describe the focused manager hierarchy", async () => {
+  const sources = await Promise.all([
+    source("app/docs/page.tsx"),
+    source("public/llms.txt"),
+    source("public/llms-full.txt"),
+  ]);
+
+  for (const text of sources) {
+    assert.match(text, /Worktree manager/);
+    assert.match(text, /source workspace and path/);
+    assert.match(text, /mode-specific target/);
+    assert.match(text, /branch remains intact|leaves the (?:git )?branch\s+intact/);
+  }
 });
 
 test("docs and agent context pin Slice 3 socket boundaries", async () => {
