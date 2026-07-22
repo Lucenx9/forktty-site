@@ -158,7 +158,7 @@ const DOC_SECTIONS: DocSection[] = [
     eyebrow: "Optional metadata",
     title: "Agent integrations",
     summary:
-      "Agents work without setup; optional hooks add lifecycle, attention, focus, and resume metadata.",
+      "Agents work without setup; optional hooks add lifecycle, attention, and resume metadata.",
     blocks: [
       {
         kind: "paragraph",
@@ -210,7 +210,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "Settings > Agent hooks names installed providers, confirms setup and updates before writing, and removes only ForkTTY-managed entries. Setup preserves unrelated user configuration and backs up changed files. Claude installs 25 lifecycle events by default or 28 with --full; Codex installs 10, Antigravity 3, and OpenCode 11.",
+        text: "Settings > Agent hooks names installed providers, confirms setup and updates before writing, and removes only ForkTTY-managed entries. Hooks report lifecycle and attention state; they never move focus or rearrange panes. Setup preserves unrelated user configuration and backs up changed files. Claude installs 25 lifecycle events by default or 28 with --full; Codex installs 10, Antigravity 3, and OpenCode 11.",
       },
       {
         kind: "paragraph",

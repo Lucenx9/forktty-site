@@ -70,6 +70,7 @@ test("public docs describe the reversible Agent hooks settings flow", async () =
     assert.match(text, /Settings > Agent hooks/);
     assert.match(text, /ForkTTY-managed entries/);
     assert.match(text, /preserv(?:es|ing) unrelated/);
+    assert.match(text, /never move focus or rearrange panes/);
   }
 });
 
