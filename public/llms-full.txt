@@ -16,8 +16,9 @@ ForkTTY includes:
   and a focused-pane accent, focus navigation, drag and drop, and layout
   restore. Opening the sidebar does not resize terminal panes; routine activity
   summaries appear only for attention, error, or terminal-exit states.
-- Quiet GTK chrome with a seven-step type scale, a single warm accent,
-  AA-readable muted text, and consistent 4/6/8px radii.
+- Quiet GTK chrome with one permanent global titlebar, compact split-pane
+  headers, and no redundant bottom status bar. It uses a seven-step type scale,
+  a single warm accent, AA-readable muted text, and consistent 4/6/8px radii.
 - OSC notifications, desktop notifications, unread state, attention rings, and generic progress/status metadata.
 - Git branch and directory information plus git worktree workspace flows.
 - A command palette and an owner-only Unix socket for terminal workspace primitives.
