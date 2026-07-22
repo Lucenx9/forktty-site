@@ -56,6 +56,7 @@ test("public docs describe the quiet GTK design system", async () => {
     assert.match(text, /AA-readable muted text/);
     assert.match(text, /General, Integrations, and System navigation/);
     assert.match(text, /subtle raised\s+preference groups/);
+    assert.match(text, /pane-action hover fills remain inset/);
   }
 });
 

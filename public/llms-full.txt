@@ -17,7 +17,8 @@ ForkTTY includes:
   restore. Opening the sidebar does not resize terminal panes; routine activity
   summaries appear only for attention, error, or terminal-exit states.
 - Quiet GTK chrome with one permanent global titlebar, compact split-pane
-  headers, and no redundant bottom status bar. It uses a seven-step type scale,
+  headers whose pane-action hover fills remain inset from the focus hairline,
+  and no redundant bottom status bar. It uses a seven-step type scale,
   a single warm accent, AA-readable muted text, and consistent 4/6/8px radii.
   Settings uses General, Integrations, and System navigation with subtle raised
   preference groups.
