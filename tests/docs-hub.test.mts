@@ -126,6 +126,21 @@ test("worktree docs and agent context pin retry and removal coordination", async
   );
 });
 
+test("worktree docs describe the focused manager hierarchy", async () => {
+  const sources = await Promise.all([
+    source("app/docs/page.tsx"),
+    source("public/llms.txt"),
+    source("public/llms-full.txt"),
+  ]);
+
+  for (const text of sources) {
+    assert.match(text, /Worktree manager/);
+    assert.match(text, /source workspace and path/);
+    assert.match(text, /mode-specific target/);
+    assert.match(text, /branch remains intact|leaves the (?:git )?branch\s+intact/);
+  }
+});
+
 test("docs and agent context pin Slice 3 socket boundaries", async () => {
   const [docsPage, llms, llmsFull] = await Promise.all([
     source("app/docs/page.tsx"),

@@ -23,6 +23,9 @@ ForkTTY includes:
   preference groups.
 - OSC notifications, desktop notifications, unread state, attention rings, and generic progress/status metadata.
 - Git branch and directory information plus git worktree workspace flows.
+  The Worktree manager keeps the source workspace and path visible, uses one
+  mode-specific target form, and makes clear that removal leaves the branch
+  intact.
 - A command palette and an owner-only Unix socket for terminal workspace primitives.
 - Optional, explicitly installed lifecycle hooks and a thin Agent HUD for focus, health, hibernate, reclaim, and resume.
 - Optional dtach-backed persistence for plain terminal processes.

@@ -300,6 +300,10 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
+        text: "The Worktree manager keeps the source workspace and path visible while Create, Attach, Merge, and Remove share one mode-specific target form. Its label stays visible, and the removal flow states that the git branch remains intact.",
+      },
+      {
+        kind: "paragraph",
         text: "For the exact worktree-name/canonical-path identity, Create and Attach retries reuse the same existing modeled workspace ID and allocate no new modeled surface; same-named worktrees at different canonical paths stay separate. GTK and socket mutations serialize inside the running ForkTTY process, not through a cross-process Git lock. Remove suppresses automatic terminal respawn while the exact target is quiesced, then either commits the model change or attempts to restore the prior runtime/model state before suppression ends. Terminal respawn during rollback can fail; ForkTTY then records a blocking terminal error status before suppression ends.",
       },
     ],
