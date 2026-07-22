@@ -72,7 +72,7 @@ ForkTTY uses a DBus single-instance application. A second launch delegates to th
 ## Terminal workspace
 
 - Open the command palette with `Ctrl+Shift+P`.
-- Use the workspace sidebar for projects and tabs/splits for concurrent processes. Pane and tab actions remain bound to the surface that opened them even if focus changes before activation.
+- Use the workspace sidebar for projects and tabs/splits for concurrent processes. Pane and tab actions remain bound to the surface that opened them even if focus changes before activation. If a new tab cannot start, the previous pane layout and focus are restored.
 - Pane chrome is hidden for a single-pane workspace by design. Maximize applies only to real multi-pane trees, counts multiple tabs as one pane, and clears when a split collapses.
 - Drag pane headers to rearrange panes.
 - While visible, the notification panel reconciles rows, count, Clear, and Open Latest every 500 ms from one current snapshot; Dismiss and Clear refresh immediately.

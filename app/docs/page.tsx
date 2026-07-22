@@ -149,7 +149,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "Pane and tab actions stay bound to the surface that opened them, even if focus changes before activation. Maximize applies only when the real layout has multiple panes, counts tabs as part of one pane, and clears when the layout collapses. While the notification panel is visible it reconciles rows, count, Clear, and Open Latest every 500 ms; Dismiss and Clear refresh immediately. SSH workspace metadata reads ssh:<host> · connected or ssh:<host> · disconnected from local terminal readiness, not a network heartbeat.",
+        text: "Pane and tab actions stay bound to the surface that opened them, even if focus changes before activation. If a new tab cannot start, ForkTTY restores the previous pane layout and focus. Maximize applies only when the real layout has multiple panes, counts tabs as part of one pane, and clears when the layout collapses. While the notification panel is visible it reconciles rows, count, Clear, and Open Latest every 500 ms; Dismiss and Clear refresh immediately. SSH workspace metadata reads ssh:<host> · connected or ssh:<host> · disconnected from local terminal readiness, not a network heartbeat.",
       },
     ],
   },
