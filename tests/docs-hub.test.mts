@@ -54,6 +54,8 @@ test("public docs describe the quiet GTK design system", async () => {
     assert.match(text, /seven-step type scale/);
     assert.match(text, /single warm accent/);
     assert.match(text, /AA-readable muted text/);
+    assert.match(text, /General, Integrations, and System navigation/);
+    assert.match(text, /subtle raised\s+preference groups/);
   }
 });
 

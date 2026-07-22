@@ -19,6 +19,8 @@ ForkTTY includes:
 - Quiet GTK chrome with one permanent global titlebar, compact split-pane
   headers, and no redundant bottom status bar. It uses a seven-step type scale,
   a single warm accent, AA-readable muted text, and consistent 4/6/8px radii.
+  Settings uses General, Integrations, and System navigation with subtle raised
+  preference groups.
 - OSC notifications, desktop notifications, unread state, attention rings, and generic progress/status metadata.
 - Git branch and directory information plus git worktree workspace flows.
 - A command palette and an owner-only Unix socket for terminal workspace primitives.
