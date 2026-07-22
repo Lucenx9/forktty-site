@@ -6,7 +6,7 @@ async function source(path: string): Promise<string> {
   return readFile(new URL(`../${path}`, import.meta.url), "utf8");
 }
 
-test("home hero describes the simplified terminal workspace", async () => {
+test("home hero describes the multi-agent terminal workspace", async () => {
   const hero = await source("components/Hero.tsx");
 
   assert.match(hero, /<h1[\s\S]*?>[\s\S]*forktty[\s\S]*<\/h1>/);
@@ -19,10 +19,10 @@ test("home hero describes the simplified terminal workspace", async () => {
   assert.match(hero, /src="\/screenshots\/forktty-workspace\.png"/);
   assert.match(
     hero,
-    /alt="ForkTTY workspace with three split terminals and a compact content-first titlebar"/,
+    /alt="ForkTTY workspace running several coding agents across split terminal panes"/,
   );
-  assert.match(hero, /width=\{1410\}/);
-  assert.match(hero, /height=\{870\}/);
+  assert.match(hero, /width=\{2304\}/);
+  assert.match(hero, /height=\{1300\}/);
   assert.doesNotMatch(hero, /Router rail/);
   assert.doesNotMatch(hero, /workflow feed/);
   assert.doesNotMatch(hero, /forktty-app-focus\.png/);

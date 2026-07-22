@@ -103,9 +103,9 @@ export function Hero() {
         >
           <Image
             src="/screenshots/forktty-workspace.png"
-            alt="ForkTTY workspace with three split terminals and a compact content-first titlebar"
-            width={1410}
-            height={870}
+            alt="ForkTTY workspace running several coding agents across split terminal panes"
+            width={2304}
+            height={1300}
             sizes="(min-width: 1280px) 1152px, (min-width: 640px) calc(100vw - 4rem), calc(100vw - 3rem)"
             className="h-auto w-full rounded-md"
             quality={95}
