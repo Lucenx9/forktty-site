@@ -210,7 +210,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "Setup changes only ForkTTY-managed hook entries and preserves unrelated user configuration. Claude installs 25 lifecycle events by default or 28 with --full; Codex installs 10, Antigravity 3, and OpenCode 11. Re-run setup explicitly after an update when doctor reports stale managed hooks.",
+        text: "Settings > Agent hooks names installed providers, confirms setup and updates before writing, and removes only ForkTTY-managed entries. Setup preserves unrelated user configuration and backs up changed files. Claude installs 25 lifecycle events by default or 28 with --full; Codex installs 10, Antigravity 3, and OpenCode 11.",
       },
       {
         kind: "paragraph",

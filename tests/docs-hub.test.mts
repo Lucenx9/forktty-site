@@ -59,6 +59,19 @@ test("public docs describe the quiet GTK design system", async () => {
   }
 });
 
+test("public docs describe the reversible Agent hooks settings flow", async () => {
+  const [docsPage, llms, llmsFull] = await Promise.all([
+    source("app/docs/page.tsx"),
+    source("public/llms.txt"),
+    source("public/llms-full.txt"),
+  ]);
+  for (const text of [docsPage, llms, llmsFull]) {
+    assert.match(text, /Settings > Agent hooks/);
+    assert.match(text, /ForkTTY-managed entries/);
+    assert.match(text, /preserv(?:es|ing) unrelated/);
+  }
+});
+
 test("docs and agent context pin the packaged Ghostty runtime contract", async () => {
   const [docsPage, llms, llmsFull] = await Promise.all([
     source("app/docs/page.tsx"),

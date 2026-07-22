@@ -109,7 +109,7 @@ The managed event sets contain Codex 10, Claude 25 lifecycle / 28 full, Antigrav
 
 `forktty hooks doctor <agent>` is local and read-only. Its additive version-1 `installationCheck` regenerates the canonical setup plan and gates top-level health on complete configs/plugins, one usable launcher, and exact regular executable Antigravity wrappers. Missing, malformed, partial, modified, or non-executable assets are unhealthy.
 
-Startup does not install or refresh hooks and does not nag about missing hooks. Optional setup remains available from the first-run welcome flow, Settings > Agents, and the CLI, and it preserves unrelated provider configuration.
+Startup does not install or refresh hooks and does not nag about missing hooks. Optional setup remains available from the first-run welcome flow, Settings > Agent hooks, and the CLI. Settings names installed providers, confirms setup and updates before writing, and removes only ForkTTY-managed entries while preserving unrelated provider configuration.
 
 The thin agent surface consists of:
 
