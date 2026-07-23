@@ -14,8 +14,10 @@ ForkTTY includes:
   current global zoom carries across newly opened panes.
 - A compact vertical workspace overlay, tabs, split panes with compact headers
   and a focused-pane accent, focus navigation, drag and drop, and layout
-  restore. Opening the sidebar does not resize terminal panes; routine activity
-  summaries appear only for attention, error, or terminal-exit states.
+  restore. Opening the sidebar does not resize terminal panes; dense flat rows
+  use restrained selection and reorder cues, pane counts read as borderless
+  metadata, and routine activity summaries appear only for attention, error,
+  or terminal-exit states.
 - Quiet GTK chrome with one permanent global titlebar, compact split-pane
   headers whose pane-action hover fills remain inset from the focus hairline,
   and no redundant bottom status bar. It uses a seven-step type scale,
