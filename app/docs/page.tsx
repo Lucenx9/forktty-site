@@ -145,7 +145,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "Pane chrome is hidden when a workspace contains one pane. Split-pane headers stay compact and reveal actions on interaction, while pane-action hover fills remain inset from the focus hairline; the titlebar is the only permanent global bar. The workspace sidebar overlays the terminal layout instead of reflowing it, and routine activity summaries stay hidden unless a workspace needs attention or reports an error or terminal-exit state.",
+        text: "Pane chrome is hidden when a workspace contains one pane. Split-pane headers stay compact and reveal actions on interaction, while pane-action hover fills remain inset from the focus hairline; the titlebar is the only permanent global bar. The workspace sidebar overlays the terminal layout instead of reflowing it. Dense flat rows keep selection and reorder cues restrained, pane counts read as borderless metadata, and routine activity summaries stay hidden unless a workspace needs attention or reports an error or terminal-exit state.",
       },
       {
         kind: "paragraph",
