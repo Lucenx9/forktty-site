@@ -165,6 +165,9 @@ test("docs and agent context pin Slice 3 socket boundaries", async () => {
     assert.match(text, /snapshot.*scrollback/);
     assert.match(text, /saves the session/);
     assert.match(text, /deadline-bounded nonblocking AF_UNIX connector/);
+    assert.match(text, /SO_PEERCRED/);
+    assert.match(text, /effective UID/);
+    assert.match(text, /before sending requests/i);
     assert.match(text, /timeout.*occupied\/foreign/);
     assert.match(text, /inode is never removed or replaced/);
   }

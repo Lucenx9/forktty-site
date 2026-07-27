@@ -171,7 +171,7 @@ Method families cover:
 
 Normal response lines are capped at 64 MiB including the terminating newline; an oversized result becomes `response_too_large` with the original request id.
 
-Official clients and startup collision checks share a deadline-bounded nonblocking AF_UNIX connector. A full Linux accept backlog retries with a fresh descriptor until the deadline; timeout means occupied/foreign, so the existing socket inode is never removed or replaced.
+Official clients and startup collision checks share a deadline-bounded nonblocking AF_UNIX connector. Before sending requests, official CLI and hook clients verify the connected server's `SO_PEERCRED` UID matches their effective UID. A full Linux accept backlog retries with a fresh descriptor until the deadline; timeout means occupied/foreign, so the existing socket inode is never removed or replaced.
 
 Cooperative GTK shutdown first stops new socket dispatch while the UI remains alive, then drains admitted requests and waits for the socket runtime to drop. Only afterward finalization snapshots bounded terminal scrollback, synchronizes live working directories, saves the session, cleans up configured PTY persistence, and closes the window.
 
@@ -179,7 +179,7 @@ The socket has no router, task strategy, team, workflow, feed, approval orchestr
 
 Security properties:
 
-- Socket and parent paths must be controlled by the current user (symlinked parents are rejected) and use restrictive permissions; accepted connections must carry same-user (or root) SO_PEERCRED credentials.
+- Socket and parent paths must be controlled by the current user (symlinked parents are rejected) and use restrictive permissions; accepted connections must carry same-user (or root) `SO_PEERCRED` credentials, and official clients authenticate the server peer before writing request data.
 - Request lines and terminal reads are size-bounded.
 - Terminal output is untrusted input.
 - Project actions use validated argv arrays and never `sh -c`.

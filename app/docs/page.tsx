@@ -265,7 +265,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "Set FORKTTY_SOCKET_PATH to an absolute path when the default runtime socket is unsuitable. Requests are newline-delimited, size-bounded, and accepted only through an owner-controlled Unix socket.",
+        text: "Set FORKTTY_SOCKET_PATH to an absolute path when the default runtime socket is unsuitable. Requests are newline-delimited and size-bounded. Official CLI and hook clients verify the connected server's SO_PEERCRED UID matches their effective UID before sending request data.",
       },
       {
         kind: "paragraph",
@@ -373,7 +373,7 @@ const DOC_SECTIONS: DocSection[] = [
       {
         kind: "list",
         items: [
-          "The Unix socket and its parent must be owned by the current user and use restrictive permissions; each accepted connection is additionally verified against same-user (or root) SO_PEERCRED credentials.",
+          "The Unix socket and its parent must be owned by the current user and use restrictive permissions; the server verifies each accepted connection against same-user (or root) SO_PEERCRED credentials, and official clients verify the server peer matches their effective UID before sending requests.",
           "Request lines and terminal reads are bounded; terminal output is untrusted input.",
           "Project actions use validated argv arrays, never sh -c.",
           "Worktree operations are restricted to repositories represented by visible ForkTTY state.",
