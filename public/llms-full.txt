@@ -15,13 +15,15 @@ ForkTTY includes:
 - A compact vertical workspace overlay, tabs, split panes with compact headers
   and a focused-pane accent, focus navigation, drag and drop, and layout
   restore. Opening the sidebar does not resize terminal panes; dense flat rows
-  use restrained selection and reorder cues, pane counts read as borderless
-  metadata, and routine activity summaries appear only for attention, error,
-  or terminal-exit states.
+  reuse unchanged widgets during refresh, use restrained selection and reorder
+  cues, show pane counts as borderless metadata, and surface routine activity
+  summaries only for attention, error, or terminal-exit states.
 - Quiet GTK chrome with one permanent global titlebar, compact split-pane
-  headers whose pane-action hover fills remain inset from the focus hairline,
-  and no redundant bottom status bar. It uses a seven-step type scale,
-  a single warm accent, AA-readable muted text, and consistent 4/6/8px radii.
+  headers whose pane-action hover fills remain inset from the focus hairline, a
+  stronger inactive-attention hairline and dot, thin split lines inside larger
+  drag targets, and no redundant bottom status bar. It uses a
+  seven-step type scale, a single warm accent, AA-readable muted text, and
+  consistent 4/6/8px radii.
   Settings uses General, Integrations, and System navigation with subtle raised
   preference groups.
 - OSC notifications, desktop notifications, unread state, attention rings, and generic progress/status metadata.
@@ -83,7 +85,7 @@ ForkTTY uses a DBus single-instance application. A second launch delegates to th
 - Use the workspace sidebar for projects and tabs/splits for concurrent processes. Pane and tab actions remain bound to the surface that opened them even if focus changes before activation. If a new tab cannot start, the previous pane layout and focus are restored.
 - Pane chrome is hidden for a single-pane workspace by design. Maximize applies only to real multi-pane trees, counts multiple tabs as one pane, and clears when a split collapses.
 - Drag pane headers to rearrange panes.
-- While visible, the notification panel reconciles rows, count, Clear, and Open Latest every 500 ms from one current snapshot; Dismiss and Clear refresh immediately.
+- While visible, the notification panel reconciles rows, count, Clear, and Open Latest every 500 ms from one current snapshot; targeted rows lead with workspace/path context, visible refreshes preserve scroll position, and Dismiss/Clear refresh immediately.
 - SSH workspace metadata displays `ssh:<host> · connected` or `ssh:<host> · disconnected` from local terminal readiness, not a separate network/authentication heartbeat.
 - Session restore saves layout and each local terminal pane's last live working directory in `~/.local/state/forktty/session-v2.json`. Live `/proc/<pid>/cwd` values containing non-UTF-8 Unix bytes are ignored so the last valid cwd remains safe for JSON responses and session persistence.
 - Plain terminal processes do not survive UI restarts by default. Enable `general.persist_terminal_processes` when `dtach` is installed to opt in.

@@ -145,11 +145,11 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "Pane chrome is hidden when a workspace contains one pane. Split-pane headers stay compact and reveal actions on interaction, while pane-action hover fills remain inset from the focus hairline; the titlebar is the only permanent global bar. The workspace sidebar overlays the terminal layout instead of reflowing it. Dense flat rows keep selection and reorder cues restrained, pane counts read as borderless metadata, and routine activity summaries stay hidden unless a workspace needs attention or reports an error or terminal-exit state.",
+        text: "Pane chrome is hidden when a workspace contains one pane. Split-pane headers stay compact and reveal actions on interaction, while pane-action hover fills remain inset from the focus hairline; inactive attention uses a stronger warm hairline and dot, and split dividers keep a thin line inside a larger drag target. The titlebar is the only permanent global bar. The workspace sidebar overlays the terminal layout instead of reflowing it. Dense flat rows keep selection and reorder cues restrained, reuse unchanged row widgets during refresh, show pane counts as borderless metadata, and hide routine activity summaries unless a workspace needs attention or reports an error or terminal-exit state.",
       },
       {
         kind: "paragraph",
-        text: "Pane and tab actions stay bound to the surface that opened them, even if focus changes before activation. If a new tab cannot start, ForkTTY restores the previous pane layout and focus. Maximize applies only when the real layout has multiple panes, counts tabs as part of one pane, and clears when the layout collapses. While the notification panel is visible it reconciles rows, count, Clear, and Open Latest every 500 ms; Dismiss and Clear refresh immediately. SSH workspace metadata reads ssh:<host> · connected or ssh:<host> · disconnected from local terminal readiness, not a network heartbeat.",
+        text: "Pane and tab actions stay bound to the surface that opened them, even if focus changes before activation. If a new tab cannot start, ForkTTY restores the previous pane layout and focus. Maximize applies only when the real layout has multiple panes, counts tabs as part of one pane, and clears when the layout collapses. While the notification panel is visible it reconciles rows, count, Clear, and Open Latest every 500 ms; targeted rows lead with workspace/path context, visible refreshes preserve scroll position, and Dismiss/Clear refresh immediately. SSH workspace metadata reads ssh:<host> · connected or ssh:<host> · disconnected from local terminal readiness, not a network heartbeat.",
       },
     ],
   },
