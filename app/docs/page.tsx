@@ -138,14 +138,14 @@ const DOC_SECTIONS: DocSection[] = [
         items: [
           "Open the command palette with Ctrl+Shift+P.",
           "Create tabs and split panes for shells, editors, servers, and coding agents.",
-          "Drag pane headers to rearrange panes and use the compact overlay sidebar to switch projects without resizing terminal panes.",
+          "Drag pane headers to rearrange panes. Leave the compact workspace sidebar unpinned to overlay terminal panes, or pin it beside them for persistent navigation.",
           "Use notifications and unread markers instead of polling every pane.",
           "Enable optional dtach-backed process persistence if terminal processes must survive a UI restart.",
         ],
       },
       {
         kind: "paragraph",
-        text: "Pane chrome is hidden when a workspace contains one pane. Split-pane headers stay compact and reveal actions on interaction, while pane-action hover fills remain inset from the focus hairline; inactive attention uses a stronger warm hairline and dot, and split dividers keep a thin line inside a larger drag target. The titlebar is the only permanent global bar. The workspace sidebar overlays the terminal layout instead of reflowing it. Dense flat rows keep selection and reorder cues restrained, reuse unchanged row widgets during refresh, show pane counts as borderless metadata, and hide routine activity summaries unless a workspace needs attention or reports an error or terminal-exit state.",
+        text: "Pane chrome is hidden when a workspace contains one pane. Split-pane headers stay compact and reveal actions on interaction, while pane-action hover fills remain inset from the focus hairline; inactive attention uses a stronger warm hairline and dot, and split dividers keep a thin line inside a larger drag target. The titlebar is the only permanent global bar. The workspace sidebar overlays the terminal layout by default, and its header pin keeps it beside the terminal when persistent navigation matters. The saved pin choice stays independent from Ctrl+B/F9 visibility. Dense flat rows keep selection and reorder cues restrained, reuse unchanged row widgets during refresh, show pane counts as borderless metadata, and hide routine activity summaries unless a workspace needs attention or reports an error or terminal-exit state.",
       },
       {
         kind: "paragraph",
