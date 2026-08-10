@@ -30,7 +30,7 @@ ForkTTY includes:
   preference groups.
 - OSC notifications, desktop notifications, unread state, attention rings, and generic progress/status metadata.
 - Git branch and directory information plus git worktree workspace flows.
-  The Worktree manager keeps the source workspace and path visible, uses one
+  The Worktree manager keeps the relevant workspace and checkout context visible, uses one
   mode-specific target form, and makes clear that removal leaves the branch
   intact.
 - A command palette and an owner-only Unix socket for terminal workspace primitives.
@@ -199,7 +199,7 @@ forktty worktree-status --cwd /path/to/repo
 forktty worktree-attach feature/my-task --cwd /path/to/repo
 ```
 
-Create and attach work from either the primary checkout or a linked worktree. New branches retain the active checkout's HEAD while registration and placement use the common repository layout. Merge and Remove show the resolved primary checkout used for the operation. All create, attach, merge, and remove flows validate the repository boundary. Dirty-state checks prevent destructive operations from silently discarding uncommitted work. Repository-local setup/teardown hooks and project actions remain explicit and argv-based.
+Create and attach work from either the primary checkout or a linked worktree. New branches retain the active checkout's HEAD while registration and placement use the common repository layout. Merge and Remove show the resolved primary checkout used for the operation. Mutating actions reject an external separate-git-dir layout when metadata cannot verify the primary checkout instead of guessing from the shared git-directory parent. All create, attach, merge, and remove flows validate the repository boundary. Dirty-state checks prevent destructive operations from silently discarding uncommitted work. Repository-local setup/teardown hooks and project actions remain explicit and argv-based.
 
 For the exact worktree-name/canonical-path identity, Create and Attach retries reuse the same existing modeled workspace ID and allocate no new modeled surface; same-named worktrees at different canonical paths remain separate. GTK and socket worktree mutations serialize inside the running ForkTTY process through commit or rollback. That coordination is process-local, not a cross-process or distributed Git lock. Remove suppresses automatic terminal respawn while the exact target's terminals are quiesced, then either commits the model change or attempts to restore the prior runtime/model state. Terminal respawn during rollback can fail; ForkTTY then records a blocking terminal error status before suppression ends.
 
@@ -252,7 +252,7 @@ forktty capabilities
 ```
 
 - If socket commands fail, launch ForkTTY or set an absolute `FORKTTY_SOCKET_PATH`.
-- Corrupt config or session files are quarantined and replaced with safe defaults.
+- Corrupt config or session files are quarantined and replaced with safe defaults. Config recovery remains visible as a Config Issue notification after saved workspaces restore.
 - If hook metadata is missing or stale, inspect `forktty hooks setup --dry-run` before applying setup again.
 - For bug reports, include distro, desktop environment, install method, reproduction steps, and relevant doctor output.
 

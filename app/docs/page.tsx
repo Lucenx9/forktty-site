@@ -308,7 +308,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "The Worktree manager keeps the source workspace and path visible while Create, Attach, Merge, and Remove share one mode-specific target form. Create and Attach work from the primary checkout or an active linked worktree, retain that active checkout's HEAD for new branches, and place new worktrees in the common repository layout. Merge and Remove show the resolved primary checkout used for the operation, and the removal flow states that the git branch remains intact.",
+        text: "The Worktree manager keeps the relevant workspace and checkout context visible while Create, Attach, Merge, and Remove share one mode-specific target form. Create and Attach work from the primary checkout or an active linked worktree, retain that active checkout's HEAD for new branches, and place new worktrees in the common repository layout. Merge and Remove show the resolved primary checkout used for the operation, and the removal flow states that the git branch remains intact. Mutating worktree actions reject external separate-git-dir layouts when repository metadata cannot verify the primary checkout instead of guessing from the git-directory parent.",
       },
       {
         kind: "paragraph",
@@ -402,7 +402,7 @@ const DOC_SECTIONS: DocSection[] = [
         kind: "list",
         items: [
           "If socket commands cannot connect, launch ForkTTY first or set an absolute FORKTTY_SOCKET_PATH.",
-          "If configuration or session files are corrupt, ForkTTY quarantines the bad file and starts from safe defaults.",
+          "If configuration or session files are corrupt, ForkTTY quarantines the bad file and starts from safe defaults. A Config Issue notification remains visible after saved workspaces restore so the recovery is not silent.",
           "For hook problems, inspect a dry run and the exact provider config file before applying setup again.",
           "For bug reports, include distro, desktop environment, install method, reproduction steps, and relevant doctor output.",
         ],
