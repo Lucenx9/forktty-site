@@ -210,7 +210,11 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "Settings > Agent hooks names installed providers, confirms setup and updates before writing, and removes only ForkTTY-managed entries. Hooks report lifecycle and attention state; they never move focus or rearrange panes. Setup preserves unrelated user configuration and backs up changed files. Claude installs 25 lifecycle events by default or 28 with --full; Codex installs 10, Antigravity 3, and OpenCode 11.",
+        text: "Settings > Agent hooks names installed providers, confirms setup and updates before writing, and removes only ForkTTY-managed entries. Hooks report lifecycle and attention state; they never move focus or rearrange panes. Setup preserves unrelated user configuration and backs up changed files. Claude installs 25 lifecycle events by default or 28 with --full; Codex installs 11, Antigravity 5, and OpenCode 11.",
+      },
+      {
+        kind: "paragraph",
+        text: "Codex SessionEnd cleanup releases lifecycle and permission state plus the learned surface target within the provider's three-second deadline. Antigravity observes PostInvocation and Stop; only a clean Stop with an explicit boolean fullyIdle: true becomes Ready. Missing, invalid, or false idle state remains non-reclaimable, while provider errors stay visible.",
       },
       {
         kind: "paragraph",

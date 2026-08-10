@@ -113,7 +113,7 @@ forktty hooks setup antigravity
 forktty hooks setup opencode
 ```
 
-The managed event sets contain Codex 10, Claude 25 lifecycle / 28 full, Antigravity 3, and OpenCode 11 events. Claude lifecycle excludes only `PreToolUse`, `PostToolUse`, and `PostToolUseFailure`; `PostToolBatch` remains for prompt-result correlation. Claude `SessionStart` enrichment requires workspace ID, surface ID, and an absolute socket path together. Partial provenance returns the exact continue response without socket I/O.
+The managed event sets contain Codex 11, Claude 25 lifecycle / 28 full, Antigravity 5, and OpenCode 11 events. Claude lifecycle excludes only `PreToolUse`, `PostToolUse`, and `PostToolUseFailure`; `PostToolBatch` remains for prompt-result correlation. Codex `SessionEnd` cleanup releases lifecycle and permission state plus the learned surface target within the provider's three-second deadline. Antigravity observes `PostInvocation` and `Stop`; only a clean `Stop` with an explicit boolean `fullyIdle: true` becomes ready. Missing, invalid, or false idle state remains non-reclaimable, while provider errors stay visible. Claude `SessionStart` enrichment requires workspace ID, surface ID, and an absolute socket path together. Partial provenance returns the exact continue response without socket I/O.
 
 Codex may run hooks through a shared app-server without the originating pane's `FORKTTY_*` environment. A local session whose `session_meta` originator is `codex-tui` may use the default owner-only socket, but ForkTTY binds it only when one unclaimed same-cwd Codex TUI process belongs to one eligible surface. Another unclaimed same-cwd TUI, including one outside ForkTTY, leaves the hook unassigned instead of falling back to active focus.
 
