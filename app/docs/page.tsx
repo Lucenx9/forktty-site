@@ -308,7 +308,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "The Worktree manager keeps the source workspace and path visible while Create, Attach, Merge, and Remove share one mode-specific target form. Create and Attach work from the primary checkout or an active linked worktree, retain that active checkout's HEAD for new branches, and place new worktrees in the common repository layout. Merge and Remove show the resolved primary checkout used for the operation, and the removal flow states that the git branch remains intact. Mutating worktree actions reject external separate-git-dir layouts when repository metadata cannot verify the primary checkout instead of guessing from the git-directory parent.",
+        text: "The Worktree manager keeps the source workspace and path visible while Create, Attach, Merge, and Remove share one mode-specific target form. Create and Attach work from the primary checkout or an active linked worktree. Create branches from the active checkout's HEAD, while Attach uses the selected existing branch reference; both place new worktrees in the common repository layout. Merge and Remove show the resolved primary checkout used for the operation, and the removal flow states that the git branch remains intact. Mutating worktree actions reject external separate-git-dir layouts when repository metadata cannot verify the primary checkout instead of guessing from the git-directory parent.",
       },
       {
         kind: "paragraph",
