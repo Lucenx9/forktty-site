@@ -252,7 +252,8 @@ forktty capabilities
 ```
 
 - If socket commands fail, launch ForkTTY or set an absolute `FORKTTY_SOCKET_PATH`.
-- Corrupt config or session files are quarantined and replaced with safe defaults. Config recovery remains visible as a Config issue notification after saved workspaces restore.
+- Corrupt configuration is quarantined and replaced with safe defaults. Config recovery remains visible as a Config issue notification after saved workspaces restore.
+- A corrupt saved session is quarantined and ForkTTY starts with a fresh default workspace.
 - If hook metadata is missing or stale, inspect `forktty hooks setup --dry-run` before applying setup again.
 - For bug reports, include distro, desktop environment, install method, reproduction steps, and relevant doctor output.
 

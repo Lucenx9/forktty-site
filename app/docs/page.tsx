@@ -402,7 +402,8 @@ const DOC_SECTIONS: DocSection[] = [
         kind: "list",
         items: [
           "If socket commands cannot connect, launch ForkTTY first or set an absolute FORKTTY_SOCKET_PATH.",
-          "If configuration or session files are corrupt, ForkTTY quarantines the bad file and starts from safe defaults. A Config issue notification remains visible after saved workspaces restore so the recovery is not silent.",
+          "If configuration is corrupt, ForkTTY quarantines the bad file and starts from safe defaults. A Config issue notification remains visible after saved workspaces restore so the recovery is not silent.",
+          "If the saved session is corrupt, ForkTTY quarantines it and starts with a fresh default workspace.",
           "For hook problems, inspect a dry run and the exact provider config file before applying setup again.",
           "For bug reports, include distro, desktop environment, install method, reproduction steps, and relevant doctor output.",
         ],
