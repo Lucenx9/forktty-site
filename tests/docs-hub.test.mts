@@ -139,6 +139,8 @@ test("worktree docs describe the focused manager hierarchy", async () => {
     assert.match(text, /Worktree manager/);
     assert.match(text, /source workspace and path/);
     assert.match(text, /mode-specific target/);
+    assert.match(text, /Create branches from the active checkout's HEAD/);
+    assert.match(text, /Attach uses the selected existing branch reference/);
     assert.match(text, /branch remains intact|leaves the (?:git )?branch\s+intact/);
   }
 });

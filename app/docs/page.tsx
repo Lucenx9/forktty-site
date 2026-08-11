@@ -149,7 +149,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "Pane and tab actions stay bound to the surface that opened them, even if focus changes before activation. If a new tab cannot start, ForkTTY restores the previous pane layout and focus. Maximize applies only when the real layout has multiple panes, counts tabs as part of one pane, and clears when the layout collapses. While the notification panel is visible it reconciles rows, count, Clear, and Open Latest every 500 ms; targeted rows lead with workspace/path context, visible refreshes preserve scroll position, and Dismiss/Clear refresh immediately. SSH workspace metadata reads ssh:<host> · connected or ssh:<host> · disconnected from local terminal readiness, not a network heartbeat.",
+        text: "Pane and tab actions stay bound to the surface that opened them, even if focus changes before activation. If a new tab cannot start, ForkTTY restores the previous pane layout and focus. Maximize applies only when the real layout has multiple panes, counts tabs as part of one pane, and clears when the layout collapses. While the notification panel is visible it reconciles rows, count, Clear, and Open Latest every 500 ms; targeted rows lead with workspace/path context, visible refreshes preserve scroll position, a dedicated scrollbar gutter keeps Dismiss controls clickable, and Dismiss/Clear refresh immediately. SSH workspace metadata reads ssh:<host> · connected or ssh:<host> · disconnected from local terminal readiness, not a network heartbeat.",
       },
     ],
   },
@@ -308,7 +308,7 @@ const DOC_SECTIONS: DocSection[] = [
       },
       {
         kind: "paragraph",
-        text: "The Worktree manager keeps the source workspace and path visible while Create, Attach, Merge, and Remove share one mode-specific target form. Its label stays visible, and the removal flow states that the git branch remains intact.",
+        text: "The Worktree manager keeps the source workspace and path visible while Create, Attach, Merge, and Remove share one mode-specific target form. Create and Attach work from the primary checkout or an active linked worktree. Create branches from the active checkout's HEAD, while Attach uses the selected existing branch reference; both place new worktrees in the common repository layout. Merge and Remove show the resolved primary checkout used for the operation, and the removal flow states that the git branch remains intact. Mutating worktree actions reject external separate-git-dir layouts when repository metadata cannot verify the primary checkout instead of guessing from the git-directory parent.",
       },
       {
         kind: "paragraph",
@@ -402,7 +402,8 @@ const DOC_SECTIONS: DocSection[] = [
         kind: "list",
         items: [
           "If socket commands cannot connect, launch ForkTTY first or set an absolute FORKTTY_SOCKET_PATH.",
-          "If configuration or session files are corrupt, ForkTTY quarantines the bad file and starts from safe defaults.",
+          "If configuration is corrupt, ForkTTY quarantines the bad file and starts from safe defaults. A Config issue notification remains visible after saved workspaces restore so the recovery is not silent.",
+          "If the saved session is corrupt, ForkTTY quarantines it and starts with a fresh default workspace.",
           "For hook problems, inspect a dry run and the exact provider config file before applying setup again.",
           "For bug reports, include distro, desktop environment, install method, reproduction steps, and relevant doctor output.",
         ],
